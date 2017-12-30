@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery-1.7.2.min.js"></script>
+</head>
+
+<body>
+<div class="top mg2">
+	<div class="topl f"><a href="#"><img align="absmiddle" src="images/index_1_01.png" /></a></div>
+	<div class="topc f cen xi13">
+		<ul>
+			<li class="bg1"><a href="../index">概况</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg2"><a href="../visualization">可视化</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg1hover topchover"><a href="../report">报表</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg4"><a href="../trade">交易</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg5"><a href="../operation">运维</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg6"><a href="../service">服务</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg7"><a href="../set">设置</a></li>
+		</ul>
+	</div>
+	<div class="topr r xi13">
+		<ul>
+			<li><a href="#">欢迎您</a></li>
+			<li><a href="#"><img align="absmiddle" src="images/index_26.png" /></a></li>
+			<li><a href="#"><img align="absmiddle" src="images/index_28.png" /></a></li>
+			<li><a href="#"><img align="absmiddle" src="images/index_30.png" /></a></li>
+		</ul>
+	</div>
+</div>
+<div class="con mg2">
+	<div class="conl">
+		<div class="conls mg2">
+			<span class="conlsr1 r"><img align="absmiddle" src="images/user_list_23.png" /></span>
+			<span class="conlsr2 r"><img align="absmiddle" src="images/user_list_23.png" /></span>
+		</div>
+		<div id="menu_zzjs_net" class="sdmenu">
+			<div>
+				<span>用户报表</span>
+				<a href="#">用户综合统计</a>
+				<a href="carstop">用户停车分析</a>
+			</div>
+			<div>
+				<span>财务报表</span>
+				<a href="#">财务概况分析</a>
+				<a href="#">消费对账</a>
+			</div>
+			<div>
+				<span>停车报表</span>
+				<a href="#">停车运营分析</a>
+				<a href="#">泊位占用率</a>
+				<a href="#">泊位周转率</a>
+				<a href="#">停车数据分析</a>
+			</div>
+			<div>
+				<span>运维报表</span>
+				<a href="#">运维汇总</a>
+				<a href="#">运营日报</a>
+				<a href="#">运营周报</a>
+				<a href="#">运营月报</a>
+				<a href="#">个人指标</a>
+				<a href="#">团队指标</a>
+			</div>
+			<div>
+				<span>设备报表</span>
+				<a href="#">异常设备</a>
+			</div>
+			<script type="text/javascript">
+			// <![CDATA[
+			var myMenu;
+			window.onload = function() {
+				myMenu = new SDMenu("menu_zzjs_net");
+				myMenu.init();
+			var firstSubmenu = myMenu.submenus[0][1]; //不同栏目首页是0以此类推
+			myMenu.expandMenu(firstSubmenu);
+			};
+			// ]]>
+			</script>
+		</div>
+	</div>
+	<div class="conr">
+		<div class="baobiao1 mg2">
+			<div class="baobiao1s mg2 xi16">今日用户概况（戒指2016-07-12 18:59:14）</div>
+			<div class="baobiao1x mg2 cen cu hui">
+				<ul>
+					<li>总用户数（人）<br/><span class="xi24 xi">4888</span></li>
+					<li>新增用户数（人）<br/><span class="xi24 xi">235</span></li>
+					<li>充值用户数（人）<br/><span class="xi24 xi">984</span></li>
+					<li>停车用户数（人）<br/><span class="xi24 xi">144</span></li>
+					<li>活跃用户数（人）<br/><span class="xi24 xi">642</span></li>
+				</ul>
+			</div>
+		</div>
+		<div class="user_lists mg2">				
+			<div class="user_listss mg2">
+				<ul>
+					<li class="user_listss1 you">年份：</li>
+					<li><select name="" class="bd1_1 f">
+		  <option value="--自定--">2016</option>
+		  <option value="自定">2015</option>
+		  <option value="自定">2014</option>
+		</select></li>
+					<li class="user_listss1 you">月份：</li>
+					<li><select name="" class="bd1_1 f">
+		  <option value="自定">12</option>
+		  <option value="自定">11</option>
+		  <option value="自定">10</option>
+		  <option value="自定">9</option>
+		  <option value="自定">8</option>
+		  <option value="自定">7</option>
+		  <option value="自定">6</option>
+		  <option value="自定">5</option>
+		  <option value="自定">4</option>
+		  <option value="自定">3</option>
+		  <option value="自定">2</option>
+		  <option value="自定">1</option>
+		</select></li>
+					<li><input name="" type="button" class="an1 f xi14 bai" value="统计"></li>
+				</ul>
+			</div>
+		</div>
+		<div class="baobiao2 mg2"><img align="absmiddle" src="images/baobiao_03.png" width="100%" height="400" /></div>
+		<div class="baobiao3 mg2">
+			<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#ebebeb" class="tab2 cen">
+			  <tr class="cu">
+				<td>日期</td>
+				<td>新增用户数（人）</td>
+				<td>充值用户数（人）</td>
+				<td>停车用户数（人）</td>
+			  </tr>
+			  <tr class="tab2tr2">
+				<td>2016-10-19</td>
+				<td>109</td>
+				<td>78</td>
+				<td>90</td>
+			  </tr>
+			  <tr class="tab2tr2">
+				<td>2016-10-18</td>
+				<td>5158</td>
+				<td>2443</td>
+				<td>900</td>
+			  </tr>
+			  <tr class="tab2tr2">
+				<td>2016-10-17</td>
+				<td>543</td>
+				<td>432</td>
+				<td>142</td>
+			  </tr>
+			  <tr class="tab2tr2">
+				<td>2016-10-16</td>
+				<td>986</td>
+				<td>331</td>
+				<td>532</td>
+			  </tr>
+			  <tr class="tab2tr2">
+				<td>2016-10-15</td>
+				<td>1109</td>
+				<td>780</td>
+				<td>940</td>
+			  </tr>
+			  <tr class="tab2tr2">
+				<td>2016-10-14</td>
+				<td>1498</td>
+				<td>787</td>
+				<td>901</td>
+			  </tr>
+			  <tr class="tab2tr2">
+				<td>2016-10-13</td>
+				<td>979</td>
+				<td>768</td>
+				<td>890</td>
+			  </tr>
+			  <tr class="tab2tr2">
+				<td>2016-10-12</td>
+				<td>875</td>
+				<td>781</td>
+				<td>290</td>
+			  </tr>
+			</table>
+		</div>
+	</div>
+</div>
+<script src="js/js.js"></script>
+</body>
+</html>

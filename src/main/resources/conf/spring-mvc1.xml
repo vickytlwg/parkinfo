@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+    
+    <!-- 扫描controller（controller层注入） -->
+   <context:component-scan base-package="cn.parkinfo.controller"/>
+   
+   <!-- 避免IE在ajax请求时，返回json出现下载 -->
+   <bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">		
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+	
+    <!-- 模板信息设置 -->  
+   <bean id="velocityConfig"  
+       class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">  
+       <property name="resourceLoaderPath"  value="/WEB-INF/views" /><!-- 設置模板防止位置-->  
+       <property name="velocityProperties">  
+           <props>  
+               <prop key="input.encoding">UTF-8</prop><!-- 指定模板引擎进行模板处理的编码 -->  
+               <prop key="output.encoding">UTF-8</prop><!-- 指定输出流的编码 -->  
+           </props>  
+       </property>  
+   </bean>  
+  <mvc:annotation-driven /> 
+<!-- 设置视图解析工具 -->  
+   <bean id="viewResolver"  
+       class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">  
+       <property name="suffix" value=".html" />  
+       <property name="layoutUrl" value="layoutNull.html" />
+       <!-- 避免乱码 -->  
+       <property name="contentType" value="text/html;charset=UTF-8" />  
+       <property name="dateToolAttribute" value="dateTool" />  
+       <property name="numberToolAttribute" value="numberTool" />  
+       <property name="exposeRequestAttributes" value="true" />  
+       <property name="exposeSessionAttributes" value="true" />  
+   </bean>  
+   
+   	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>	
+		<mvc:mapping path="/*/**"/>
+		<mvc:exclude-mapping path="/login"/>
+		<mvc:exclude-mapping path="/authority"/>
+		<mvc:exclude-mapping path="/images/**"/>
+		<mvc:exclude-mapping path="/angular/**"/>
+		<mvc:exclude-mapping path="/script/**"/>
+		<mvc:exclude-mapping path="/css/**"/>
+		<mvc:exclude-mapping path="/js/**"/>
+		<mvc:exclude-mapping path="/dist/**"/>
+		<mvc:exclude-mapping path="/font/**"/>
+		<mvc:exclude-mapping path="static/**"/>
+		<mvc:exclude-mapping path="/views/**"/>	
+		<mvc:exclude-mapping path="/monthUser/**"/>	
+		<mvc:exclude-mapping path="/set/**"/>	
+				
+		<bean class="cn.parkinfo.controller.LoginInterceptor1"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+   <!-- 静态资源访问-->
+   	<mvc:resources mapping="/js/**" location="/META-INF/script/"
+    	cache-period="31556926" /> 
+    <mvc:resources mapping="/css/**" location="/META-INF/css/"
+    	cache-period="31556926" /> 
+    <mvc:resources mapping="/images/**" location="META-INF/images/"
+    	cache-period="31556926" />
+    <mvc:resources mapping="/**" location="META-INF/"
+    	cache-period="31556926" />
+</beans>

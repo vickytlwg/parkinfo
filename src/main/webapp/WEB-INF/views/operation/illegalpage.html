@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery-1.7.2.min.js"></script>
+</head>
+
+<body>
+<div class="top mg2">
+	<div class="topl f"><a href="#"><img align="absmiddle" src="images/index_1_01.png" /></a></div>
+	<div class="topc f cen xi13">
+		<ul>
+			<li class="bg1"><a href="../index">概况</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg2"><a href="../visualization">可视化</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg3"><a href="../report">报表</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg4"><a href="../trade">交易</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg5"><a href="../operation">运维</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg6"><a href="../service">服务</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg1hover topchover"><a href="../set">设置</a></li>
+		</ul>
+	</div>
+	<div class="topr r xi13">
+		<ul>
+			<li><a href="#">欢迎您</a></li>
+			<li><a href="#"><img align="absmiddle" src="images/index_26.png" /></a></li>
+			<li><a href="#"><img align="absmiddle" src="images/index_28.png" /></a></li>
+			<li><a href="#"><img align="absmiddle" src="images/index_30.png" /></a></li>
+		</ul>
+	</div>
+</div>
+<div class="con mg2">
+	<div class="conl">
+		<div class="conls mg2">
+			<span class="conlsr1 r"><img align="absmiddle" src="images/user_list_23.png" /></span>
+			<span class="conlsr2 r"><img align="absmiddle" src="images/user_list_23.png" /></span>
+		</div>
+		<div id="menu_zzjs_net" class="sdmenu">
+			<div>
+				<span>工单管理</span>
+				<a href="illegalpage">泊位内违章</a>
+				<a href="unpaid">逃逸欠费订单</a>
+				<a href="#">用户投诉</a>
+				<a href="#">投诉工单</a>
+				<a href="#">设备维保</a>
+			</div>
+			<div>
+				<span>通告管理</span>
+				<a href="#">通告列表</a>
+				<a href="#">通告类型</a>
+			</div>
+			<div>
+				<span>告警管理</span>
+				<a href="#">告警事件管理</a>
+				<a href="#">告警事件查询</a>
+			</div>
+			<script type="text/javascript">
+			// <![CDATA[
+			var myMenu;
+			window.onload = function() {
+				myMenu = new SDMenu("menu_zzjs_net");
+				myMenu.init();
+			var firstSubmenu = myMenu.submenus[0]; //不同栏目首页是0以此类推
+			myMenu.expandMenu(firstSubmenu);
+			};
+			// ]]>
+			</script>
+		</div>
+	</div>
+	<div class="conr">
+		<div class="user_lists mg2">
+			<div class="user_listss mg2">
+				<ul>
+					<li class="user_listss1 you">时间范围：</li>
+					<li><span class="user_listss1spanhover">最近七日</span><span class="user_listss1span">所有工单</span></li>
+					<li class="user_listss1 you">取证时间：</li>
+					<li><input name="" type="text" class="bd1 f"></li>
+					<li class="user_listss2">~</li>
+					<li><input name="" type="text" class="bd1 f"></li>
+				</ul>
+			</div>
+			<div class="list0 mg2">
+				<div class="user_listss mg2">
+					<ul>
+						<li class="user_listss1 you">违章行为：</li>
+						<li><select name="" class="bd1_1 f">
+			  <option value="--自定--">--自定--</option>
+			  <option value="自定">自定</option>
+			  <option value="自定">自定</option>
+			</select></li>
+						<li class="user_listss1 you">处理状态：</li>
+						<li><select name="" class="bd1_1 f">
+			  <option value="--自定--">--自定--</option>
+			  <option value="自定">自定</option>
+			  <option value="自定">自定</option>
+			</select></li>
+					</ul>
+				</div>
+				<div class="user_listss mg2">
+					<ul>
+						<li class="user_listss1 you">区域信息：</li>
+						<li><select name="" class="bd1_1 f">
+			  <option value="--自定--">--自定--</option>
+			  <option value="自定">自定</option>
+			  <option value="自定">自定</option>
+			</select></li>
+						<li class="user_listss1 you">执法中队：</li>
+						<li><select name="" class="bd1_1 f">
+			  <option value="--自定--">--自定--</option>
+			  <option value="自定">自定</option>
+			  <option value="自定">自定</option>
+			</select></li>
+						<li class="user_listss1 you">执法路段：</li>
+						<li><select name="" class="bd1_1 f">
+			  <option value="--自定--">--自定--</option>
+			  <option value="自定">自定</option>
+			  <option value="自定">自定</option>
+			</select></li>
+					</ul>
+				</div>
+			</div>
+			<div class="user_listss mg2">
+				<ul>
+					<li class="user_listss1 you">车牌/工单号：</li>
+					<li><input name="" type="text" class="bd1 f"></li>
+					<li class="user_listss1 you">取证人：</li>
+					<li><input name="" type="text" class="bd1 f"></li>
+					<li class="user_listss1 you">泊位号：</li>
+					<li><input name="" type="text" class="bd1 f"></li>
+					<li><input name="" type="button" class="an1 f xi14 bai" value="查询"></li>
+				</ul>
+			</div>
+			<div class="listmoreshow xi13">显示更多</div>
+			<div class="listmorehide xi13">收起查询</div>
+		</div>
+		<div class="user_listc mg2">
+			<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#e4e4e4" class="tab1">
+			  <tr class="bghui cu">
+				<td>工单编号</td>
+				<td class="cen">车牌号</td>
+				<td>执法片区</td>
+				<td>执法路段</td>
+				<td class="cen">泊位编号</td>
+				<td>违法行为</td>
+				<td class="cen">取证时间</td>
+				<td>巡管员</td>
+				<td class="cen">工单状态</td>
+				<td>审核状态</td>
+			  </tr>
+			  <tr>
+				<td>NB000011</td>
+				<td class="cen">苏ATP050</td>
+				<td>秦淮区</td>
+				<td>雨花西路</td>
+				<td class="cen">NB001</td>
+				<td>违停</td>
+				<td class="cen">2016-10-11 20:00:21</td>
+				<td>张净值</td>
+				<td class="cen">已处理</td>
+				<td>已审核</td>
+			  </tr>
+			  <tr>
+				<td>NB000012</td>
+				<td class="cen">苏A1P052</td>
+				<td>秦淮区</td>
+				<td>软件大道</td>
+				<td class="cen">NB002</td>
+				<td>违停</td>
+				<td class="cen">2016-10-16 20:00:21</td>
+				<td>汪超</td>
+				<td class="cen">已处理</td>
+				<td>已审核</td>
+			  </tr>
+			  <tr>
+				<td>NB000013</td>
+				<td class="cen">苏A4P143</td>
+				<td>秦淮区</td>
+				<td>软件大道</td>
+				<td class="cen">NB003</td>
+				<td>违停</td>
+				<td class="cen">2016-10-19 20:00:21</td>
+				<td>汪超</td>
+				<td class="cen">未处理</td>
+				<td>未审核</td>
+			  </tr>
+			  <tr>
+				<td>NB000014</td>
+				<td class="cen">苏AKP140</td>
+				<td>雨花区</td>
+				<td>软件大道</td>
+				<td class="cen">NB004</td>
+				<td>缴费争议</td>
+				<td class="cen">2016-10-29 18:20:33</td>
+				<td>汪超</td>
+				<td class="cen">未处理</td>
+				<td>未审核</td>
+			  </tr>
+			   <tr>
+				<td>NB000015</td>
+				<td class="cen">苏ADP140</td>
+				<td>鼓楼区</td>
+				<td>花神大道</td>
+				<td class="cen">NB005</td>
+				<td>缴费争议</td>
+				<td class="cen">2016-10-30 11:15:31</td>
+				<td>汪超</td>
+				<td class="cen">未处理</td>
+				<td>未审核</td>
+			  </tr>
+			</table>
+		</div>
+		<div class="user_listx mg2">
+			<div class="user_listxl f">总记录数：<span class="lan">736</span></div>
+			<div class="user_listxl f">当前页：<span class="lan">1</span> / <span class="lan">74</span></div>
+			<div class="user_listxr1 r"><select name="" class="bd1_2 f">
+		  <option value="10">10</option>
+		  <option value="10">10</option>
+		  <option value="10">10</option>
+		</select></div>
+			<div class="user_listxr2 r">每页行数：</div>
+			<div class="user_listxc r">
+				<div class="fy mg2">
+					<a href="#">上一页</a>
+					<span>1</span>
+					<a href="#">2</a>
+					<a href="#">3</a>
+					<a href="#">4</a>
+					...
+					<a href="#">5</a>
+					<a href="#">6</a>
+					<a href="#">下一页</a>
+					<a href="#">尾页</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="js/js.js"></script>
+</body>
+</html>
