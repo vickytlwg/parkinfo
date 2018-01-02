@@ -194,6 +194,12 @@ public String deletePark(@RequestBody Monthuserpark monthUserPark){
 @ResponseBody
 public String insert(@RequestBody Monthuser monthUser){
 	Map<String, Object> result=new HashMap<>();
+	List<Monthuser> monthusers=monthUserService.getByCarnumberAndPark(monthUser.getCardnumber(), monthUser.getParkid());
+	if (!monthusers.isEmpty()) {
+		result.put("status", 1002);
+		result.put("message", "用户已存在");
+		return Utility.gson.toJson(result);
+	}
 	int num=monthUserService.insert(monthUser);
 	if (num==1) {
 		result.put("status", 1001);
