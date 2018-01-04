@@ -44,6 +44,13 @@ public class PosChargeData {
 
 	String url="";
 	
+//	@Override
+//	public String toString() {
+//		// TODO Auto-generated method stub
+//		//return super.toString("id"+id,cardNumber,parkDesc,portNumber);
+//		return "return===="+id+"/n"+cardNumber+"/n"+parkDesc+"/n";
+//	}
+//	
 
 	public int getId() {
 		return id;

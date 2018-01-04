@@ -159,7 +159,7 @@ function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
             return;
         }
           $uibModal.open({
-            templateUrl: 'modifyUser2',
+            templateUrl: '/park/views/template/monthUserParkUpdate.html',
             controller: 'userParkCtrl',
             scope:$scope,
             resolve: {
@@ -385,7 +385,7 @@ monthUserApp.factory("getPositionData",function($http,$q){
             var deferred=$q.defer();
             var promise=deferred.promise;
             $http({
-                url:"/parkinfo/zoneCenter/getByStartAndCount",
+                url:"/park/zoneCenter/getByStartAndCount",
                 method:'post',
                 params:{start:0,count:100}
             }).success(function(response){   
@@ -400,7 +400,7 @@ monthUserApp.factory("getPositionData",function($http,$q){
             return;
             }
             $http({
-                url:'/parkinfo/area/selectByPrimaryKey/'+areaid,
+                url:'/park/area/selectByPrimaryKey/'+areaid,
                 method:'get'
             }).success(function(response){
                 if(response.status==1001){
@@ -416,7 +416,7 @@ monthUserApp.factory("getPositionData",function($http,$q){
             return;
         }
             $http({
-                url:'/parkinfo/area/getByZoneCenterId/'+zoneid,
+                url:'/park/area/getByZoneCenterId/'+zoneid,
                 method:'get',
             }).success(function(response){
                 if(response.status==1001){
@@ -429,7 +429,7 @@ monthUserApp.factory("getPositionData",function($http,$q){
            var deferred=$q.defer();
            var promise=deferred.promise;           
              $http({
-                 url:"/parkinfo/street/getByAreaid/"+areaid,
+                 url:"/park/street/getByAreaid/"+areaid,
                  method:'get'
              }).success(function(response){
                  if(response.status==1001){
@@ -442,7 +442,7 @@ monthUserApp.factory("getPositionData",function($http,$q){
            var deferred=$q.defer();
            var promise=deferred.promise;           
              $http({
-                 url:"/parkinfo/getOutsideParkByStreetId/"+streetId,
+                 url:"/park/getOutsideParkByStreetId/"+streetId,
                  method:'get'
              }).success(function(response){
                  if(response.status==1001){

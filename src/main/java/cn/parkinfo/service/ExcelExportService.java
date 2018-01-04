@@ -196,10 +196,13 @@ public class ExcelExportService {
 			XSSFCell cell1 = row1.createCell(0);
 			cell1.setCellStyle(style2);
 			cell1.setCellValue(posdata.getCardNumber());
+			/*System.out.println(posdata.getCardNumber());
+			System.out.println(posdata);*/
 
 			XSSFCell cell2 = row1.createCell(1);
 			cell2.setCellStyle(style2);
 			cell2.setCellValue(posdata.getParkDesc());
+			System.out.println(posdata.getParkDesc());
 
 			XSSFCell cell3 = row1.createCell(2);
 			cell3.setCellStyle(style2);

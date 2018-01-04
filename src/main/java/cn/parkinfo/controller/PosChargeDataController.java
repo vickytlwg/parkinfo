@@ -559,7 +559,7 @@ public class PosChargeDataController {
 		List<PosChargeData> posdatas = chargeSerivce.getPage(0, 100000);
 		String docsPath = request.getSession().getServletContext().getRealPath("/");
 		final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
-		String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "押金", "应收费", "补交", "返还", "进场时间", "离场时间" };
+		String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "实收费", "应收费", "补交", "返还", "进场时间", "离场时间" };
 		OutputStream out = new FileOutputStream(docsPath + FILE_SEPARATOR + "poschargedata.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		excelService.produceExceldataPosChargeData("收费明细", headers, posdatas, workbook);
@@ -581,7 +581,7 @@ public class PosChargeDataController {
 		List<PosChargeData> posdatas = chargeSerivce.getByParkAndDay(Integer.parseInt(parkId), date);
 		String docsPath = request.getSession().getServletContext().getRealPath("/");
 		final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
-		String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "押金", "应收费", "补交", "返还", "进场时间", "离场时间" };
+		String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "实收费", "应收费", "补交", "返还", "进场时间", "离场时间" };
 		OutputStream out = new FileOutputStream(docsPath + FILE_SEPARATOR + "poschargedata.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		excelService.produceExceldataPosChargeData("收费明细", headers, posdatas, workbook);
@@ -601,7 +601,7 @@ public class PosChargeDataController {
 		List<PosChargeData> posdatas = chargeSerivce.getAllByDay(date);
 		String docsPath = request.getSession().getServletContext().getRealPath("/");
 		final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
-		String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "押金", "应收费", "补交", "返还", "进场时间", "离场时间" };
+		String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "实收费", "应收费", "补交", "返还", "进场时间", "离场时间" };
 		OutputStream out = new FileOutputStream(docsPath + FILE_SEPARATOR + "poschargedata.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		excelService.produceExceldataPosChargeData("收费明细", headers, posdatas, workbook);
@@ -624,7 +624,7 @@ public class PosChargeDataController {
 		List<PosChargeData> posdatas = chargeSerivce.getByParkAndDayRange(Integer.parseInt(parkId), startDate, endDate);
 		String docsPath = request.getSession().getServletContext().getRealPath("/");
 		final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
-		String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "押金", "应收费", "补交", "返还", "进场时间", "离场时间" };
+		String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "实收费", "应收费", "补交", "返还", "进场时间", "离场时间" };
 		OutputStream out = new FileOutputStream(docsPath + FILE_SEPARATOR + "poschargedata.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		excelService.produceExceldataPosChargeData("收费明细", headers, posdatas, workbook);
@@ -645,7 +645,7 @@ public class PosChargeDataController {
 		List<PosChargeData> posdatas = chargeSerivce.getAllByDayRange(startDate, endDate);
 		String docsPath = request.getSession().getServletContext().getRealPath("/");
 		final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
-		String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "押金", "应收费", "补交", "返还", "进场时间", "离场时间" };
+		String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "实收费", "应收费", "补交", "返还", "进场时间", "离场时间" };
 		OutputStream out = new FileOutputStream(docsPath + FILE_SEPARATOR + "poschargedata.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		excelService.produceExceldataPosChargeData("收费明细", headers, posdatas, workbook);
