@@ -215,13 +215,13 @@ public String insert(@RequestBody Monthuser monthUser){
 public String insertOrder(@RequestBody Monthuser monthUser){
 	Map<String, Object> result=new HashMap<>();
 	monthUser.setType(1);
-	Date startd=monthUser.getStarttime();
-	Date endd=monthUser.getEndtime();
-	if (endd.getTime()-startd.getTime()>1000*60*60*24) {
-		result.put("status", 1002);
-		result.put("message", "时间不能超过24小时");
-		return Utility.gson.toJson(result);
-	}
+//	Date startd=monthUser.getStarttime();
+//	Date endd=monthUser.getEndtime();
+//	if (endd.getTime()-startd.getTime()>1000*60*60*24) {
+//		result.put("status", 1002);
+//		result.put("message", "时间不能超过24小时");
+//		return Utility.gson.toJson(result);
+//	}
 	int num=monthUserService.insert(monthUser);
 	if (num==1) {
 		result.put("status", 1001);
@@ -357,13 +357,13 @@ public String update(@RequestBody Monthuser monthUser){
 public String updateOrder(@RequestBody Monthuser monthUser){
 	Map<String, Object> result=new HashMap<>();
 	monthUser.setType(1);
-	Date startd=monthUser.getStarttime();
-	Date endd=monthUser.getEndtime();
-	if (endd.getTime()-startd.getTime()>1000*60*60*24) {
-		result.put("status", 1002);
-		result.put("message", "时间不能超过24小时");
-		return Utility.gson.toJson(result);
-	}
+//	Date startd=monthUser.getStarttime();
+//	Date endd=monthUser.getEndtime();
+//	if (endd.getTime()-startd.getTime()>1000*60*60*24) {
+//		result.put("status", 1002);
+//		result.put("message", "时间不能超过24小时");
+//		return Utility.gson.toJson(result);
+//	}
 	int num=monthUserService.updateByPrimaryKeySelective(monthUser);
 	if (num==1) {
 		result.put("status", 1001);
