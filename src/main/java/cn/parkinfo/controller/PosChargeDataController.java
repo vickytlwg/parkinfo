@@ -556,7 +556,7 @@ public class PosChargeDataController {
 	@RequestMapping("/getExcel")
 	@ResponseBody
 	public void getExcel(HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
-		List<PosChargeData> posdatas = chargeSerivce.getPage(0, 100000);
+		List<PosChargeData> posdatas = chargeSerivce.getPage(0, 50000);
 		String docsPath = request.getSession().getServletContext().getRealPath("/");
 		final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
 		String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "押金", "应收费", "补交", "返还", "进场时间", "离场时间" };
