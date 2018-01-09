@@ -468,7 +468,7 @@ monthDetail.service('textModal', ['$uibModal',
 
                                     this.open = function($scope, header, body) {
                                         $scope.textShowModal = $uibModal.open({
-                                            templateUrl : '/parkinfo/views/template/text-modal.html',
+                                            templateUrl : '/park/views/template/text-modal.html',
                                             controller : 'textCtrl',
                                             scope : $scope,
                                             resolve : {
