@@ -154,7 +154,9 @@ public String getUsersByParkId(@PathVariable("parkId")int parkId){
 @ResponseBody
 public String deletePark(@PathVariable("id")int id){
 	Map<String, Object> result=new HashMap<>();
-	int num=monthUserParkService.deleteByPrimaryKey(id);
+	Monthuserpark monthuserpark=monthUserParkService.selectByPrimaryKey(id);
+	monthUserParkService.deleteByPrimaryKey(id);
+	int num=monthUserService.deleteByPrimaryKey(monthuserpark.getMonthuserid());
 	if (num==1) {
 		result.put("status", 1001);
 	}
@@ -168,7 +170,11 @@ public String deletePark(@PathVariable("id")int id){
 @ResponseBody
 public String insertPark(@RequestBody Monthuserpark monthUserPark){
 	Map<String, Object> result=new HashMap<>();
-	int num= monthUserParkService.insert(monthUserPark);
+	Monthuser monthuser=monthUserService.selectByPrimaryKey(monthUserPark.getMonthuserid());
+	monthuser.setParkid(monthUserPark.getParkid());
+	monthuser.setId(null);
+	int num= monthUserService.insertSelective(monthuser);
+	monthUserParkService.insert(monthUserPark);
 	if (num==1) {
 		result.put("status", 1001);
 	}
@@ -181,7 +187,7 @@ public String insertPark(@RequestBody Monthuserpark monthUserPark){
 @ResponseBody
 public String deletePark(@RequestBody Monthuserpark monthUserPark){
 	Map<String, Object> result=new HashMap<>();
-	int num= monthUserParkService.deleteByUserIdAndParkId(monthUserPark);
+	int num= monthUserService.deleteByPrimaryKey(monthUserPark.getMonthuserid());
 	if (num==1) {
 		result.put("status", 1001);
 	}

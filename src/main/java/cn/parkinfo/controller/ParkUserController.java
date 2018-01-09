@@ -44,6 +44,12 @@ public class ParkUserController {
 		
 	private static Log logger = LogFactory.getLog(ParkUserController.class);	
 	
+	
+	@RequestMapping(value = "", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+	public String index(){		
+		return "userManage";					
+	}
+	
 	@RequestMapping(value = "/getParkUserCount", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
 	@ResponseBody
 	public String getuserCount(){
