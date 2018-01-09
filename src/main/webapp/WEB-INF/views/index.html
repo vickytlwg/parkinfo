@@ -268,7 +268,7 @@
 							</tr>
 								<tr  ng-repeat = "item in items" ng-class="{true:'success'}[item.isNew]">				          						     
 				          		<td ng-bind="item.cardNumber"></td>	
-								<td ng-bind="item.portNumber"></td>	
+								<td ng-bind="item.portNumber"></td>
 								<td ng-if="item.exitDate==undefined" >入场</td>
 								<td ng-if="item.exitDate!=undefined" >出场</td>
 								<td ng-if="item.exitDate==undefined" ng-bind="item.entranceDate"></td>
