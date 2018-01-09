@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>用户管理</title>
+<title>包月</title>
 <link href="/parkinfo/css/style.css" rel="stylesheet" type="text/css" />
 <script src="/parkinfo/js/jquery.min.js"></script>
 </head>
@@ -27,16 +27,18 @@
             <div class="topcbar f"><img align="absmiddle" src="/parkinfo/images/index_07.jpg" /></div>
             <li class="bg2"><a href="/parkinfo/report/month/">月卡管理</a></li>
             <div class="topcbar f"><img align="absmiddle" src="/parkinfo/images/index_07.jpg" /></div>
-            <li class="bg6 bg6hover"><a href="#">服务</a></li>
+            <li class="bg2 topchover"><a href="/parkinfo/report/user/">用户管理</a></li>
             <div class="topcbar f"><img align="absmiddle" src="/parkinfo/images/index_07.jpg" /></div>
-            <li class="bg2"><a href="/parkinfo/report/user/">用户管理</a></li>
+            <li class="bg6 bg6hover"><a href="#">服务</a></li>
+            <!-- <div class="topcbar f"><img align="absmiddle" src="/parkinfo/images/index_07.jpg" /></div>
+            <li class="bg7 bg7hover"><a href="/parkinfo/report/user/">设置</a></li> -->
         </ul>
 	</div>
 	<div class="topr r xi13">
 		<ul>
 			<li><a href="#">欢迎您</a></li>
-			<li><a href="#"><img align="absmiddle" src="/parkinfo/images/index_26.png" /></a></li>
-			<li><a href="#"><img align="absmiddle" src="/parkinfo/images/index_28.png" /></a></li>
+			<!-- <li><a href="#"><img align="absmiddle" src="/parkinfo/images/index_26.png" /></a></li>
+			<li><a href="#"><img align="absmiddle" src="/parkinfo/images/index_28.png" /></a></li> -->
 			<li><a href="/parkinfo/login"><img align="absmiddle" src="/parkinfo/images/index_30.png" /></a></li>
 		</ul>
 	</div>
@@ -52,11 +54,7 @@
                 <span>月卡管理</span>
     <a href="/parkinfo/report/month/" hidden>月卡管理</a>      
               <a href="/parkinfo/report/infoToday">今日概况</a>   
-            </div>-->
-             <div>
-            	<span>用户管理</span>
-            	<a href="/parkinfo/report/user/">用户信息</a>
-            </div>
+            </div> -->
            <!--  <div>
             	<span>包月用户管理</span>
             	<a href="/parkinfo/report/month/">包月用户管理</a>
@@ -76,10 +74,14 @@
                 <span>停车位状态</span> 
                  <a href="/parkinfo/report/CarportStatus/">车位状态</a>
              </div> -->
+             <div>
+            	<span>用户管理</span>
+            	<a href="/parkinfo/report/user/">用户信息</a>
+            </div>
         </div>
     </div>
 <div class="conr">
-	<iframe id="mainFrame" name="mainFrame" scrolling="no" onload="changeFrameHeight()" src="/parkinfo/usermanage" frameborder="0" style="padding: 0px; width: 100%;min-height:3900px"></iframe>
+	<iframe id="mainFrame" name="mainFrame" scrolling="no" onload="changeFrameHeight()" src="userManage.html" frameborder="0" style="padding: 0px; width: 100%;min-height:2700px"></iframe>
 </div>
 </div>
 <!-- <script type="text/javascript">
@@ -93,7 +95,7 @@
             };
             // ]]>
             </script>-->
-<script >
+<script>
 function changeFrameHeight(){
     var ifm= document.getElementById("mainFrame"); 
     ifm.height=ifm.contentWindow.document.body.scrollHeight;

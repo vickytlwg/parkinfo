@@ -159,7 +159,7 @@ function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
             return;
         }
           $uibModal.open({
-            templateUrl: '/park/views/template/monthUserParkUpdate.html',
+            templateUrl: 'modifyUser2',
             controller: 'userParkCtrl',
             scope:$scope,
             resolve: {
@@ -387,7 +387,7 @@ monthUserApp.factory("getPositionData",function($http,$q){
             var deferred=$q.defer();
             var promise=deferred.promise;
             $http({
-                url:"/park/zoneCenter/getByStartAndCount",
+                url:"/parkinfo/zoneCenter/getByStartAndCount",
                 method:'post',
                 params:{start:0,count:100}
             }).success(function(response){   
@@ -402,7 +402,7 @@ monthUserApp.factory("getPositionData",function($http,$q){
             return;
             }
             $http({
-                url:'/park/area/selectByPrimaryKey/'+areaid,
+                url:'/parkinfo/area/selectByPrimaryKey/'+areaid,
                 method:'get'
             }).success(function(response){
                 if(response.status==1001){
@@ -418,7 +418,7 @@ monthUserApp.factory("getPositionData",function($http,$q){
             return;
         }
             $http({
-                url:'/park/area/getByZoneCenterId/'+zoneid,
+                url:'/parkinfo/area/getByZoneCenterId/'+zoneid,
                 method:'get',
             }).success(function(response){
                 if(response.status==1001){
@@ -431,7 +431,7 @@ monthUserApp.factory("getPositionData",function($http,$q){
            var deferred=$q.defer();
            var promise=deferred.promise;           
              $http({
-                 url:"/park/street/getByAreaid/"+areaid,
+                 url:"/parkinfo/street/getByAreaid/"+areaid,
                  method:'get'
              }).success(function(response){
                  if(response.status==1001){
@@ -444,7 +444,7 @@ monthUserApp.factory("getPositionData",function($http,$q){
            var deferred=$q.defer();
            var promise=deferred.promise;           
              $http({
-                 url:"/park/getOutsideParkByStreetId/"+streetId,
+                 url:"/parkinfo/getOutsideParkByStreetId/"+streetId,
                  method:'get'
              }).success(function(response){
                  if(response.status==1001){
@@ -470,7 +470,7 @@ monthDetail.service('textModal', ['$uibModal',
 
                                     this.open = function($scope, header, body) {
                                         $scope.textShowModal = $uibModal.open({
-                                            templateUrl : '/park/views/template/text-modal.html',
+                                            templateUrl : '/parkinfo/views/template/text-modal.html',
                                             controller : 'textCtrl',
                                             scope : $scope,
                                             resolve : {
