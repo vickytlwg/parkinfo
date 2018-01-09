@@ -1,84 +1,13 @@
-var monthUserApp=angular.module("monthUserApp",['ui.bootstrap']);
-monthUserApp.controller("monthUserCtrl",['$scope', '$http','$window','$modal', 'textModalTest','textModal', '$timeout',
+var userManageApp=angular.module("userManageApp",['ui.bootstrap']);
+userManageApp.controller("userManageCtrl",['$scope', '$http','$window','$modal', 'textModalTest','textModal', '$timeout',
 function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
 	 //define table content
     $scope.detail = {
     	users : [],
-        loading : false,
-        page : {
-            hidden : true,
-            allCounts : 0,
-            size : 100,
-            indexRange : [1],
-            index : 1
-        }
-    };
-      $scope.getExcel=function(){
-         $window.location.href="/parkinfo/monthUser/getExcel?date="+$scope.searchDate+"&parkId="+$scope.selectedParkidd;
-     };
-    $scope.startDate=new Date().format('yyyy-MM-dd');
-    $scope.endDate=new Date().format('yyyy-MM-dd');
-         var dateInitial=function(){
-           $('.date').datepicker({
-               autoClose: true,
-               dateFormat: "yyyy-mm-dd",
-               days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
-               daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
-               daysMin: ["日", "一", "二", "三", "四", "五", "六"],
-               months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
-               monthsShort: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
-               showMonthAfterYear: true,
-               viewStart: 0,
-               weekStart: 1,
-               yearSuffix: "年",
-               isDisabled: function(date){return date.valueOf() > Date.now() ? true : false;}        
-           });
-       };  
-      dateInitial();
-    
-	$scope.users=[];
-	$scope.searchText="";
-    $scope.searchByPlateNumber=function(){
-        if($scope.searchText==""||$scope.searchText==undefined){
-            return;
-        }
-        $http({
-            url:'/parkinfo/monthUser/getByPlateNumber2',
-            method:'post',
-            data:{"platenumber":$scope.searchText}
-        }).success(function(response){
-            if(response.status==1001){
-                $scope.users=response.body;
-            }
-        });
+        loading : false
     };
     
-    $scope.getExcelByDayRange=function(){  
-        $window.location.href="getExcelByDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate;
-       };
-    /*$scope.getExcelByParkRange=function(){
-        $window.location.href="/parkinfo/pos/charge/getExcelByParkAndDay?date="+$scope.searchDate+"&parkId="+$('#park-select').val();
-    };*/
-    $scope.getExcelByParkAndDayRange=function(){
-        $window.location.href="/parkinfo/pos/charge/getExcelByParkAndDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate
-        +"&parkId="+$('#park-select2').val();
-    };
-    
-    $scope.selectedPark={};
-    $scope.selectParks = [];
-    var getSelectData = function() {
-        var options = $('#get_Park').get(0).options;
-        for (var i = 0; i < options.length; i++) {
-            var item = {
-                value : $(options[i]).val(),
-                name : $(options[i]).text()
-            };
-             $scope.selectParks.push(item);
-        };
-        $scope.selectedPark=$scope.selectParks[0];
-    };
-    getSelectData();
-    
+   
     
 	
     $scope.users=[];
@@ -141,18 +70,7 @@ function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
             textModal.open($scope,"错误","数据请求失败");
         });
     };
-    $scope.insertUser=function(){
-        $uibModal.open({
-            templateUrl: 'modifyUser',
-            controller: 'monthUserModify',
-            scope:$scope,
-            resolve: {
-                index: function(){
-                        return undefined;
-                }
-            }
-        });
-    };
+
     $scope.updateUserPark=function(){
         if($scope.checkedIndex==-1){
             alert("请选择");
@@ -185,46 +103,10 @@ function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
             }
         });
     };
-    $scope.deleteUser=function(){
-        if($scope.checkedIndex==-1){
-            alert("请选择");
-            return;
-        }
-        var id=$scope.users[$scope.checkedIndex].id;
-        $http({
-            url:'/parkinfo/monthUser/delete/'+id,
-            method:'get'
-        }).success(function(response){
-            if(response.status==1001)
-            {
-                textModal.open($scope, "成功","操作成功");
-                $scope.refreshUser();
-            }
-            else{
-                textModal.open($scope, "失败","操作失败");
-            }
-        }).error(function(){
-             textModal.open($scope, "失败","操作失败");
-        });
-    };
-        $scope.selectChange=function(index){
-        if($scope.users[index].checked){
-            $scope.checkedIndex = index;
-            return;
-        }
-        for(var i = 0; i < $scope.users.length; i++){
-            var item = $scope.users[i];
-            if(item.checked != undefined && item.checked == true){
-                $scope.checkedIndex = i;
-                return;
-            }
-        }
-        $scope.checkedIndex = -1;
-    };
-    $scope.refreshUser();
+    
 }]);
 
-monthUserApp.controller("monthUserModify",function($scope, textModal,$modalInstance, $http, $timeout, index){
+userManageApp.controller("userManageModify",function($scope, textModal,$modalInstance, $http, $timeout, index){
     var url = '/parkinfo/monthUser/insert';
     $scope.tempUser={};
     if(index != undefined){
@@ -289,7 +171,7 @@ monthUserApp.controller("monthUserModify",function($scope, textModal,$modalInsta
 
 });
 
-monthUserApp.controller("userParkCtrl",function($scope,$http,$modalInstance,getPositionData,textModal,index){
+userManageApp.controller("userParkCtrl",function($scope,$http,$modalInstance,getPositionData,textModal,index){
     
     $scope.tempUser = $scope.$parent.users[index];
    
@@ -462,8 +344,8 @@ monthUserApp.factory("getPositionData",function($http,$q){
 });
 
 
-var monthDetail = angular.module('monthUserApp');
-monthDetail.service('textModal', ['$uibModal',
+var userDetail = angular.module('userManageApp');
+userDetail.service('textModal', ['$uibModal',
                                 function($uibModal) {
 
                                     this.open = function($scope, header, body) {
@@ -487,7 +369,7 @@ monthDetail.service('textModal', ['$uibModal',
                                     };
 
                                 }]);
-monthDetail.service('textModalTest', function($uibModal) {
+userDetail.service('textModalTest', function($uibModal) {
     var modalInstance;
     var open=function($scope){
     modalInstance = $uibModal.open({
@@ -514,7 +396,7 @@ monthDetail.service('textModalTest', function($uibModal) {
         close:close
     };
 });
-monthDetail.controller('textCtrl', function($scope, $uibModalInstance, $http, msg) {
+userDetail.controller('textCtrl', function($scope, $uibModalInstance, $http, msg) {
     $scope.text = msg;
     $scope.close = function() {
         $uibModalInstance.close('cancel');

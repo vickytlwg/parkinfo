@@ -65,6 +65,7 @@
 		<mvc:exclude-mapping path="static/**"/>
 		<mvc:exclude-mapping path="/views/**"/>	
 		<mvc:exclude-mapping path="/monthUser/**"/>	
+		<mvc:exclude-mapping path="/userManage/**"/>	
 		<mvc:exclude-mapping path="/set/**"/>	
 				
 		<bean class="cn.parkinfo.controller.LoginInterceptor1"></bean>

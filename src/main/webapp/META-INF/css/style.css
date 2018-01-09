@@ -58,7 +58,7 @@ a img{text-decoration: none;margin: 0px;padding: 0px;border:none;}
 .topc ul li:hover,.topchover{ background:url(../images/index_03.jpg);}
 .topc ul li a{ display:block; padding-top:41px; height:32px;}
 .bg1 a{ background:url(../images/index_1_10.png) center 7px no-repeat; color:#fff;}
-.bg1 a:hover,.bg1hover a,.bg1hover a:hover{ background:url(../images/index_10.png) center 7px no-repeat; color:#84cefd; border-bottom:3px solid #4ba9e9;}
+.bg1 a:hover,.bg1hover a,.bg1hover a:hover{ background:url(../images/index_10.png) center 7px no-repeat; color:#84cefd; border-bottom:3px solid #4ba9e9;padding-top:41px;height:32px;}
 .bg2 a{ background:url(../images/index_1_12.png) center 7px no-repeat; color:#fff;}
 .bg2 a:hover,.bg2hover a,.bg2hover a:hover{ background:url(../images/index_12.png) center 7px no-repeat; color:#84cefd; border-bottom:3px solid #84cefd;}
 .bg3 a{ background:url(../images/index_1_14.png) center 7px no-repeat; color:#fff;}
@@ -153,7 +153,7 @@ background:#fff url(../images/user_list_38.jpg) no-repeat right 3px;}
 .fy a:hover{ background:#4ba9e9; color:#fff;}
 .conlsr2{ display:none;}
 .gaikuang{ margin:76px 40px 0 40px;}
-.gaikuang1{ height:42px; line-height:42px; padding-top:18px;}
+.gaikuang1{ height:42px; /* line-height:42px; */padding-top:18px;}
 .gaikuang2{ margin-top:20px;}
 .gaikuang2 ul li{ float:left; width:20%; margin-bottom:15px; height:208px;}
 .gaikuang2s{ width:257px; height:208px;}

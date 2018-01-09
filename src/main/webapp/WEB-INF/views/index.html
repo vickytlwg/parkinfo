@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <title></title>
+       	<link href="/parkinfo/css/bootstrap.min.css" rel="stylesheet" />
         <link href="css/style.css" rel="stylesheet" type="text/css" />
         <script src="/parkinfo/js/jquery-1.7.2.min.js"></script>
         <script src="/parkinfo/angular/angular.min.js"></script>
@@ -12,6 +13,14 @@
         <script src="/parkinfo/angular/ocLazyLoad.min.js"></script>
         <script src="/parkinfo/angular/ui-bootstrap-tpls.min.js"></script>
         <script src="/parkinfo/js/generalDataView.js?v=1.5"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=c7A2jm3enN7T0s5V8QbDHx85"></script>       
+		<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>            		
+		<script type="text/javascript" src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+		<script type="text/javascript" src="/parkinfo/script/utility.js"></script>
+		<script type="text/javascript" src="/parkinfo/script/parkinfoBigData.js?v=1.0"></script>
+		<script type="text/javascript" src="/parkinfo/script/parkinfoBigDataAngular.js?v=1.0"></script>
     </head>
 
     <body ng-app="generalDataViewApp" ng-controller="generalDataViewCtrl">
@@ -58,13 +67,13 @@
                     </li>
                     <div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" />
                     </div>
-                    <li class="bg6 bg6hover">
-                        <a href="#">服务</a>
+                    <li class="bg2">
+                        <a href="report/user">用户管理</a>
                     </li>
                     <div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" />
                     </div>
-                    <li class="bg2 f">
-                        <a href="report/user">用户管理</a>
+                    <li class="bg6 bg6hover">
+                        <a href="#">服务</a>
                     </li>
                     <div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" />
                     </div>
@@ -158,7 +167,7 @@
                             </div>
                         </div>
                     </li>
-                    <li>
+                    <!-- <li>
                         <div class="gaikuang2s mg2 gaikuangbg6">
                             <div class="gaikuang2ss mg2 xi14 bai">
                                 今日运营站点数
@@ -222,9 +231,62 @@
                                 总泊位周转率{{dayOutCount/dayOnlineCarportCount|number:4}}
                             </div>
                         </div>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
+            
+            <div class="gaikuang1 mg2 xi15">
+               	 停车大数据
+            </div>
+        <div class="row"  style="margin-top:20px;min-width:700px" >
+            <div class="col-md-6" style="margin-right:-10px">
+                <div class="panel panel-success" >
+                    <div class="panel-heading">
+                        <h3 class="panel-title">智慧停车场数全国分布图</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row" id="container4" style="width:100%;height:400px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6"  ng-app="parkinfoBigDataApp" ng-controller="parkinfoBigDataCtrl">
+                <div class="panel panel-info" style="margin-left:-25px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">停车场实时数据</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row" style="width:100%;height:400px;">										
+							<table class="table table-hover" style="font-size:12px;vertical-align: middle;">					        								
+							<tr>
+								<th style=" text-align: center;vertical-align: middle;"><span>车牌号</span></th>
+								<th style=" text-align: center;vertical-align: middle;"><span>车位号</span></th>
+								<th style=" text-align: center;vertical-align: middle;"><span>动作</span></th>
+								<th style=" text-align: center;vertical-align: middle;"><span>时间</span></th>
+								<th style=" text-align: center;vertical-align: middle;"><span>是否收费</span></th>
+								<th style=" text-align: center;vertical-align: middle;"><span>费用</span></th>
+								<th style=" text-align: center;vertical-align: middle;"><span>停车场</span></th>
+							</tr>
+								<tr  ng-repeat = "item in items" ng-class="{true:'success'}[item.isNew]">				          						     
+				          		<td ng-bind="item.cardNumber"></td>	
+								<td ng-bind="item.portNumber"></td>	
+								<td ng-if="item.exitDate==undefined" >入场</td>
+								<td ng-if="item.exitDate!=undefined" >出场</td>
+								<td ng-if="item.exitDate==undefined" ng-bind="item.entranceDate"></td>
+								<td ng-if="item.exitDate!=undefined" ng-bind="item.exitDate"></td>
+				          		<td ng-if="item.paidCompleted==true" class="success">已收费</td>
+								<td ng-if="item.paidCompleted==false" class="warning">未收费</td>				          	
+				          		<td ng-if="item.paidCompleted==true" class="warning">收费:￥{{item.chargeMoney}}</td>	
+								<td ng-if="item.paidCompleted==false">计费:￥{{item.chargeMoney}}</td>	
+								<td ng-bind="item.parkDesc"></td>
+								</tr>
+								
+                            </table>
+						
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
             <div class="gaikuang1 mg2 xi15">
                 停车场今日数据
@@ -300,6 +362,11 @@
                 </table>
             </div>
         </div>
-        <script src="js/js.js"></script>
+<!--         <script src="js/js.js"></script> -->
+        <script >
+/* $(function() {
+                $.fn.platformShow.initial();
+            }); */
+</script>
     </body>
 </html>
