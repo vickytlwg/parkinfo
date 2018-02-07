@@ -21,6 +21,8 @@ public interface PosChargeDataService {
 	
 	public List<PosChargeData> getByParkIdAndCardNumber(Integer parkId,String cardNumber);
 	
+	public List<PosChargeData> getByCardNumberAndPark(String cardNumber,Integer parkId);
+	
 	public List<PosChargeData> getPageByParkId(int parkId,int start,int count);
 	
 	public List<PosChargeData> getPageArrearage(int low, int count);
@@ -66,6 +68,8 @@ public interface PosChargeDataService {
 	public Map<String, Object> getParkChargeByDay(int parkId, String day);
 	
 	public List<PosChargeData> getByCardNumber(int parkId,String cardNumber);
+	
+	public List<PosChargeData> getByCardNumber(String cardNumber);
 	
 	public List<PosChargeData> getByParkName(String parkName);
 	

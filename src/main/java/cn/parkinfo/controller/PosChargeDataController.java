@@ -41,7 +41,6 @@ import cn.parkinfo.service.ParkService;
 import cn.parkinfo.service.PosChargeDataService;
 import cn.parkinfo.service.Utility;
 
-
 @Controller
 @RequestMapping("/pos/charge")
 public class PosChargeDataController {
@@ -56,8 +55,6 @@ public class PosChargeDataController {
 
 	@Autowired
 	private ExcelExportService excelService;
-
-
 
 	@RequestMapping(value = "/detail", produces = { "application/json;charset=UTF-8" })
 	public String feeDetailIndex(ModelMap modelMap, HttpServletRequest request, HttpSession session) {
@@ -80,7 +77,6 @@ public class PosChargeDataController {
 				isAdmin = true;
 			modelMap.addAttribute("isAdmin", isAdmin);
 
-		
 		}
 		return "feeDetail";
 	}
@@ -105,7 +101,7 @@ public class PosChargeDataController {
 			if (user.getRole() == AuthUserRole.ADMIN.getValue())
 				isAdmin = true;
 			modelMap.addAttribute("isAdmin", isAdmin);
-		
+
 		}
 		return "record";
 	}
@@ -180,7 +176,7 @@ public class PosChargeDataController {
 			if (user.getRole() == AuthUserRole.ADMIN.getValue())
 				isAdmin = true;
 			modelMap.addAttribute("isAdmin", isAdmin);
-		
+
 		}
 		return "reconciliation";
 	}
@@ -225,15 +221,16 @@ public class PosChargeDataController {
 		return "arrearage";
 	}
 
-	@RequestMapping(value = "/getByParkAndRange", method = RequestMethod.POST, produces = {"application/json;charset=utf-8" })
+	@RequestMapping(value = "/getByParkAndRange", method = RequestMethod.POST, produces = {
+			"application/json;charset=utf-8" })
 	@ResponseBody
 	public String getByParkAndRange(@RequestBody Map<String, Object> args) {
-		int parkId=1;
+		int parkId = 1;
 		try {
-			 parkId=Integer.parseInt((String)args.get("parkId"));
+			parkId = Integer.parseInt((String) args.get("parkId"));
 		} catch (Exception e) {
 			// TODO: handle exception
-			parkId=(int) args.get("parkId");
+			parkId = (int) args.get("parkId");
 		}
 		String startDay = (String) args.get("startDay");
 		String endDay = (String) args.get("endDay");
@@ -251,7 +248,8 @@ public class PosChargeDataController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		List<PosChargeData> posChargeDatas = chargeSerivce.selectPosdataByParkAndRange(parsedStartDay, parsedEndDay, parkId);
+		List<PosChargeData> posChargeDatas = chargeSerivce.selectPosdataByParkAndRange(parsedStartDay, parsedEndDay,
+				parkId);
 		if (posChargeDatas.isEmpty()) {
 			retMap.put("status", 1002);
 		} else {
@@ -260,16 +258,38 @@ public class PosChargeDataController {
 			retMap.put("body", posChargeDatas);
 		}
 		return Utility.gson.toJson(retMap);
-	}	
+	}
 
 	@RequestMapping(value = "getByCardnumber", method = RequestMethod.POST, produces = {
 			"application/json;charset=UTF-8" })
 	@ResponseBody
 	public String getByCardnumber(@RequestBody Map<String, String> args) {
 		String cardNumber = args.get("cardNumber");
-		int parkId=Integer.parseInt(args.get("parkId"));
-		/*System.out.println(parkId);*/
-		return Utility.createJsonMsg(1001, "success", chargeSerivce.getByCardNumber(parkId,cardNumber));
+		int parkId = Integer.parseInt(args.get("parkId"));
+		/* System.out.println(parkId); */
+		return Utility.createJsonMsg(1001, "success", chargeSerivce.getByCardNumber(parkId, cardNumber));
+	}
+
+	@RequestMapping(value = "getByCardnumberAuthority", method = RequestMethod.POST, produces = {
+			"application/json;charset=UTF-8" })
+	@ResponseBody
+	public String getByCardnumberAuthority(@RequestBody Map<String, String> args, HttpSession session) {
+		String cardNumber = args.get("cardNumber");
+		String username = (String) session.getAttribute("username");
+		AuthUser user = authService.getUserByUsername(username);
+		List<Park> parkList = parkService.getParks();
+		if (username == null)
+			return null;	
+		if (user.getRole() == AuthUserRole.ADMIN.getValue())
+		{
+			return Utility.createJsonMsg(1001, "success", chargeSerivce.getByCardNumber(cardNumber));
+		}
+			parkList = parkService.filterPark(parkList, username);
+			List<PosChargeData> posChargeDatas=new ArrayList<>();
+			for (Park park : parkList) {
+				posChargeDatas.addAll(chargeSerivce.getByCardNumberAndPark(cardNumber, park.getId()));
+			}
+		return Utility.createJsonMsg(1001, "success", posChargeDatas);
 	}
 
 	@RequestMapping(value = "/count", method = RequestMethod.GET, produces = { "application/json;charset=UTF-8" })
@@ -287,13 +307,13 @@ public class PosChargeDataController {
 	}
 
 	@RequestMapping(value = "/page", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
-	public @ResponseBody String page(@RequestBody Map<String, Object> args,HttpSession session) {
+	public @ResponseBody String page(@RequestBody Map<String, Object> args, HttpSession session) {
 		int low = (int) args.get("low");
 		int count = (int) args.get("count");
-		String userName=(String) session.getAttribute("username");
+		String userName = (String) session.getAttribute("username");
 		return Utility.createJsonMsg(1001, "success", chargeSerivce.getByParkAuthority(userName));
 	}
-	
+
 	@RequestMapping(value = "/getByCount", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
 	@ResponseBody
 	public String getByCount(@RequestBody Map<String, Object> args) {
@@ -323,7 +343,7 @@ public class PosChargeDataController {
 	@RequestMapping(value = "/getParkCarportStatusToday", method = RequestMethod.POST, produces = {
 			"application/json;charset=UTF-8" })
 	public @ResponseBody String getParkCarportStatusToday(@RequestBody Map<String, Object> args) {
-		int parkId = (int) args.get("parkId");	
+		int parkId = (int) args.get("parkId");
 		return Utility.createJsonMsg(1001, "success", chargeSerivce.getParkCarportStatusToday(parkId));
 	}
 
@@ -359,12 +379,13 @@ public class PosChargeDataController {
 
 		int parkId = charge.getParkId();
 		Park park = parkService.getParkById(parkId);
-	//	Outsideparkinfo outsideparkinfo = outsideParkInfoService.getByParkidAndDate(parkId, charge.getEntranceDate());
+		// Outsideparkinfo outsideparkinfo =
+		// outsideParkInfoService.getByParkidAndDate(parkId,
+		// charge.getEntranceDate());
 
 		if (park == null || park.getFeeCriterionId() == null) {
 			return Utility.createJsonMsg(1002, "请先绑定计费标准到停车场");
 		}
-	
 
 		if (charge.getEntranceDate() == null) {
 			charge.setEntranceDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
@@ -395,7 +416,7 @@ public class PosChargeDataController {
 		if (posChargeDatas.isEmpty()) {
 			return Utility.createJsonMsg(1002, "no record");
 		}
-	
+
 		int ret = chargeSerivce.update(posChargeDatas.get(0));
 		if (ret == 1)
 			return Utility.createJsonMsg(1001, "success");
@@ -425,10 +446,11 @@ public class PosChargeDataController {
 		}
 		return Utility.createJsonMsg(1001, "success", queryCharges);
 	}
-	
-	@RequestMapping(value = "/getArrearageByCardNumber", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
+
+	@RequestMapping(value = "/getArrearageByCardNumber", method = RequestMethod.POST, produces = {
+			"application/json;charset=UTF-8" })
 	@ResponseBody
-	public String getArrearageByCardNumber(@RequestBody Map<String, Object> args){
+	public String getArrearageByCardNumber(@RequestBody Map<String, Object> args) {
 		String cardNumber = (String) args.get("cardNumber");
 		List<PosChargeData> queryCharges = chargeSerivce.getArrearageByCardNumber(cardNumber);
 		return Utility.createJsonMsg(1001, "success", queryCharges);
@@ -497,30 +519,28 @@ public class PosChargeDataController {
 
 		return Utility.createJsonMsg(1001, "success", payRet);
 	}
-	
+
 	@RequestMapping(value = "/payById", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
 	public @ResponseBody String payById(@RequestBody Map<String, Object> args) {
 		String cardNumber = (String) args.get("cardNumber");
 		double money = (double) args.get("money");
-		Integer chargeId=(Integer) args.get("id");
+		Integer chargeId = (Integer) args.get("id");
 		PosChargeData payRet = chargeSerivce.getById(chargeId);
-		if (payRet!=null&&payRet.getCardNumber().equals(cardNumber)) {
-			if (payRet.getUnPaidMoney()<=money) {
+		if (payRet != null && payRet.getCardNumber().equals(cardNumber)) {
+			if (payRet.getUnPaidMoney() <= money) {
 				payRet.setGivenMoney(money);
-				money-=payRet.getUnPaidMoney();
+				money -= payRet.getUnPaidMoney();
 				payRet.setPaidCompleted(true);
-				String data=new DecimalFormat("0.00").format(money);
+				String data = new DecimalFormat("0.00").format(money);
 				payRet.setChangeMoney(Double.parseDouble(data));
 				chargeSerivce.update(payRet);
-			}
-			else {
-				payRet.setGivenMoney(money+payRet.getGivenMoney());
-		//		payRet.setPaidMoney(payRet.getPaidMoney()+money);
-				payRet.setUnPaidMoney(payRet.getUnPaidMoney()-money);
+			} else {
+				payRet.setGivenMoney(money + payRet.getGivenMoney());
+				// payRet.setPaidMoney(payRet.getPaidMoney()+money);
+				payRet.setUnPaidMoney(payRet.getUnPaidMoney() - money);
 				chargeSerivce.update(payRet);
 			}
-		}
-		else {
+		} else {
 			return Utility.createJsonMsg(1002, "付费失败");
 		}
 
