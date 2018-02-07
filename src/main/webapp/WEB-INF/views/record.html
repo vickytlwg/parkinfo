@@ -20,15 +20,15 @@
 
 <div class="" ng-app="feeDetailApp" ng-controller="feeDetailCtrl">
 	<section class="content-header">
-   
+		 <h1> 停车记录 <small></small></h1>
     </section>
     <section class="content">
        <div class="row">
             <div class="col-xs-12">
               	<div class="box">
-	                <div class="box-header">
+	                <!-- <div class="box-header">
 	                  <h3 class="box-title"></h3>
-	                </div><!-- /.box-header -->
+	                </div> --><!-- /.box-header -->
 	               <div class="box-body">  
 					<div class="panel panel-default">
 						<div class="panel-body">
@@ -59,6 +59,11 @@
 							
 						  </div>
 						</div>	
+						<div class="btn-group">
+							 <button  ng-click="refreshUser()" type="button" class="btn bg-purple">
+                                        <span class="glyphicon glyphicon-refresh"></span> 刷新
+                             </button>
+						</div>
 	                	<br/>   
 	                    <br/> 
 						<div>
@@ -77,7 +82,7 @@
 										<th hidden><span>找零</span></th>	 -->
 										<th><span>进场时间</span></th>	
 										<th><span>离场时间</span></th>
-										<th><span>查看图片</span></th>
+										<!-- <th><span>查看图片</span></th> -->
 				            </tr>
 				          <tbody id="channelBody"></tbody>
 				          	<tr  ng-repeat = "item in detail.items">
@@ -95,9 +100,9 @@
 				          		<td ng-bind="item.changeMoney" hidden></td> -->
 				          		<td ng-bind="item.entranceDate"></td>
 				          		<td ng-bind="item.exitDate"></td>
-				          		<td ng-if="item.url!=''"><a href={{item.url}} target="_blank">查看
+				          		<!-- <td ng-if="item.url!=''"><a href={{item.url}} target="_blank">查看
                                 </a></td>
-								<td ng-if="item.url==''">暂无</td>
+								<td ng-if="item.url==''">暂无</td> -->
 				          </table>
     					</div>
     					

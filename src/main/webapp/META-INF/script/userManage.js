@@ -9,7 +9,6 @@ function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
     
    
     
-	
     $scope.users=[];
     $scope.checkedIndex=-1;
     $scope.start=0;
@@ -106,12 +105,12 @@ function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
     
 }]);
 
-userManageApp.controller("userManageModify",function($scope, textModal,$modalInstance, $http, $timeout, index){
-    var url = '/parkinfo/monthUser/insert';
+monthUserApp.controller("monthUserModify",function($scope, textModal,$modalInstance, $http, $timeout, index){
+    var url = '/park/monthUser/insertOrder';
     $scope.tempUser={};
     if(index != undefined){
         $scope.tempUser = $scope.$parent.users[index];
-        url = '/parkinfo/monthUser/update';
+        url = '/park/monthUser/updateOrder';
     }else{
     $scope.tempUser.starttime=new Date().format("yyyy-MM-dd hh:mm:ss");
     $scope.tempUser.endtime=new Date().format("yyyy-MM-dd hh:mm:ss");
@@ -121,14 +120,15 @@ userManageApp.controller("userManageModify",function($scope, textModal,$modalIns
     $scope.parks=[];
     $scope.getParks=function(){
         $http({
-            url:'getParks?_t=' + (new Date()).getTime(),
+            url:'/park/getParks?_t=' + (new Date()).getTime(),
             method:'get'
         }).success(function(response){
             if(response.status=1001){
                 var body=response.body;
                 for(var i=0;i<body.length;i++){
-                  $scope.parks.push(body[i]);
-                  $scope.tempUser.parkid=$scope.parks[0].id;
+                    
+                        $scope.parks.push(body[i]);
+                    
                 }
                 $scope.selectValue=$scope.parks[0];
             }
@@ -171,6 +171,7 @@ userManageApp.controller("userManageModify",function($scope, textModal,$modalIns
 
 });
 
+
 userManageApp.controller("userParkCtrl",function($scope,$http,$modalInstance,getPositionData,textModal,index){
     
     $scope.tempUser = $scope.$parent.users[index];
@@ -196,47 +197,7 @@ userManageApp.controller("userParkCtrl",function($scope,$http,$modalInstance,get
     $scope.showResult=false;
     $scope.showLoader=false;
     $scope.result='';
-    $scope.add=function(){
-        if(!$scope.tempUser.id){
-            return;
-        }
-        $http({
-            url:"/parkinfo/monthUser/insertPark",
-            method:'post',
-            data:{'monthuserid':$scope.tempUser.id,'parkid':$scope.parkid}
-        }).success(function(response){
-            if(response.status==1001){
-                $scope.result="成功";
-                $scope.showResult=true;
-                $scope.showLoader=false;
-                $scope.getParkNames();
-            }
-            else{
-                textModal.open($scope, "失败","操作失败");
-            }
-        });
-    };
-    $scope.deletePark=function(){
-        if(!$scope.tempUser.id){
-            return;
-        }
-        $http({
-            url:"/parkinfo/monthUser/deletePark",
-            method:'post',
-            data:{'monthuserid':$scope.tempUser.id,'parkid':$scope.parkid}
-        }).success(function(response){
-            if(response.status==1001){
-                $scope.result="成功";
-                $scope.showResult=true;
-                $scope.showLoader=false;
-                $scope.getParkNames();
-            }
-            else{
-                textModal.open($scope, "失败","操作失败");
-            }
-        });
-    };
-    
+   
     $scope.getZoneCenter=function(){
         getPositionData.getZoneCenter().then(function(result){
             $scope.zoneCenters=result;

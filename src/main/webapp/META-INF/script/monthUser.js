@@ -36,9 +36,10 @@ function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
        };  
       dateInitial();
     
+    //查询检索
 	$scope.users=[];
-	$scope.searchText="";
-    $scope.searchByPlateNumber=function(){
+	$scope.searchText="";//查询检索文本框
+    $scope.searchByPlateNumber=function(){//查询按钮点击事件
         if($scope.searchText==""||$scope.searchText==undefined){
             return;
         }
@@ -59,11 +60,26 @@ function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
     /*$scope.getExcelByParkRange=function(){
         $window.location.href="/parkinfo/pos/charge/getExcelByParkAndDay?date="+$scope.searchDate+"&parkId="+$('#park-select').val();
     };*/
-    $scope.getExcelByParkAndDayRange=function(){
-        $window.location.href="/parkinfo/pos/charge/getExcelByParkAndDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate
-        +"&parkId="+$('#park-select2').val();
-    };
+       /*$scope.getExcel=function(){
+           $window.location.href="/parkinfo/monthUser/getExcelByParkAndDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate
+           +"&parkId="+$('#park-select2').val();
+       };*/
+       /*$scope.searchByParkName=function(){
+           if($scope.searchParkNameText==""||$scope.searchParkNameText==undefined){
+               return;
+           }
+           $http({
+               url:'getByParkName',
+               method:'post',
+               data:{"parkName":$scope.searchParkNameText}
+           }).success(function(response){
+               if(response.status==1001){
+                   $scope.detail.items=response.body;
+               }
+           });
+       };*/
     
+    //所有停车场加载
     $scope.selectedPark={};
     $scope.selectParks = [];
     var getSelectData = function() {
@@ -235,8 +251,8 @@ monthUserApp.controller("monthUserModify",function($scope, textModal,$modalInsta
     $scope.tempUser.endtime=new Date().format("yyyy-MM-dd hh:mm:ss");
     }   
     $scope.statuses=[{value:0,text:'未支付'},{value:1,text:'已支付'}];
-    $scope.orderTypes=[{value:0,text:'包月用户'},{value:1,text:'类型A'},{value:2,text:'类型B'},{value:3,text:'类型C'},{value:4,text:'类型D'}];
-    $scope.tempUser.type=0;
+    $scope.orderTypes=[{value:0,text:'包月用户'},{value:1,text:'预约'}/*,{value:2,text:'类型B'},{value:3,text:'类型C'},{value:4,text:'类型D'}*/];
+    /*$scope.tempUser.type=0;*/
     
     $scope.parks=[];
     $scope.getParks=function(){
@@ -248,7 +264,7 @@ monthUserApp.controller("monthUserModify",function($scope, textModal,$modalInsta
                 var body=response.body;
                 for(var i=0;i<body.length;i++){
                   $scope.parks.push(body[i]);
-                  $scope.tempUser.parkid=$scope.parks[0].id;
+                  /*$scope.tempUser.parkid=$scope.parks[0].id;*/
                 }
                 $scope.selectValue=$scope.parks[0];
             }

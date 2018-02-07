@@ -129,8 +129,13 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
             return;
         };
         getPositionData.getOutsideParkByStreetId(streetId).then(function(result) {
-            $scope.parks = filtPark(result);          
-            $scope.parkid=$scope.parks[0].id;           
+            $scope.parks = filtPark(result);       
+            if($scope.parks!=undefined&&$scope.parks.length==1){
+//            $scope.parkid=$scope.parks[0].id;   
+            $scope.parkid=$scope.parks[0].value;
+            
+            $scope.selectPosdataByParkAndRange();
+            }
         });
     };
 
@@ -197,10 +202,11 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
         var dateEnd = dateStart;
         dateEnd.setMonth(dateStart.getMonth() + 1);
 
+        getDataService.getParkChargeByRange($scope.parkid, dateselect.substring(0, 7) + '-01', dateEnd.getFullYear() + '-' + (dateEnd.getMonth()+1) + '-01').then(function(result) {
         $scope.catagory = [];
         $scope.totalMoney = [];
         $scope.realMoney = [];
-        getDataService.getParkChargeByRange($scope.parkid, dateselect.substring(0, 7) + '-01', dateEnd.getFullYear() + '-' + (dateEnd.getMonth()+1) + '-01').then(function(result) {
+//        getDataService.getParkChargeByRange($scope.parkid, dateselect.substring(0, 7) + '-01', dateEnd.getFullYear() + '-' + (dateEnd.getMonth()+1) + '-01').then(function(result) {
             $.each(result, function(name, value) {
                 var date = new Date(parseInt(name));
                 var month = date.getMonth() + 1;

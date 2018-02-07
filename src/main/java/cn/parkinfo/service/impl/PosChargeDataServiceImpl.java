@@ -236,9 +236,9 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 	}
 
 	@Override
-	public List<PosChargeData> getByCardNumber(String cardNumber) {
+	public List<PosChargeData> getByCardNumber(int parkId,String cardNumber) {
 		// TODO Auto-generated method stub
-		return chargeDao.getByCardNumber(cardNumber);
+		return chargeDao.getByCardNumber(parkId,cardNumber);
 	}
 
 	@Override

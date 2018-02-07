@@ -80,6 +80,7 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
         $scope.detail.getPage();
     };
     $scope.searchText="";
+    $scope.parkId="";
     $scope.searchByCardnumber=function(){
         if($scope.searchText==""||$scope.searchText==undefined){
             return;
@@ -87,7 +88,7 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
         $http({
             url:'/parkinfo/pos/charge/getByCardnumber',
             method:'post',
-            data:{"cardNumber":$scope.searchText}
+            data:{"cardNumber":$scope.searchText,"parkId":$scope.parkId}
         }).success(function(response){
             if(response.status==1001){
                 $scope.detail.items=response.body;
@@ -112,7 +113,7 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
             return;
         }
         $http({
-            url:'getByParkName',
+            url:'/parkinfo/pos/charge/getByParkName',
             method:'post',
             data:{"parkName":$scope.searchParkNameText}
         }).success(function(response){
@@ -121,6 +122,25 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
             }
         });
     };
+    //刷新
+    $scope.refreshUser=function(){
+        $http({
+            url:'/parkinfo/monthUser/getByStartAndCount',
+            method:'post',
+            params:{start:$scope.start,count:$scope.count}
+        }).success(function(response){
+            if(response.status==1001){
+                $scope.users=response.body;
+            }
+            else{
+               textModal.open($scope,"错误","数据请求失败");
+            }
+        }).error(function(){
+            textModal.open($scope,"错误","数据请求失败");
+        });
+    };
+    
+    
     //first page
     $scope.detail.firstPage = function() {
         if ($scope.detail.page.index <= 1)

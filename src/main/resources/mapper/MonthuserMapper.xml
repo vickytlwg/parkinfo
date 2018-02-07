@@ -185,6 +185,12 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <insert id="addExcelpark" parameterType="cn.parkinfo.ExcelExp.ExcelExp">
+  	insert into monthUser(owner,cardnumber,starttime,endtime,status)values(#{owner},#{cardnumber},#{starttime},#{endtime},#{status})
+  </insert>
+  
+  
   <select id="getCount" resultType="int">
   	select count(*) from monthUser
   </select>
