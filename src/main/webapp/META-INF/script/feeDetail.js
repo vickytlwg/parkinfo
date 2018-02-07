@@ -69,7 +69,7 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
         $http({
             url:'getByCardnumber',
             method:'post',
-            data:{"cardNumber":$scope.searchText}
+            data:{"cardNumber":$scope.searchText,"parkId":$scope.parkId}
         }).success(function(response){
             if(response.status==1001){
                 $scope.detail.items=response.body;

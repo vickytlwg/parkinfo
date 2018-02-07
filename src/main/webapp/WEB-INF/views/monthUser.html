@@ -17,6 +17,57 @@
 <script src="/parkinfo/script/datepicker.js"></script>
 <script src="/parkinfo/js/service/textModalService.js"></script>
 <!-- <script src="/parkinfo/script/reconciliation.js"></script> -->
+
+<script type="text/javascript">
+var monthPark=function(){
+	this.init=function(){
+		//模拟上传excel  
+        $("#uploadEventBtn").unbind("click").bind("click",function(){  
+            $("#uploadEventFile").click();  
+        });  
+        $("#uploadEventFile").bind("change",function(){  
+            $("#uploadEventPath").attr("value",$("#uploadEventFile").val());  
+        });  
+	};
+	//点击上传按钮  
+    this.uploadBtn = function(){  
+        var uploadEventFile = $("#uploadEventFile").val();  
+        if(uploadEventFile == ''){  
+            alert("请选择excel文件,再上传");  
+        }else if(uploadEventFile.lastIndexOf(".xls")<0){//可判断以.xls和.xlsx结尾的excel  
+            alert("只能上传Excel文件");  
+        }else{  
+            var url =  '/import/importExcel';  
+            var formData = new FormData($('form')[0]);  
+            parkexp.sendAjaxRequest(url,'POST',formData);  
+        }  
+    }; 
+    this.sendAjaxRequest = function(url,type,data){  
+        $.ajax({  
+            url : url,  
+            type : type,  
+            data : data,  
+            success : function(result) {  
+                alert( "文件上传成功"+result);  
+            },  
+            error : function() {  
+                alert( "文件上传失败");  
+            },  
+            cache : false,  
+            contentType : false,  
+            processData : false  
+        });  
+    };  
+}
+var parkexp;  
+$(function(){  
+	parkexp = new monthPark();  
+	parkexp.init();  
+});
+
+
+
+</script>
 <div class="" ng-app="monthUserApp" ng-controller="monthUserCtrl">
     <section class="content-header">
         <h1> 月卡用户管理 <small></small></h1>
@@ -38,7 +89,7 @@
                                         <h3 class="panel-title"> 月卡用户查找及导出 </h3>
                                     </div>
                                     <div class="panel-body">
-                                        <div class="row" >
+                                        <div class="row" style="height: 50px;">
                                             <div class="col-md-1">
                                                 <label class="control-label" style="float:right;padding-top:10px;">关键字:</label>
                                             </div>
@@ -52,9 +103,21 @@
                                                     查找
                                                 </button>
                                             </div>
-
+                                            
+                                            
+                                           <div class="col-md-1">
+                                           <button class="btn btn-success btn-xs" id="uploadEventBtn" style="height:33px;margin-left: 0px;"  type="button" >选择文件</button>
+                                            </div>
+                                            <form enctype="multipart/form-data" id="batchUpload"  action="/import/importExcel" method="post" class="form-horizontal">    
+											    <input type="file" name="file"  style="width:0px;height:0px;" id="uploadEventFile">  
+											    <input id="uploadEventFile" type="file" name="file" accept="xlsx" style="width:0px;height:0px;"/>
+											    <input id="uploadEventPath"  disabled="disabled"  type="text" placeholder="请选择excel表" style="border: 1px solid #e6e6e6; height: 35px;width: 223px;margin-left: 15px;" >                                           
+											</form>  
+											<div class="col-md-1">
+                                                <button type="button" class="btn btn-info" onclick="parkexp.uploadBtn()" style="margin-top: -50px;margin-left: 676px;">上传</button>
+                                            </div>
+                                            
                                             <!-- <div class="col-md-4">
-
                                             <select id="park-select" class="form-control" style="font-weight:bold;width: 220.5px;float: right;">
                                             #foreach( $park in $parks)
                                             <option value=$park.id>$park.name</option>
@@ -101,6 +164,7 @@
                                                     导出
                                                 </button>
                                             </div>
+                                            
                                             <div class="col-md-1" hidden>
                                                 <button  type="button" class="btn btn-info" ng-click="getExcelByDayRange()" style="float:left">
                                                     所有停车场
@@ -166,6 +230,8 @@
         </div></th>
         <th><span style="padding-left:15%">描述
 </div></th>
+<th><span style="padding-left:15%">类型
+</div></th>
 <th hidden><span style="padding-left:15%" >电话号码</div></th>
 <th><span style="padding-left:15%">开始时间</div></th>
 <th><span style="padding-left:15%">结束时间</div></th>
@@ -185,6 +251,12 @@
     <td ng-bind="user.platenumber"></td>
     <td ng-bind="user.platecolor" hidden></td>
     <td ng-bind="user.certificatetype"></td>
+    <td ng-if="user.type==0">包月用户</td>
+    <td ng-if="user.type==1">预约</td>
+    <td ng-if="user.type==2">预约</td>
+    <td ng-if="user.type==3">预约</td>
+    <td ng-if="user.type==4">预约</td>
+    <td ng-if="user.type==9">临停</td>
     <td ng-bind="user.certificatenumber" hidden></td>
     <td ng-bind="user.starttime"></td>
     <td ng-bind="user.endtime"></td>
@@ -268,7 +340,7 @@
     <button type='button' class='close' ng-click="close()" aria-hidden='true'>
     &times;
     </button>
-    <h4 class="modal-title" >月卡用户</h4>
+    <h4 class="modal-title" >月卡缴费</h4>
 
     </div>
 
@@ -369,4 +441,5 @@
     </button>
     </div>
 </script>
+
 </div>

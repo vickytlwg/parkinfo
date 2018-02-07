@@ -65,7 +65,7 @@ public interface PosChargeDataService {
 	
 	public Map<String, Object> getParkChargeByDay(int parkId, String day);
 	
-	public List<PosChargeData> getByCardNumber(String cardNumber);
+	public List<PosChargeData> getByCardNumber(int parkId,String cardNumber);
 	
 	public List<PosChargeData> getByParkName(String parkName);
 	
@@ -78,4 +78,6 @@ public interface PosChargeDataService {
 	List<PosChargeData> getAllByDayRange(String startDate, String endDate) throws ParseException;
 	
 	public Outsideparkinfo getOutsideparkinfoByOrigin(int parkId,String day);
+
+	/*List<PosChargeData> getByCardNumber(int parkId, String cardNumber);*/
 }

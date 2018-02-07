@@ -24,6 +24,17 @@
 		</property>
 	</bean>
 	
+	<bean id="multipartResolver"  
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <!-- set the max upload size100MB -->  
+        <property name="maxUploadSize">  
+            <value>10485760</value>  
+        </property>  
+        <property name="maxInMemorySize">  
+            <value>4096</value>  
+        </property>  
+    </bean>
+	
     <!-- 模板信息设置 -->  
    <bean id="velocityConfig"  
        class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">  
@@ -65,7 +76,7 @@
 		<mvc:exclude-mapping path="static/**"/>
 		<mvc:exclude-mapping path="/views/**"/>	
 		<mvc:exclude-mapping path="/monthUser/**"/>	
-		<mvc:exclude-mapping path="/userManage/**"/>	
+		<mvc:exclude-mapping path="/usermanage/**"/>	
 		<mvc:exclude-mapping path="/set/**"/>	
 				
 		<bean class="cn.parkinfo.controller.LoginInterceptor1"></bean>

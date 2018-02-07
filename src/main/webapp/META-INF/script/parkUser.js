@@ -84,23 +84,7 @@
 			tr.append('<td><input type="checkbox" /></td>');
 			tr.append('<td>' + data[i]['id']+ '</td>');
 			tr.append('<td>' + data[i]['username']+ '</td>');
-			var role = "管理员用户";
-			if(data[i]['role'] == 1)
-				role = "普通用户";
-			tr.append('<td>' + role + '</td>');
-			
-			var parkName="";
-			if(data[i]['role'] == 0)
-				parkName="所有停车场";
-			else{
-				for(var j = 0; j < data[i]["parkName"].length; j++){
-					parkName += "   ";
-					parkName += data[i]["parkName"][j];
-				}
-				
-			}
-						
-			tr.append('<td>' + parkName + '</td>');
+			tr.append('<td>' + data[i]['password']+ '</td>');
 					
 			if( i % 2 == 0){
 				tr.addClass('success');
@@ -192,35 +176,6 @@
 		});
 	};
 	
-	
-	
-	var bindDeleteButton = function(){
-		$('#deleteUser').on('click', $(this), function(){
-			var checkedTr = $('#userBody').find('input[type="checkbox"]:checked').parents('tr');
-			if(checkedTr > 1)
-				return;
-			var modal = new $.Modal("userDelete","删除用户","是否删除用户!" );
-			var callback = deleteClickHandle;
-			modal.setSubmitClickHandle(callback);
-			$('#showMessage').html(modal.get());
-			modal.show();
-		});
-	};
-	
-	var deleteClickHandle = function(){
-		var checkedTr = $('#userBody').find('input[type="checkbox"]:checked').parents('tr');
-		var id = parseInt($(checkedTr.find('td')[1]).text());
-		$.ajax({
-			url:$.fn.config.webroot + "/delete/parkUser/" + id,
-			type: 'get',
-			success: function(data){
-				$('#refresh').click();
-			},
-			error: function(data){
-				errorHandle(data);
-			}
-		});
-	};
 	
 	var errorHandle = function(data){
 		var modal = new $.Modal('errorHandle', "失败", "操作失败" + data['message']);

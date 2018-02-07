@@ -9,7 +9,7 @@ import org.apache.velocity.app.event.ReferenceInsertionEventHandler.referenceIns
 public class Monthuser {
     private Integer id;
 
-    private Integer type=0;
+    private Integer type;
 
     private Integer parkid;
 

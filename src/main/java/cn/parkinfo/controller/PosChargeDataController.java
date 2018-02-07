@@ -267,7 +267,9 @@ public class PosChargeDataController {
 	@ResponseBody
 	public String getByCardnumber(@RequestBody Map<String, String> args) {
 		String cardNumber = args.get("cardNumber");
-		return Utility.createJsonMsg(1001, "success", chargeSerivce.getByCardNumber(cardNumber));
+		int parkId=Integer.parseInt(args.get("parkId"));
+		/*System.out.println(parkId);*/
+		return Utility.createJsonMsg(1001, "success", chargeSerivce.getByCardNumber(parkId,cardNumber));
 	}
 
 	@RequestMapping(value = "/count", method = RequestMethod.GET, produces = { "application/json;charset=UTF-8" })
@@ -276,7 +278,7 @@ public class PosChargeDataController {
 		return Utility.createJsonMsg(1001, "success", count);
 	}
 
-	@RequestMapping(value = "getByParkName", method = RequestMethod.POST, produces = {
+	@RequestMapping(value = "/getByParkName", method = RequestMethod.POST, produces = {
 			"application/json;charset=UTF-8" })
 	@ResponseBody
 	public String getByParkName(@RequestBody Map<String, String> args) {
