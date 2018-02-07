@@ -238,7 +238,7 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 	@Override
 	public List<PosChargeData> getByCardNumber(int parkId,String cardNumber) {
 		// TODO Auto-generated method stub
-		return chargeDao.getByCardNumber(parkId,cardNumber);
+		return null;
 	}
 
 	@Override
@@ -461,5 +461,17 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 			posChargeDatas.addAll(tmPosChargeDatas);
 		}
 		return posChargeDatas;
+	}
+
+	@Override
+	public List<PosChargeData> getByCardNumberAndPark(String cardNumber, Integer parkId) {
+		// TODO Auto-generated method stub
+		return chargeDao.getByCardNumberAndPark(cardNumber, parkId);
+	}
+
+	@Override
+	public List<PosChargeData> getByCardNumber(String cardNumber) {
+		// TODO Auto-generated method stub
+		return chargeDao.getByCardNumber(cardNumber);
 	}
 }

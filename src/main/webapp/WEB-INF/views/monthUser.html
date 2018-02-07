@@ -11,7 +11,7 @@
 <script src="/parkinfo/angular/angular-ui-router.min.js"></script>
 <script src="/parkinfo/angular/ocLazyLoad.min.js"></script>
 <script src="/parkinfo/angular/ui-bootstrap-tpls.min.js"></script>
-<script src="/parkinfo/js/monthUser.js?v=1.1"></script>
+<script src="/parkinfo/js/monthUser.js?v=1.2"></script>
 <script src="/parkinfo/js/bootstrap.min.js"></script>
 <script src="/parkinfo/js/utility.js"></script>
 <script src="/parkinfo/script/datepicker.js"></script>
@@ -348,32 +348,32 @@ $(function(){
     <form class="form-horizontal" role="form">
 
     <div class="form-group">
-    <label class="col-sm-2 control-label" >停车场(必填)</label>
+    <label class="col-sm-2 control-label" >停车场 *</label>
     <div class="col-sm-8">
     <select class="form-control" ng-options="park.id as park.name for park in parks" ng-model="tempUser.parkid"></select>
     </div>
     </div>
     <div class="form-group">
-    <label class="col-sm-2 control-label" >车牌号(必选)</label>
+    <label class="col-sm-2 control-label" >车牌号 *</label>
     <div class="col-sm-8">
     <input type="text" class="form-control" placeholder="请输入车牌号" ng-model="tempUser.platenumber">
     </div>
     </div>
     <div class="form-group">
-    <label class="col-sm-2 control-label" >车主(必填)</label>
+    <label class="col-sm-2 control-label" >车主 *</label>
     <div class="col-sm-8">
     <input type="text" class="form-control" placeholder="请输入车主姓名" ng-model="tempUser.owner">
     </div>
     </div>
 
     <div class="form-group">
-    <label class="col-sm-2 control-label" >开始时间(必填)</label>
+    <label class="col-sm-2 control-label" >开始时间 *</label>
     <div class="col-sm-8">
     <input type="text" class="form-control" placeholder="YYYY-MM-DD hh:mm:ss" ng-model="tempUser.starttime">
     </div>
     </div>
     <div class="form-group">
-    <label class="col-sm-2 control-label" >结束时间(必填)</label>
+    <label class="col-sm-2 control-label" >结束时间 *</label>
     <div class="col-sm-8">
     <input type="text" class="form-control" placeholder="YYYY-MM-DD hh:mm:ss" ng-model="tempUser.endtime">
     </div>

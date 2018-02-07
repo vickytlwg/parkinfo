@@ -86,7 +86,7 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
             return;
         }
         $http({
-            url:'/parkinfo/pos/charge/getByCardnumber',
+            url:'/parkinfo/pos/charge/getByCardnumberAuthority',
             method:'post',
             data:{"cardNumber":$scope.searchText,"parkId":$scope.parkId}
         }).success(function(response){

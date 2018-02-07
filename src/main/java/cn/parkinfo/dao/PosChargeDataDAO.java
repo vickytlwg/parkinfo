@@ -20,6 +20,8 @@ public interface PosChargeDataDAO {
 	
 	public List<PosChargeData> getByParkIdAndCardNumber(@Param("parkId")int parkId,@Param("cardNumber")String cardNumber);
 	
+	public List<PosChargeData> getByCardNumberAndPark(@Param("cardNumber")String cardNumber,@Param("parkId")int parkId);
+	
 	public List<PosChargeData> getPageByParkId(@Param("parkId")int parkId,@Param("start")int start,@Param("count")int count);
 	
 	public List<PosChargeData> getPageArrearage(int low, int count);
@@ -46,7 +48,7 @@ public interface PosChargeDataDAO {
 	
 	public List<PosChargeData> selectPosdataByParkAndRange(@Param("startDay") Date startDay, @Param("endDay") Date endDay,@Param("parkId")int parkId);
 	
-	public List<PosChargeData> getByCardNumber(@Param("cardNumber")int parkId,String cardNumber);
+	public List<PosChargeData> getByCardNumber(@Param("cardNumber")String cardNumber);
 	
 	public List<PosChargeData> getByParkName(@Param("parkName")String parkName);
 	

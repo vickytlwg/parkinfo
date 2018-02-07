@@ -251,8 +251,8 @@ monthUserApp.controller("monthUserModify",function($scope, textModal,$modalInsta
     $scope.tempUser.endtime=new Date().format("yyyy-MM-dd hh:mm:ss");
     }   
     $scope.statuses=[{value:0,text:'未支付'},{value:1,text:'已支付'}];
-    $scope.orderTypes=[{value:0,text:'包月用户'},{value:1,text:'预约'}/*,{value:2,text:'类型B'},{value:3,text:'类型C'},{value:4,text:'类型D'}*/];
-    /*$scope.tempUser.type=0;*/
+    $scope.orderTypes=[{value:0,text:'包月用户'},{value:1,text:'预约类型A'},{value:2,text:'预约类型B'},{value:3,text:'预约类型C'},{value:4,text:'预约类型D'}];
+    $scope.tempUser.type=0;
     
     $scope.parks=[];
     $scope.getParks=function(){
