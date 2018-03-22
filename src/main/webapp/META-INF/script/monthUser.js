@@ -35,7 +35,7 @@ function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
            });
        };  
       dateInitial();
-    
+      
     //查询检索
 	$scope.users=[];
 	$scope.searchText="";//查询检索文本框
@@ -46,7 +46,7 @@ function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
         $http({
             url:'/parkinfo/monthUser/getByPlateNumber2',
             method:'post',
-            data:{"platenumber":$scope.searchText}
+            data:{"platenumber":$scope.searchText,"parkId":$scope.parkId}
         }).success(function(response){
             if(response.status==1001){
                 $scope.users=response.body;
@@ -54,30 +54,16 @@ function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
         });
     };
     
+    $scope.getExcelByParkAndDayRange=function(){
+        $window.location.href="/pos/charge/getExcelByParkAndDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate
+        +"&parkId="+$scope.selectedParkidd;
+    };
+    
     $scope.getExcelByDayRange=function(){  
-        $window.location.href="getExcelByDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate;
+        $window.location.href="getExcelByDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate+
+        			"&parkId="+$scope.selectedParkidd;
        };
-    /*$scope.getExcelByParkRange=function(){
-        $window.location.href="/parkinfo/pos/charge/getExcelByParkAndDay?date="+$scope.searchDate+"&parkId="+$('#park-select').val();
-    };*/
-       /*$scope.getExcel=function(){
-           $window.location.href="/parkinfo/monthUser/getExcelByParkAndDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate
-           +"&parkId="+$('#park-select2').val();
-       };*/
-       /*$scope.searchByParkName=function(){
-           if($scope.searchParkNameText==""||$scope.searchParkNameText==undefined){
-               return;
-           }
-           $http({
-               url:'getByParkName',
-               method:'post',
-               data:{"parkName":$scope.searchParkNameText}
-           }).success(function(response){
-               if(response.status==1001){
-                   $scope.detail.items=response.body;
-               }
-           });
-       };*/
+    
     
     //所有停车场加载
     $scope.selectedPark={};
@@ -99,6 +85,7 @@ function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
 	
     $scope.users=[];
     $scope.checkedIndex=-1;
+    $scope.certificateType=null;
     $scope.start=0;
     $scope.count=200;
      $scope.parks=[];
@@ -164,9 +151,10 @@ function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
             scope:$scope,
             resolve: {
                 index: function(){
-                        return undefined;
+                	return undefined;
                 }
             }
+        
         });
     };
     $scope.updateUserPark=function(){
@@ -251,7 +239,7 @@ monthUserApp.controller("monthUserModify",function($scope, textModal,$modalInsta
     $scope.tempUser.endtime=new Date().format("yyyy-MM-dd hh:mm:ss");
     }   
     $scope.statuses=[{value:0,text:'未支付'},{value:1,text:'已支付'}];
-    $scope.orderTypes=[{value:0,text:'包月用户'},{value:1,text:'预约类型A'},{value:2,text:'预约类型B'},{value:3,text:'预约类型C'},{value:4,text:'预约类型D'}];
+    $scope.orderTypes=[{value:0,text:'包月用户'},{value:1,text:'预约'}];
     $scope.tempUser.type=0;
     
     $scope.parks=[];

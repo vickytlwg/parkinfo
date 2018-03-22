@@ -1,4 +1,4 @@
-package cn.parkinfo.ExcelExp;
+package cn.parkinfo.model;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 public class ReadExcel {
-	 //总行数  
+	
+	//总行数  
     private int totalRows = 0;    
     //总条数  
     private int totalCells = 0;   
@@ -100,8 +101,9 @@ public class ReadExcel {
                 continue;  
             }  
             ExcelExp exp = new ExcelExp();  
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);  
-            Date date;
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);  
+//            Date date;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");  //日期格式化  
             // 循环Excel的列  
             for (int c = 0; c < this.totalCells; c++) {  
                 Cell cell = row.getCell(c);  
@@ -121,17 +123,17 @@ public class ReadExcel {
                         }else{  
                             exp.setCardnumber(cell.getStringCellValue());//车牌号
                         }  
-                    } else if (c == 2){  
-                            exp.setStarttime(cell.getDateCellValue());//开始日期
-                    }else if(c==3){
-                    		exp.setEndtime(cell.getDateCellValue());//结束日期
-                    }else if(c==4){
-//                    	if(cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC){  
-//                            int status = Integer.parseInt((int) cell.getNumericCellValue());  
-//                            exp.setStatus(4);//车牌号 
-//                        }else{  
-                            exp.setStatus(Integer.valueOf((String)cell.getStringCellValue()));//车牌号
-//                        }  
+	                    }else if (c == 2){  
+	                            exp.setStarttime(cell.getDateCellValue());//开始日期
+	                    }else if(c==3){
+	                    		exp.setEndtime(cell.getDateCellValue());//结束日期
+	                    }else if(c==4){
+	                    	if(cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC){  
+	                            int status = ((int) cell.getNumericCellValue());  
+	                            exp.setStatus(4);
+	                    }else{  
+	                        exp.setStatus(Integer.valueOf((String)cell.getStringCellValue()));//状态
+	                    }  
                     }
                 }  
             }  

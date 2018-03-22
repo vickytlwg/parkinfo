@@ -1,8 +1,10 @@
 package cn.parkinfo.controller;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,7 +12,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,12 +32,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 
 import cn.parkinfo.service.UserParkService;
-
 import cn.parkinfo.model.AuthUser;
 import cn.parkinfo.model.AuthUserRole;
+import cn.parkinfo.model.Constants;
 import cn.parkinfo.model.Monthuser;
 import cn.parkinfo.model.Monthuserpark;
 import cn.parkinfo.model.PosChargeData;
@@ -60,8 +67,6 @@ private ExcelExportService excelExportService;
 //@Autowired
 //private PosChargeDataService chargeSerivce;
 
-
-
 @RequestMapping(value = "/getExcel")
 @ResponseBody
 public void getExcelByPark(HttpServletRequest request, HttpServletResponse response)
@@ -83,6 +88,29 @@ public void getExcelByPark(HttpServletRequest request, HttpServletResponse respo
 	Utility.download(docsPath + FILE_SEPARATOR + "monthusers.xlsx", response);
 }
 
+@RequestMapping(value = "/getExcelByParkAndDayRange")
+@ResponseBody
+public void getExcelByParkAndDayRange(HttpServletRequest request, HttpServletResponse response)
+		throws FileNotFoundException, NumberFormatException, ParseException {
+//	String starttime = request.getParameter("starttime");
+//	String endtime = request.getParameter("endtime");
+	String parkId = request.getParameter("parkId");
+
+	List<Monthuser> posdatas = monthUserService.getByPark(Integer.parseInt(parkId));
+	String docsPath = request.getSession().getServletContext().getRealPath("/");
+	final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
+	String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "实收费", "应收费", "补交", "返还", "进场时间", "离场时间" };
+	OutputStream out = new FileOutputStream(docsPath + FILE_SEPARATOR + "poschargedata.xlsx");
+	XSSFWorkbook workbook = new XSSFWorkbook();
+	excelExportService.produceExceldataMonthUser("收费明细", headers, posdatas, workbook);
+	try {
+		workbook.write(out);
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+	Utility.download(docsPath + FILE_SEPARATOR + "poschargedata.xlsx", response);
+}
+
 
 @RequestMapping(value="")
 public String index(ModelMap modelMap, HttpServletRequest request, HttpSession session){
@@ -102,14 +130,18 @@ public String index(ModelMap modelMap, HttpServletRequest request, HttpSession s
 
 @RequestMapping(value = "getByPlateNumber", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8" })
 @ResponseBody
-public String getByPlateNumber2(@RequestBody Map<String, String> args) {
+public String getByPlateNumber2(@RequestBody Map<String, String> args, HttpSession session) {
 	String platenumber = args.get("platenumber");
+	String username = (String) session.getAttribute("username");
+	AuthUser user = authService.getUserByUsername(username);
 	return Utility.createJsonMsg(1001, "success", monthUserService.getByPlateNumber(platenumber));
 }
 @RequestMapping(value = "getByPlateNumber2", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8" })
 @ResponseBody
-public String getByPlateNumber3(@RequestBody Map<String, String> args) {
+public String getByPlateNumber3(@RequestBody Map<String, String> args, HttpSession session) {
 	String platenumber = args.get("platenumber");
+	String username = (String) session.getAttribute("username");
+	AuthUser user = authService.getUserByUsername(username);
 	Map<String, Object> result=new HashMap<>();
 	result.put("status", 1001);
 	result.put("body",  monthUserService.getByPlateNumber(platenumber));
@@ -196,7 +228,7 @@ public String deletePark(@RequestBody Monthuserpark monthUserPark){
 	}
 	return Utility.gson.toJson(result);
 }
-@RequestMapping(value="insert",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})
+@RequestMapping(value="/insert",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})
 @ResponseBody
 public String insert(@RequestBody Monthuser monthUser){
 	Map<String, Object> result=new HashMap<>();
@@ -206,13 +238,13 @@ public String insert(@RequestBody Monthuser monthUser){
 		result.put("message", "用户已存在");
 		return Utility.gson.toJson(result);
 	}
-	int num=monthUserService.insert(monthUser);
+	int num=this.monthUserService.insert(monthUser);
 	if (num==1) {
-		result.put("status", 1001);
+		result.put("status", Integer.valueOf(1001));
 		
 	}
 	else {
-		result.put("status", 1002);
+		result.put("status", Integer.valueOf(1002));
 	}
 	return Utility.gson.toJson(result);
 }
@@ -292,7 +324,7 @@ public String deleteByNameAndPark(@RequestBody Map<String, Object> args){
 	int parkid = (int) args.get("parkid");
 	List<Monthuser> monthusers=monthUserService.getByUsernameAndPark(username, parkid);
 	if (monthusers.isEmpty()) {
-		result.put("status", 1002);
+		result.put("status", 1002);	
 		result.put("message", "没有预约");
 		return Utility.gson.toJson(result);
 	}

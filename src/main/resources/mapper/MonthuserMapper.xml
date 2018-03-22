@@ -31,16 +31,20 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
  <insert id="insert" parameterType="cn.parkinfo.model.Monthuser">
-    insert into monthUser (id, type, parkId, 
-      cardNumber, owner, plateNumber, 
+	insert into monthUser (id, type, parkId,
+       owner,cardNumber, plateNumber, 
       plateColor, certificateType, certificateNumber, 
       startTime, endTime, payment, 
       status)
     values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{parkid,jdbcType=INTEGER}, 
-      #{cardnumber,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, #{platenumber,jdbcType=VARCHAR}, 
+      #{owner,jdbcType=VARCHAR}, #{cardnumber,jdbcType=VARCHAR}, #{platenumber,jdbcType=VARCHAR}, 
       #{platecolor,jdbcType=VARCHAR}, #{certificatetype,jdbcType=VARCHAR}, #{certificatenumber,jdbcType=VARCHAR}, 
       #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{payment,jdbcType=REAL}, 
       #{status,jdbcType=INTEGER})
+
+		<!-- insert into monthUser(owner,cardnumber,starttime,endtime,status) 
+		values(#{owner},#{cardnumber},#{starttime},#{endtime},#{status})
+ -->
   </insert>
    <insert id="insertSelective" parameterType="cn.parkinfo.model.Monthuser">
     insert into monthUser
@@ -186,9 +190,9 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <insert id="addExcelpark" parameterType="cn.parkinfo.ExcelExp.ExcelExp">
+  <!-- <insert id="upload" parameterType="cn.parkinfo.model.ExcelExp">
   	insert into monthUser(owner,cardnumber,starttime,endtime,status)values(#{owner},#{cardnumber},#{starttime},#{endtime},#{status})
-  </insert>
+  </insert> -->
   
   
   <select id="getCount" resultType="int">

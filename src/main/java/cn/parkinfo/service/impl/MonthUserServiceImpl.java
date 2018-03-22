@@ -1,13 +1,17 @@
 package cn.parkinfo.service.impl;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import cn.parkinfo.dao.MonthuserDAO;
+import cn.parkinfo.model.Constants;
 import cn.parkinfo.model.Monthuser;
 import cn.parkinfo.service.MonthUserService;
 @Transactional
@@ -111,5 +115,15 @@ public class MonthUserServiceImpl implements MonthUserService {
 		// TODO Auto-generated method stub
 		return monthUserDao.getByParkIdAndCount(parkId,0,1000);
 	}
+
+	@Override
+	public List<Monthuser> getByParkAndDayRange(int parkId, Date starttime, Date endtime) throws ParseException {
+		// TODO Auto-generated method stub
+		SimpleDateFormat sFormat=new SimpleDateFormat(Constants.DATEFORMAT);
+		Date dstartDate=sFormat.parse(starttime+" 00:00:00");
+		Date dendDate=sFormat.parse(endtime+" 23:59:59");
+		return monthUserDao.getByRange(parkId, starttime, endtime);
+	}
+
 
 }
