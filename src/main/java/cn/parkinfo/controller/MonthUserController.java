@@ -206,7 +206,7 @@ public String insert(@RequestBody Monthuser monthUser){
 		result.put("message", "用户已存在");
 		return Utility.gson.toJson(result);
 	}
-	int num=monthUserService.insert(monthUser);
+	int num=monthUserService.insertSelective(monthUser);
 	if (num==1) {
 		result.put("status", 1001);
 		
