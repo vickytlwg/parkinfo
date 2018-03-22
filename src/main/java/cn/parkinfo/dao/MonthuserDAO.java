@@ -1,12 +1,14 @@
 package cn.parkinfo.dao;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import cn.parkinfo.model.Monthuser;
+import cn.parkinfo.model.PosChargeData;
 @Repository
 public interface MonthuserDAO {
 	
@@ -40,4 +42,5 @@ public interface MonthuserDAO {
     
     List<Monthuser> getByParkIdAndCountOrder(@Param("parkId")int parkId,@Param("start")int start,@Param("count")int count,@Param("type")int type);
 
+    List<Monthuser> getByRange(@Param("parkId")int parkId,@Param("starttime")Date starttime,@Param("endtime")Date endtime);
 }

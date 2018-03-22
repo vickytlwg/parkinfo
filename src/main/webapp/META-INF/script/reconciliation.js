@@ -16,8 +16,8 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
         }
     };
  $scope.searchDate=new Date().format('yyyy-MM-dd');
- $scope.startDate=new Date().format('yyyy-MM-dd hh:mm:ss');
- $scope.endDate=new Date().format('yyyy-MM-dd hh:mm:ss');
+ $scope.startDate=new Date().format('yyyy-MM-dd HH:mm:ss');
+ $scope.endDate=new Date().format('yyyy-MM-dd HH:mm:ss');
       var dateInitial=function(){
         $('.date').datepicker({
             autoClose: true,

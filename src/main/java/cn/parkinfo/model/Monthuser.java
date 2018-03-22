@@ -130,7 +130,8 @@ public class Monthuser {
     }
 
     public void setStarttime(String starttime) throws ParseException {
-        this.starttime = new SimpleDateFormat(Constants.DATEFORMAT).parse(starttime);
+//        this.starttime = new SimpleDateFormat(Constants.DATEFORMAT).parse(starttime);
+        this.starttime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(starttime);
     }
 
     public Date getEndtime() {
@@ -138,7 +139,7 @@ public class Monthuser {
     }
 
     public void setEndtime(String endtime) throws ParseException {
-        this.endtime = new SimpleDateFormat(Constants.DATEFORMAT).parse(endtime);
+        this.endtime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(endtime);
     }
 
     public Float getPayment() {

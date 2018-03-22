@@ -14,6 +14,8 @@ public class PosChargeData {
 	
 	String parkDesc;
 	
+//	String rejectReason="";
+	
 	String portNumber;
 	
 	boolean isEntrance;
@@ -83,6 +85,15 @@ public class PosChargeData {
 	public void setParkDesc(String parkDesc) {
 		this.parkDesc = parkDesc;
 	}
+	
+
+//	public String getRejectReason() {
+//		return rejectReason;
+//	}
+//
+//	public void setRejectReason(String rejectReason) {
+//		this.rejectReason = rejectReason;
+//	}
 
 	public String getPortNumber() {
 		return portNumber;
@@ -170,7 +181,7 @@ public class PosChargeData {
 	}
 
 	public void setExitDate(String exitDate) throws ParseException {
-		this.exitDate =new SimpleDateFormat(Constants.DATEFORMAT).parse(exitDate);
+		this.exitDate =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(exitDate);
 	}
 	public void setExitDate1(Date exitDate){
 		this.exitDate =exitDate;

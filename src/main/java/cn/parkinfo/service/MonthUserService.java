@@ -1,7 +1,10 @@
 package cn.parkinfo.service;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import cn.parkinfo.model.Monthuser;
 import cn.parkinfo.model.PosChargeData;
@@ -35,6 +38,8 @@ public interface  MonthUserService {
 	    List<Monthuser> getByPlateNumber(String platenumber);
 	    
 	    List<Monthuser> getByPark(int parkId) throws ParseException;
+	    
+	    List<Monthuser> getByParkAndDayRange(int parkId, Date starttime,Date endtime) throws ParseException;
 	    
 	    List<Monthuser> getByParkIdAndCount(int parkId,int start,int count);
 	    
