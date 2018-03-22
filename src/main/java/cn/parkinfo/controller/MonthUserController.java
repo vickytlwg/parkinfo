@@ -43,11 +43,13 @@ import cn.parkinfo.model.AuthUserRole;
 import cn.parkinfo.model.Constants;
 import cn.parkinfo.model.Monthuser;
 import cn.parkinfo.model.Monthuserpark;
+import cn.parkinfo.model.Park;
 import cn.parkinfo.model.PosChargeData;
 import cn.parkinfo.service.AuthorityService;
 import cn.parkinfo.service.ExcelExportService;
 import cn.parkinfo.service.MonthUserParkService;
 import cn.parkinfo.service.MonthUserService;
+import cn.parkinfo.service.ParkService;
 import cn.parkinfo.service.PosChargeDataService;
 import cn.parkinfo.service.Utility;
 
@@ -64,6 +66,8 @@ private AuthorityService authService;
 private UserParkService userParkService;
 @Autowired
 private ExcelExportService excelExportService;
+@Autowired
+ParkService parkService;
 //@Autowired
 //private PosChargeDataService chargeSerivce;
 
@@ -134,7 +138,21 @@ public String getByPlateNumber2(@RequestBody Map<String, String> args, HttpSessi
 	String platenumber = args.get("platenumber");
 	String username = (String) session.getAttribute("username");
 	AuthUser user = authService.getUserByUsername(username);
-	return Utility.createJsonMsg(1001, "success", monthUserService.getByPlateNumber(platenumber));
+	List<Monthuser>  monthusersResult=new ArrayList<>();
+	if (user.getRole() == AuthUserRole.ADMIN.getValue()){
+		monthusersResult=monthUserService.getByPlateNumber(platenumber);
+	}
+	else {
+		List<Park> parkList=parkService.getParks();
+		parkList = parkService.filterPark(parkList, username);
+		for (Park park : parkList) {
+			List<Monthuser> monthusers=monthUserService.getByCarnumberAndPark(platenumber, park.getId());
+			if (!monthusers.isEmpty()) {
+				monthusersResult.addAll(monthusers);
+			}
+		}
+	}
+	return Utility.createJsonMsg(1001, "success", monthusersResult);
 }
 @RequestMapping(value = "getByPlateNumber2", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8" })
 @ResponseBody
@@ -142,10 +160,23 @@ public String getByPlateNumber3(@RequestBody Map<String, String> args, HttpSessi
 	String platenumber = args.get("platenumber");
 	String username = (String) session.getAttribute("username");
 	AuthUser user = authService.getUserByUsername(username);
-	Map<String, Object> result=new HashMap<>();
-	result.put("status", 1001);
-	result.put("body",  monthUserService.getByPlateNumber(platenumber));
-	return Utility.gson.toJson(result);
+	List<Monthuser>  monthusers=monthUserService.getByPlateNumber(platenumber);
+	List<Monthuser>  monthusersResult=new ArrayList<>();
+	if (user.getRole() == AuthUserRole.ADMIN.getValue()){
+		monthusersResult=monthusers;
+	}
+	else {
+		List<Park> parkList=parkService.getParks();
+		parkList = parkService.filterPark(parkList, username);
+		for (Monthuser mm : monthusers) {
+			for (Park park : parkList) {
+				if (park.getId()==mm.getParkid().intValue()) {
+					monthusersResult.add(mm);
+				}
+		}}
+		
+	}
+	return Utility.createJsonMsg(1001, "success", monthusersResult);
 }
 
 @RequestMapping(value="order")
