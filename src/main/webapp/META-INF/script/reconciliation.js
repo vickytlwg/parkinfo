@@ -16,8 +16,8 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
         }
     };
  $scope.searchDate=new Date().format('yyyy-MM-dd');
- $scope.startDate=new Date().format('yyyy-MM-dd HH:mm:ss');
- $scope.endDate=new Date().format('yyyy-MM-dd HH:mm:ss');
+ $scope.startDate=new Date().format('yyyy-MM-dd hh:mm:ss');
+ $scope.endDate=new Date().format('yyyy-MM-dd hh:mm:ss');
       var dateInitial=function(){
         $('.date').datepicker({
             autoClose: true,
@@ -45,7 +45,6 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
                 $scope.detail.page.indexRange = [1];
                 for (var i = 2; i <= maxIndex; i++)
                     $scope.detail.page.indexRange.push(i);
-
             } else
                 textModal.open($scope, "错误", "获取计费错误: " + response.status);
         }).error(function(response) {
@@ -117,7 +116,7 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
             method:'post',
             data:{"parkName":$scope.searchParkNameText}
         }).success(function(response){
-            if(response.status==1001){
+            if(response.status==1001){  
                 $scope.detail.items=response.body;
             }
         });

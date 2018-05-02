@@ -369,6 +369,8 @@ public String selectPosdataByParkAndRange(@RequestBody Map<String,Object> args){
 	}	
 	return Utility.gson.toJson(retMap);
 }
+
+
 @RequestMapping(value="/selectPosdataByParkAndCarportId",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})
 @ResponseBody
 public String selectPosdataByParkAndCarportId(@RequestBody Map<String,Object> args){
@@ -441,6 +443,49 @@ public String getParkChargeByRange(@RequestBody Map<String, Object> args){
     }     	
 	return Utility.gson.toJson(comparemap);
 }
+
+@RequestMapping(value="/getParkChargeByRange2",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})
+@ResponseBody
+public String getParkChargeByRange2(@RequestBody Map<String, Object> args){
+	int parkId=Integer.parseInt((String)args.get("parkId"));
+//	Park park = parkService.getParkById(parkId);
+//	String parkName=park.getName();
+	String startDay=(String)args.get("startDay");
+	String endDay=(String)args.get("endDay");
+//	Map<String, Object> retMap = new HashMap<>();
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+	Date parsedStartDay = null;
+	try {
+		parsedStartDay = sdf.parse(startDay + " 00:00:00");
+	} catch (ParseException e) {
+		e.printStackTrace();
+	}	
+	Date parsedEndDay  = null;
+	try {
+		parsedEndDay = sdf.parse(endDay + " 00:00:00");
+	} catch (ParseException e) {
+		e.printStackTrace();
+	}	
+	
+	Calendar start =Calendar.getInstance(); 
+	start.setTime(parsedStartDay);
+	Long startTime = start.getTimeInMillis();
+	Calendar end = Calendar.getInstance();
+	end.setTime(parsedEndDay);
+	Long endTime = end.getTimeInMillis();
+	Long oneDay = 1000 * 60 * 60 * 24l;
+	Long time = startTime;  
+	Map<Long, Object> comparemap=new TreeMap<>();
+	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    while (time <= endTime) {  
+        Date d = new Date(time);            
+        Map<String,Object> tmpmap=posdataService.getParkChargeByDay2(parkId, df.format(d));
+        comparemap.put(d.getTime(), tmpmap);
+        time += oneDay;  
+    }     	
+	return Utility.gson.toJson(comparemap);
+}
+
 @RequestMapping(value="/getCountsByCard",produces={"application/json;charset=utf-8"})
 @ResponseBody
 public String getCountsByCard(){

@@ -22,6 +22,8 @@ public interface PosdataService {
 	public int getPosdataCountByPark(int parkId);
 
 	public List<Posdata> selectPosdataByParkAndRange(String parkName, Date startDay, Date endDay);
+	
+	public List<Posdata> selectPosdataByParkAndRange2(String parkName, Date startDay, Date endDay);
 
 	public List<Posdata> getPosdataByCarportAndRange(String parkName, String carportId, Date startDay, Date endDay);
 
@@ -32,6 +34,8 @@ public interface PosdataService {
 	public List<Map<String, Object>> getCountByCard();
 
 	public Map<String, Object> getParkChargeByDay(int parkId, String day);
+	
+	public Map<String, Object> getParkChargeByDay2(int parkId, String day);
 
 	public Map<String, Object> getCarpotChargeByDay(int parkId, String carportId, String day);
 }

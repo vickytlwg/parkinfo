@@ -109,6 +109,12 @@ public class MonthUserServiceImpl implements MonthUserService {
 		// TODO Auto-generated method stub
 		return monthUserDao.getByCarnumberAndPark(carnumber, parkId);
 	}
+	
+	@Override
+	public List<Monthuser> getByCarnumberAndPark2(String platenumber, int parkId) {
+		// TODO Auto-generated method stub
+		return monthUserDao.getByCarnumberAndPark2(platenumber, parkId);
+	}
 
 	@Override
 	public List<Monthuser> getByPark(int parkId) throws ParseException {
@@ -124,6 +130,5 @@ public class MonthUserServiceImpl implements MonthUserService {
 		Date dendDate=sFormat.parse(endtime+" 23:59:59");
 		return monthUserDao.getByRange(parkId, starttime, endtime);
 	}
-
 
 }

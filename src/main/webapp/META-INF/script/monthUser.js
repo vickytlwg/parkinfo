@@ -16,6 +16,7 @@ function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
       $scope.getExcel=function(){
          $window.location.href="/parkinfo/monthUser/getExcel?date="+$scope.searchDate+"&parkId="+$scope.selectedParkidd;
      };
+    $scope.searchDate=new Date().format('yyyy-MM-dd');
     $scope.startDate=new Date().format('yyyy-MM-dd');
     $scope.endDate=new Date().format('yyyy-MM-dd');
          var dateInitial=function(){
@@ -85,7 +86,6 @@ function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
 	
     $scope.users=[];
     $scope.checkedIndex=-1;
-    $scope.certificateType=null;
     $scope.start=0;
     $scope.count=200;
      $scope.parks=[];
@@ -228,6 +228,7 @@ function($scope,$http,$window,$uibModal,textModalTest,textModal,$timeout){
     $scope.refreshUser();
 }]);
 
+
 monthUserApp.controller("monthUserModify",function($scope, textModal,$modalInstance, $http, $timeout, index){
     var url = '/parkinfo/monthUser/insert';
     $scope.tempUser={};
@@ -237,7 +238,7 @@ monthUserApp.controller("monthUserModify",function($scope, textModal,$modalInsta
     }else{
     $scope.tempUser.starttime=new Date().format("yyyy-MM-dd hh:mm:ss");
     $scope.tempUser.endtime=new Date().format("yyyy-MM-dd hh:mm:ss");
-    }   
+    }
     $scope.statuses=[{value:0,text:'未支付'},{value:1,text:'已支付'}];
     $scope.orderTypes=[{value:0,text:'包月用户'},{value:1,text:'预约'}];
     $scope.tempUser.type=0;
@@ -270,7 +271,7 @@ monthUserApp.controller("monthUserModify",function($scope, textModal,$modalInsta
             data:$scope.tempUser,
         }).success(function(response){
             if(response.status==1001){
-                $scope.result="成功";
+                $scope.result="开卡成功";
                 $scope.showResult=true;
                 $scope.showLoader=false;
                 $timeout(function(){
@@ -282,9 +283,15 @@ monthUserApp.controller("monthUserModify",function($scope, textModal,$modalInsta
             }
             else
             {
+            	$scope.result="开卡失败";
+            	$scope.showResult=true;
+            	$scope.showLoader=false;
                 textModal.open($scope, "失败","操作失败");
             }
         }).error(function(){
+        	$scope.result="开卡失败";
+        	$scope.showResult=true;
+        	$scope.showLoader=false;
             textModal.open($scope, "失败","操作失败");
         });
     };

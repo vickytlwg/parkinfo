@@ -24,7 +24,8 @@ public class PosdataServiceImpl implements PosdataService {
 	private PosdataDAO posdataDAO;
 	@Autowired
 	private ParkService parkService;
-	@Autowired PosChargeDataService posChargeService;
+	@Autowired
+	private PosChargeDataService posChargeService;
 	@Override
 	public int insert(Posdata record) {
 		// TODO Auto-generated method stub
@@ -71,6 +72,13 @@ public class PosdataServiceImpl implements PosdataService {
 		// TODO Auto-generated method stub
 		return posdataDAO.selectPosdataByParkAndRange(parkName, startDay, endDay);
 	}
+	
+	@Override
+	public List<Posdata> selectPosdataByParkAndRange2(String parkName, Date startDay, Date endDay) {
+		// TODO Auto-generated method stub
+		return posdataDAO.selectPosdataByParkAndRange2(parkName, startDay, endDay);
+	}
+	
 	@Override
 	public Map<String, Object> getParkChargeByDay(int parkId, String day) {
 		// TODO Auto-generated method stub
@@ -108,6 +116,45 @@ public class PosdataServiceImpl implements PosdataService {
 		retmap.put("realMoney", realReceiveMoney);
 		return retmap;
 	}
+	
+	@Override
+	public Map<String, Object> getParkChargeByDay2(int parkId, String day) {
+		// TODO Auto-generated method stub
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+		Date parsedStartDay = null;
+		try {
+			parsedStartDay = sdf.parse(day + " 00:00:00");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}	
+		Date parsedEndDay  = null;
+		try {
+			parsedEndDay = sdf.parse(day + " 23:59:59");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}	
+		Park park = parkService.getParkById(parkId);
+		String parkName=park.getName();
+		List<Posdata> posdata=selectPosdataByParkAndRange(parkName,parsedStartDay,parsedEndDay);
+		if (posdata.isEmpty()) {
+			return posChargeService.getParkChargeByDay2(parkId, day);
+		}
+		Map<String, Object> retmap=new HashMap<>();
+		float chargeTotal=0;
+		float realReceiveMoney=0;
+		for (Posdata posdata2 : posdata) {
+			if (posdata2.getMode()==1) {
+				chargeTotal+=posdata2.getMoney().floatValue();
+				realReceiveMoney+=posdata2.getGiving().floatValue()+posdata2.getRealmoney().floatValue()-
+						posdata2.getReturnmoney().floatValue();
+			}
+			
+		}
+		retmap.put("totalMoney", chargeTotal);
+		retmap.put("realMoney", realReceiveMoney);
+		return retmap;
+	}
+	
 	@Override
 	public List<Posdata> getPosdataByCarportAndRange(String parkName, String carportId, Date startDay, Date endDay) {
 		// TODO Auto-generated method stub

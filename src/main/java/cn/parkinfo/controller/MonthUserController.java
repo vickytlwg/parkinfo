@@ -38,6 +38,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 
 import cn.parkinfo.service.UserParkService;
+import cn.parkinfo.dao.MonthuserDAO;
 import cn.parkinfo.model.AuthUser;
 import cn.parkinfo.model.AuthUserRole;
 import cn.parkinfo.model.Constants;
@@ -68,8 +69,11 @@ private UserParkService userParkService;
 private ExcelExportService excelExportService;
 @Autowired
 ParkService parkService;
-//@Autowired
-//private PosChargeDataService chargeSerivce;
+@Autowired
+private PosChargeDataService chargeSerivce;
+@Autowired
+private MonthuserDAO mdao;
+
 
 @RequestMapping(value = "/getExcel")
 @ResponseBody
@@ -80,7 +84,7 @@ public void getExcelByPark(HttpServletRequest request, HttpServletResponse respo
 	List<Monthuser> posdatas = monthUserService.getByPark(Integer.parseInt(parkId));
 	String docsPath = request.getSession().getServletContext().getRealPath("/");
 	final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
-	String[] headers = { "停车场名", "卡号", "车主姓名", "车牌号", "描述", "证件号码", "开始时间", "结束时间", "支付金额", "状态"};
+	String[] headers = { "停车场名", "卡号", "车主姓名", "车牌号", "描述", "类型", "开始时间", "结束时间", "支付金额", "状态"};
 	OutputStream out = new FileOutputStream(docsPath + FILE_SEPARATOR + "monthusers.xlsx");
 	XSSFWorkbook workbook = new XSSFWorkbook();
 	excelExportService.produceExceldataMonthUser("收费明细", headers, posdatas, workbook);
@@ -96,23 +100,23 @@ public void getExcelByPark(HttpServletRequest request, HttpServletResponse respo
 @ResponseBody
 public void getExcelByParkAndDayRange(HttpServletRequest request, HttpServletResponse response)
 		throws FileNotFoundException, NumberFormatException, ParseException {
-//	String starttime = request.getParameter("starttime");
-//	String endtime = request.getParameter("endtime");
+	String startDate = request.getParameter("startDate");
+	String endDate = request.getParameter("endDate");
 	String parkId = request.getParameter("parkId");
 
-	List<Monthuser> posdatas = monthUserService.getByPark(Integer.parseInt(parkId));
+	List<PosChargeData> posdatas = chargeSerivce.getByParkAndDayRange(Integer.parseInt(parkId), startDate, endDate);
 	String docsPath = request.getSession().getServletContext().getRealPath("/");
 	final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
-	String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "实收费", "应收费", "补交", "返还", "进场时间", "离场时间" };
+	String[] headers = { "停车场名", "卡号", "车主姓名", "车牌号", "描述", "证件号码", "开始时间", "结束时间", "支付金额", "状态" };
 	OutputStream out = new FileOutputStream(docsPath + FILE_SEPARATOR + "poschargedata.xlsx");
 	XSSFWorkbook workbook = new XSSFWorkbook();
-	excelExportService.produceExceldataMonthUser("收费明细", headers, posdatas, workbook);
+	excelExportService.produceExceldataPosChargeData("收费明细", headers, posdatas, workbook);
 	try {
 		workbook.write(out);
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
-	Utility.download(docsPath + FILE_SEPARATOR + "poschargedata.xlsx", response);
+	Utility.download(docsPath + FILE_SEPARATOR + "monthusers.xlsx", response);
 }
 
 
@@ -263,13 +267,15 @@ public String deletePark(@RequestBody Monthuserpark monthUserPark){
 @ResponseBody
 public String insert(@RequestBody Monthuser monthUser){
 	Map<String, Object> result=new HashMap<>();
-	List<Monthuser> monthusers=monthUserService.getByCarnumberAndPark(monthUser.getCardnumber(), monthUser.getParkid());
+	List<Monthuser> monthusers=monthUserService.getByCarnumberAndPark2(monthUser.getPlatenumber(), monthUser.getParkid());
+	
 	if (!monthusers.isEmpty()) {
 		result.put("status", 1002);
-		result.put("message", "用户已存在");
+		result.put("message", "用户已存在");  
 		return Utility.gson.toJson(result);
 	}
-
+	
+	
 	int num=monthUserService.insertSelective(monthUser);
 
 	if (num==1) {

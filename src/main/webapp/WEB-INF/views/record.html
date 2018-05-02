@@ -76,8 +76,8 @@
 										<!-- <th hidden><span>车位号</span></th>
 										<th hidden><span>操作员id</span></th> -->
 										<th><span>收费状态</span></th>	
-										<th><span>实收</span></th>
-										<th><span>应收</span></th>
+										<!-- <th><span>实收</span></th> -->
+										<th><span>金额</span></th>
 										<!-- <th hidden><span>补交</span></th>
 										<th hidden><span>找零</span></th>	 -->
 										<th><span>进场时间</span></th>	
@@ -92,9 +92,9 @@
 				          		<td ng-bind="item.parkDesc"></td>
 				          		<!-- <td ng-bind="item.portNumber" hidden></td>
 				          		<td ng-bind="item.operatorId" hidden></td> -->
-				          		<td ng-if="item.paidCompleted==true" class="success">已收费</td>
-								<td ng-if="item.paidCompleted==false" class="warning">未收费</td>
-				          		<td ng-bind="item.paidMoney"></td>
+				          		<td ng-if="item.paidCompleted==true" class="success">已出场</td>
+								<td ng-if="item.paidCompleted==false" class="warning">未出场</td>
+				          		<!-- <td ng-bind="item.paidMoney"></td> -->
 				          		<td ng-bind="item.chargeMoney"></td>
 								<!-- <td ng-bind="item.givenMoney" hidden></td>
 				          		<td ng-bind="item.changeMoney" hidden></td> -->

@@ -104,6 +104,9 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
         });
     };
     parkToZoneCenter();
+    
+    
+    //统计图1
     var dateInitialparkcharge = function() {
         $('#parkMonth').val(new Date().format('yyyy-MM'));
         $('#parkMonth').datepicker({
@@ -123,6 +126,7 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
     };
     dateInitialparkcharge();
     dateInitial();
+    
 
     $scope.getParks = function(streetId) {
         if (streetId==undefined||streetId==null) {
@@ -138,9 +142,9 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
             }
         });
     };
-
-
-    //作图
+    
+    
+    //作图1
     var renderChart = function(category, seriesData) {
         var myChart = echarts.init(document.getElementById('chart_park_period_charge'));
         var option = {
@@ -195,6 +199,8 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
         };
         renderChart($scope.catagory, [series1, series2]);
     };
+    
+    
     //根据日期范围获取停车场收费
     $scope.getParkChargeByRange = function() {
         var dateselect = $('#parkMonth').val();
@@ -218,7 +224,114 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
             chartData();
         });
     };
+    
+    
+  //统计图2
+    var dateInitialparkcharge = function() {
+        $('#parkMonth2').val(new Date().format('yyyy-MM'));
+        $('#parkMonth2').datepicker({
+            autoClose : true,
+            dateFormat : "yyyy-mm",
+            months : ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            monthsShort : ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+            showMonthAfterYear : true,
+            viewStart : 1,
+            weekStart : 1,
+            yearSuffix : "年",
+            isDisabled : function(date) {
+                return date.valueOf() > Date.now() ? true : false;
+            }
+        });
+        $scope.monthDate2 = $('#parkMonth2').val();
+    };
+    dateInitialparkcharge();
+    dateInitial();
+    
+    //作图2
+    var renderChart2 = function(category, seriesData) {
+        var myChart2 = echarts.init(document.getElementById('chart_park_period_charge2'));
+        var option2 = {
+            title : {
+                text : '停车场每日车流量对比',
+                subtext : '月单位'
+            },
+            tooltip : {
+                trigger : 'axis'
+            },
+            legend : {
+                data : ['进场', '出场']
+            },
+            toolbox : {
+                show : true,
+                feature : {
+                    mark : {
+                        show : true
+                    },
+                    saveAsImage : {
+                        show : true
+                    }
+                }
+            },
+            calculable : true,
+            xAxis : [{
+                type : 'category',
+                boundaryGap : false,
+                data : category
+            }],
+            yAxis : [{
+                type : 'value',
+                axisLabel : {
+                    formatter : '{value} '
+                }
+            }],
+            series : seriesData,
+        };
+/*        console.log("dadadadadadadadadada");*/
+        myChart2.setOption(option2);
+    };
 
+    var chartData2 = function() {
+/*        console.log("调用chartData2 ");*/
+        var series1 = {
+            name : '进场',
+            type : 'line',
+            data : $scope.totalMoney
+        };
+        var series2 = {
+            name : '出场',
+            type : 'line',
+            data : $scope.realMoney
+        };
+        renderChart2($scope.catagory, [series1, series2]);
+
+    };
+    
+    
+    //根据日期范围获取停车场收费
+      $scope.getParkChargeByRange2 = function() {
+          var dateselect = $('#parkMonth2').val();
+          var dateStart = new Date(dateselect.substring(0, 7) + '-01');
+          var dateEnd = dateStart;
+          dateEnd.setMonth(dateStart.getMonth() + 1);
+
+          getDataService.getParkChargeByRange2($scope.parkid, dateselect.substring(0, 7) + '-01', dateEnd.getFullYear() + '-' + (dateEnd.getMonth()+1) + '-01').then(function(result) {
+          $scope.catagory = [];
+          $scope.totalMoney = [];
+          $scope.realMoney = [];
+//          getDataService.getParkChargeByRange($scope.parkid, dateselect.substring(0, 7) + '-01', dateEnd.getFullYear() + '-' + (dateEnd.getMonth()+1) + '-01').then(function(result) {
+              $.each(result, function(name, value) {
+                  var date = new Date(parseInt(name));
+                  var month = date.getMonth() + 1;
+                  var day = date.getDate();
+                  $scope.catagory.push(month + '-' + day);
+                  $scope.totalMoney.push(value['totalMoney']);
+                  $scope.realMoney.push(value['realMoney']);
+              });
+              chartData2();
+          });
+      };
+
+    
     //获取posdata 并处理
     $scope.selectPosdataByParkAndRange = function() {
         if($scope.parkid==undefined||$scope.parkid==null){
@@ -254,6 +367,67 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
             }
         });
     };
+    
+  //获取posdata 并处理
+    $scope.selectPosdataByParkAndRange2 = function() {
+        if($scope.parkid==undefined||$scope.parkid==null){
+            return;
+        }
+        $scope.getParkById2();
+//        $scope.getParkChargeByRange();
+        $scope.getParkChargeByRange2();
+        var date = $('#date').val();
+        var dateInit = new Date(date);
+        dateInit.setDate(dateInit.getDate() + 1);
+        var dateEnd = dateInit.getFullYear() + "-" + (dateInit.getMonth() + 1) + "-" + dateInit.getDate();
+        getDataService.selectPosdataByParkAndRange2($scope.parkid, date, dateEnd).then(function(data) {
+            $scope.dayChargeTotal = 0;
+            $scope.dayRealReceiveMoney = 0;
+            $scope.dayCarsCount = 0;
+            $scope.carsInCount = 0;
+            $scope.carsOutCount = 0;
+            if (data.status == 1002) {
+                getPosChargeDataByParkAndRange2($scope.parkid, date, dateEnd);                               
+                return;
+            }
+            data = data['body'];
+            for (var i = 0; i < data.length; i++) {
+                if (data[i]['mode'] == 1) {
+                    $scope.dayChargeTotal += data[i]['money'];
+                    $scope.dayRealReceiveMoney = $scope.dayRealReceiveMoney + data[i]['giving'] + data[i]['realmoney'] - data[i]['returnmoney'];
+                    $scope.carsOutCount++;
+                }
+                if (data[i]['mode'] == 0) {
+                    $scope.dayCarsCount++;
+                    $scope.carsInCount++;
+                }
+            }
+        });
+    };
+    
+    var getPosChargeDataByParkAndRange2 = function(parkid, startDay, endDay) {
+        getDataService.getPosChargeDataByParkAndRange2(parkid, startDay, endDay).then(function(data) {
+            if (data.status == 1002) {
+                return;
+            }
+            data = data['body'];
+            $scope.dayChargeTotal = 0;
+            $scope.dayRealReceiveMoney = 0;
+            $scope.dayCarsCount = 0;
+            $scope.carsInCount = 0;
+            $scope.carsOutCount = 0;
+            for (var i = 0; i < data.length; i++) {
+                $scope.dayChargeTotal += data[i]['chargeMoney'];
+                $scope.dayRealReceiveMoney = $scope.dayRealReceiveMoney + data[i]['paidMoney'] + data[i]['givenMoney'] - data[i]['changeMoney'];
+                $scope.carsInCount++;
+                if (data[i]['exitDate'] != null) {
+                    $scope.carsOutCount++;
+                    $scope.dayCarsCount++;
+                }
+            }
+        });
+    };
+    
    
     var getPosChargeDataByParkAndRange = function(parkid, startDay, endDay) {
         getDataService.getPosChargeDataByParkAndRange(parkid, startDay, endDay).then(function(data) {
@@ -288,6 +462,18 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
         });
     };
     $scope.selectPosdataByParkAndRange();
+    
+  //获取停车场 得到停车位数据
+    $scope.getParkById2 = function() {
+        getDataService.getParkById2($scope.parkid).then(function(result) {
+            $scope.carportsCount = result.portCount;
+            $scope.selectedParkName = result.name;
+            $scope.selectedParkNum = result.id;
+            $scope.principalName = result.contact;
+            $scope.contactNumber = result.number;
+        });
+    };
+    $scope.selectPosdataByParkAndRange2();
 
 }).service("getDataService", function($http, $q) {
     var getParkChargeByRange = function(parkId, startDay, endDay) {
@@ -306,6 +492,24 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
         });
         return promise;
     };
+    
+    var getParkChargeByRange2 = function(parkId, startDay, endDay) {
+        var deferred = $q.defer();
+        var promise = deferred.promise;
+        $http({
+            url : '/parkinfo/pos/getParkChargeByRange',
+            method : 'post',
+            data : {
+                'parkId' : parkId,
+                'startDay' : startDay,
+                'endDay' : endDay
+            }
+        }).success(function(response) {
+            deferred.resolve(response);
+        });
+        return promise;
+    };
+    
 
     var selectPosdataByParkAndRange = function(parkId, startDay, endDay) {
         var deferred = $q.defer();
@@ -323,6 +527,24 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
         });
         return promise;
     };
+    
+    var selectPosdataByParkAndRange2 = function(parkId, startDay, endDay) {
+        var deferred = $q.defer();
+        var promise = deferred.promise;
+        $http({
+            url : '/parkinfo/pos/selectPosdataByParkAndRange',
+            method : 'post',
+            data : {
+                'parkId' : parkId,
+                'startDay' : startDay,
+                'endDay' : endDay
+            }
+        }).success(function(response) {
+            deferred.resolve(response);
+        });
+        return promise;
+    };
+    
     var getPosChargeDataByParkAndRange = function(parkId, startDay, endDay) {
         var deferred = $q.defer();
         $http({
@@ -338,7 +560,38 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
         });
         return deferred.promise;
     };
+    
+    var getPosChargeDataByParkAndRange2 = function(parkId, startDay, endDay) {
+        var deferred = $q.defer();
+        $http({
+            url : '/parkinfo/pos/charge/getByParkAndRange',
+            method : 'post',
+            data : {
+                'parkId' : parkId,
+                'startDay' : startDay,
+                'endDay' : endDay
+            }
+        }).success(function(response) {
+            deferred.resolve(response);
+        });
+        return deferred.promise;
+    };
+    
     var getParkById = function(id) {
+        var deferred = $q.defer();
+        var promise = deferred.promise;
+        $http({
+            url : '/parkinfo/getPark/' + id,
+            method : 'get'
+        }).success(function(response) {
+            if (response.status = 1001) {
+                deferred.resolve(response.body);
+            };
+        });
+        return promise;
+    };
+    
+    var getParkById2 = function(id) {
         var deferred = $q.defer();
         var promise = deferred.promise;
         $http({
@@ -353,9 +606,13 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
     };
     return {
         getParkChargeByRange : getParkChargeByRange,
+        getParkChargeByRange2 : getParkChargeByRange2,
         selectPosdataByParkAndRange : selectPosdataByParkAndRange,
+        selectPosdataByParkAndRange2 : selectPosdataByParkAndRange2,
         getParkById : getParkById,
-        getPosChargeDataByParkAndRange : getPosChargeDataByParkAndRange
+        getParkById2 : getParkById2,
+        getPosChargeDataByParkAndRange : getPosChargeDataByParkAndRange,
+        getPosChargeDataByParkAndRange2 : getPosChargeDataByParkAndRange2
     };
 }).factory("getPositionData", function($http, $q) {
     var getZoneCenter = function() {

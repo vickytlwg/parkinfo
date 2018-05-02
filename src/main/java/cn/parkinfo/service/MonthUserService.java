@@ -35,6 +35,8 @@ public interface  MonthUserService {
 	    
 	    List<Monthuser> getByCarnumberAndPark(String carnumber,int parkId);
 	    
+	    List<Monthuser> getByCarnumberAndPark2(String platenumber,int parkId);
+	    
 	    List<Monthuser> getByPlateNumber(String platenumber);
 	    
 	    List<Monthuser> getByPark(int parkId) throws ParseException;

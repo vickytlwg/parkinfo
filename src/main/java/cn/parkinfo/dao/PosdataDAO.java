@@ -22,6 +22,9 @@ public interface PosdataDAO {
 
 	public List<Posdata> selectPosdataByParkAndRange(@Param("parkName") String parkName,
 			@Param("startDay") Date startDay, @Param("endDay") Date endDay);
+	
+	public List<Posdata> selectPosdataByParkAndRange2(@Param("parkName") String parkName,
+			@Param("startDay") Date startDay, @Param("endDay") Date endDay);
 
 	public List<Posdata> getPosdataByCarportAndRange(@Param("parkName") String parkName,
 			@Param("carportid") String carportid, @Param("startDay") Date startDay, @Param("endDay") Date endDay);

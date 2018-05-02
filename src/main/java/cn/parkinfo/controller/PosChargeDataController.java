@@ -259,6 +259,45 @@ public class PosChargeDataController {
 		}
 		return Utility.gson.toJson(retMap);
 	}
+	
+	@RequestMapping(value = "/getByParkAndRange2", method = RequestMethod.POST, produces = {
+		"application/json;charset=utf-8" })
+	@ResponseBody
+	public String getByParkAndRange2(@RequestBody Map<String, Object> args) {
+		int parkId = 1;
+		try {
+			parkId = Integer.parseInt((String) args.get("parkId"));
+		} catch (Exception e) {
+			// TODO: handle exception
+			parkId = (int) args.get("parkId");
+		}
+		String startDay = (String) args.get("startDay");
+		String endDay = (String) args.get("endDay");
+		Map<String, Object> retMap = new HashMap<String, Object>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date parsedStartDay = null;
+		try {
+			parsedStartDay = sdf.parse(startDay + " 00:00:00");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		Date parsedEndDay = null;
+		try {
+			parsedEndDay = sdf.parse(endDay + " 00:00:00");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		List<PosChargeData> posChargeDatas = chargeSerivce.selectPosdataByParkAndRange2(parsedStartDay, parsedEndDay,
+				parkId);
+		if (posChargeDatas.isEmpty()) {
+			retMap.put("status", 1002);
+		} else {
+			retMap.put("status", 1001);
+			retMap.put("message", "success");
+			retMap.put("body", posChargeDatas);
+		}
+		return Utility.gson.toJson(retMap);
+	}
 
 	@RequestMapping(value = "getByCardnumber", method = RequestMethod.POST, produces = {
 			"application/json;charset=UTF-8" })

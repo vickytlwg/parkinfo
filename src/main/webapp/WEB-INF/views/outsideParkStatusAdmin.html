@@ -18,6 +18,7 @@
 <script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>
 <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
 <script src="/parkinfo/script/outsideParkStatusAdmin1.js?v=1.1"></script>
+<!-- <script src="/parkinfo/script/outsideParkStatusAdmin2.js?v=1.1"></script> -->
 <script type="text/javascript">
 require.config({
 	paths:{
@@ -420,8 +421,9 @@ require(
 <!--                                 </div> -->
 <!--                             </div>./col -->
                         </div>
+                        
 
-                        <div class="row" style="padding-top:25px">
+						<div class="row" style="padding-top:25px">
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="parkMonth" class="control-label">选择月份</label>
@@ -432,6 +434,19 @@ require(
                         <div class="row" >
                             <div style="height:400px;width:95%;padding-left:10px" id = "chart_park_period_charge"></div>
                         </div>
+
+                        <div class="row" style="padding-top:25px">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="parkMonth2" class="control-label">选择月份</label>
+                                    <input type="text" ng-model="monthDate2" ng-change="getParkChargeByRange2()" id="parkMonth2" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <div style="height:400px;width:95%;padding-left:10px;" id = "chart_park_period_charge2"></div>
+                        </div>
+                        
                     </div>
     </section>
 

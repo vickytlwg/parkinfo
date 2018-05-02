@@ -324,7 +324,10 @@ public class ExcelExportService {
 
 			XSSFCell cell6 = row1.createCell(5);
 			cell6.setCellStyle(style2);
-			cell6.setCellValue(posdata.getCertificatenumber());
+			cell6.setCellValue("");
+			if(posdata.getType()!=null){
+				cell6.setCellValue(posdata.getType()==1?"预约":"包月");
+			}
 
 			XSSFCell cell7 = row1.createCell(6);
 			cell7.setCellStyle(style2);
