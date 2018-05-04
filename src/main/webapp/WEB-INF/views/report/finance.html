@@ -91,7 +91,7 @@
         </div>
     </div>
 <div class="conr">
-	<iframe id="mainFrame" name="mainFrame" scrolling="no" onload="changeFrameHeight()" src="/parkinfo/reconciliation" frameborder="0" style="padding: 0px; width: 100%;min-height:1200px"></iframe>
+	<iframe id="mainFrame" name="mainFrame" scrolling="no" style="padding: 0px; width: 100%;height:1200px" src="/parkinfo/reconciliation" frameborder="0" style="padding: 0px; width: 100%;min-height:1200px"></iframe>
 </div>
 </div>
 <script >
@@ -100,7 +100,7 @@ function changeFrameHeight(){
     ifm.height=ifm.contentWindow.document.body.scrollHeight;
     
     if(ifm.height<800){
-    ifm.height=800
+    ifm.height=980
     }
 }
 window.onresize=function(){  

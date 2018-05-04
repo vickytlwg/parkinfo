@@ -15,19 +15,8 @@
 <script src="/parkinfo/js/bootstrap.min.js"></script>
 <script src="/parkinfo/script/datepicker.js"></script>
 <script src="/parkinfo/script/reconciliation.js"></script>
-<script src="/parkinfo/script/tm.pagination.js"></script>
-<script src="/parkinfo/script/feeDetail.js?v=1.3"></script>
+<script src="/parkinfo/script/feeDetail1.js?v=1.2"></script>
 
-<style>
-        .page-list .pagination {float:left;}
-        .page-list .pagination span {cursor: pointer;}
-        .page-list .pagination .separate span{cursor: default; border-top:none;border-bottom:none;}
-        .page-list .pagination .separate span:hover {background: none;}
-        .page-list .page-total {float:left; margin: 25px 20px;}
-        .page-list .page-total input, .page-list .page-total select{height: 26px; border: 1px solid #ddd;}
-        .page-list .page-total input {width: 40px; padding-left:3px;}
-        .page-list .page-total select {width: 50px;}
-</style>
 <div class="" ng-app="feeDetailApp" ng-controller="feeDetailCtrl">
     <section class="content-header">
         <h1> 停车记录 <small></small></h1>
@@ -68,7 +57,7 @@
                                     </div>
                                 </div>
 
-                                <div class="row" style="padding-top:15px">
+                                <div class="row" style="padding-top:15px" hidden>
                                     <div class="col-md-1">
                                         <label class="label-control" style="float:right;padding-top:10px">在停车:</label>
                                     </div>
@@ -87,14 +76,14 @@
                                         <input type="text" id="date" ng-model="endDate" class="form-control date">
                                     </div>
                                     <div class="col-md-1">
-                                        <button  type="button" class="btn btn-info" ng-click="searchParkingRecords()" style="float:left">
-                                            查找在停
+                                        <button  type="button" class="btn btn-info" ng-click="searchByParkName()" style="float:left">
+                                                                                                             查找在停
                                         </button>
                                     </div>
 
                                 </div>
 
-                                <div class="row" style="padding-top:25px" >
+                                <div class="row" style="padding-top:25px" hidden>
 
                                     <div class="col-md-1">
                                         <label class="label-control" style="float:right;padding-top:10px"> 免费:</label>
@@ -107,17 +96,17 @@
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="text" id="date" ng-model="startDate1" class="form-control date">
+                                        <input type="text" id="date" ng-model="startDate" class="form-control date">
                                     </div>
 
                                     <div class="col-md-3">
-                                        <input type="text" id="date" ng-model="endDate1" class="form-control date">
+                                        <input type="text" id="date" ng-model="endDate" class="form-control date">
                                     </div>
                                    
                                  
                                     <div class="col-md-1">
-                                        <button  type="button" class="btn btn-info" ng-click="searchFreeRecords()" style="float:left">
-                                                                                                    免费记录
+                                        <button  type="button" class="btn btn-info" ng-click="searchByParkName()" style="float:left">
+                                                                                                            免费记录
                                         </button>
                                     </div>
                                 </div>
@@ -172,8 +161,41 @@
                                     <td ng-if="item.url==''">暂无</td> -->
                             </table>
                         </div>
-                <tm-pagination conf="paginationConf"></tm-pagination>
-                       
+
+                        <div class="box-footer clearfix">
+                            <div ng-hide="detail.loading">
+                                <small ng-bind="'获取到' + detail.items.length + '/' + detail.page.allCounts + '条结果！'"> </small>
+                            </div>
+                            <ul ng-hide="detail.page.hidden" class="pagination pagination-sm no-margin pull-right">
+                                <li ng-click='detail.firstPage()'>
+                                    <a href>第一页</a>
+                                </li>
+                                <li ng-click='detail.previousPage()'>
+                                    <a href>上一页</a>
+                                </li>
+                                <li >
+                                    <span style="display:inline; padding:0px; ">
+                                        <div class="input-group" style="width:70px;">
+                                            <input type="text"  style="height:28px" name="table_search" class="form-control input-sm pull-right" ng-model="detail.page.index" >
+                                            <div  class="input-group-btn">
+                                                <button style="height:28px" class="btn btn-sm btn-default" ng-click="detail.getPage()">
+                                                    <i class="fa fa-chevron-right"></i>
+                                                </button>
+                                            </div>
+                                        </div> </span>
+
+                                </li>
+                                <li ng-click='detail.nextPage()'>
+                                    <a href>下一页</a>
+                                </li>
+                                <li ng-click='detail.lastPage()'>
+                                    <a href>最后页</a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
 
                 </div>
             </div>

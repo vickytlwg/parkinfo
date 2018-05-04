@@ -1,4 +1,4 @@
-var chargeApp = angular.module("feeDetailApp", ['ui.bootstrap','tm.pagination']);
+var chargeApp = angular.module("feeDetailApp", ['ui.bootstrap']);
 
 chargeApp.controller("feeDetailCtrl", ['$scope', '$http', '$window','textModal', 'textModalTest','$modal', '$timeout',
 function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
@@ -16,10 +16,8 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
         }
     };
  $scope.searchDate=new Date().format('yyyy-MM-dd  hh:mm:ss');
- $scope.startDate=new Date(new Date().getTime()-1000*60*60*24).format('yyyy-MM-dd  hh:mm:ss');
+ $scope.startDate=new Date().format('yyyy-MM-dd  hh:mm:ss');
  $scope.endDate=new Date().format('yyyy-MM-dd  hh:mm:ss');
- $scope.startDate1=new Date(new Date().getTime()-1000*60*60*24).format('yyyy-MM-dd  hh:mm:ss');
- $scope.endDate1=new Date().format('yyyy-MM-dd  hh:mm:ss');
       var dateInitial=function(){
         $('.date').datepicker({
             autoClose: true,
@@ -36,54 +34,6 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
             isDisabled: function(date){return date.valueOf() > Date.now() ? true : false;}        
         });
     };  
-    
-     $scope.paginationConf = {
-            currentPage: 1,
-            totalItems: 500,
-            itemsPerPage: 30,
-            pagesLength: 10,
-            perPageOptions: [20,30,40,50],
-            rememberPerPage: 'perPageItems',
-            onChange: function(){
-                getInitail($scope.pagedata);
-            }
-        };
-        $scope.pagedata=[];
-       
-        var getInitail=function(data){
-            $scope.pagedata=data;
-             $scope.paginationConf.totalItems=data.length;
-             var currentData=[];
-             var start=($scope.paginationConf.currentPage-1)*$scope.paginationConf.itemsPerPage;
-             for (var i= 0 ; i < $scope.paginationConf.itemsPerPage; i++) {
-               if(data.length>(start + i))
-               currentData[i]=data[start+i];
-             };
-             $scope.detail.items=currentData;
-        };
-    
-    $scope.searchParkingRecords=function(){
-        $http({
-            url:'/parkinfo/pos/charge/getParkingData',
-            method:'post',
-            data:{"startDate":$scope.startDate,"endDate":$scope.endDate,"parkId":$('#park-select').val()}
-        }).success(function(response){
-            if(response.status==1001){
-                getInitail(response.body);
-            }
-        });
-    };
-    $scope.searchFreeRecords=function(){
-         $http({
-            url:'/parkinfo/pos/charge/getFreeData',
-            method:'post',
-            data:{"startDate":$scope.startDate1,"endDate":$scope.endDate1,"parkId":$('#park-select2').val()}
-        }).success(function(response){
-            if(response.status==1001){
-                getInitail(response.body);
-            }
-        });
-    };
    dateInitial();
 
     $scope.detail.getCount = function() {
@@ -122,7 +72,7 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
             data:{"cardNumber":$scope.searchText}
         }).success(function(response){
             if(response.status==1001){
-                getInitail(response.body);
+                $scope.detail.items=response.body;
             }
         });
     };
@@ -149,7 +99,7 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
             data:{"parkName":$scope.searchParkNameText}
         }).success(function(response){
             if(response.status==1001){
-                 getInitail(response.body);
+                $scope.detail.items=response.body;
             }
         });
     };
