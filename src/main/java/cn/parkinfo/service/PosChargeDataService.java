@@ -19,6 +19,10 @@ public interface PosChargeDataService {
 	
 	public List<PosChargeData> getPage(int low, int count);
 	
+	public List<PosChargeData> getParkingData(int parkId,Date startDate,Date endDate);
+	
+	public List<PosChargeData> getFreeData(int parkId,Date startDate,Date endDate);
+	
 	public List<PosChargeData> getByParkIdAndCardNumber(Integer parkId,String cardNumber);
 	
 	public List<PosChargeData> getByCardNumberAndPark(String cardNumber,Integer parkId);

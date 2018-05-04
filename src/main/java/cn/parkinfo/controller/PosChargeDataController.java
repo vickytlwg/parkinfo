@@ -106,6 +106,31 @@ public class PosChargeDataController {
 		return "record";
 	}
 
+	@RequestMapping(value = "/record1", produces = { "application/json;charset=UTF-8" })
+	public String record1(ModelMap modelMap, HttpServletRequest request, HttpSession session) {
+		String username = (String) session.getAttribute("username");
+		AuthUser user = authService.getUserByUsername(username);
+		List<Park> parkList = parkService.getParks();
+		if (username != null)
+			parkList = parkService.filterPark(parkList, username);
+		List<Park> outsideparks = new ArrayList<>();
+		for (Park park : parkList) {
+			if (park.getType() == 3) {
+				outsideparks.add(park);
+			}
+		}
+		modelMap.addAttribute("parks", outsideparks);
+		if (user != null) {
+			modelMap.addAttribute("user", user);
+			boolean isAdmin = false;
+			if (user.getRole() == AuthUserRole.ADMIN.getValue())
+				isAdmin = true;
+			modelMap.addAttribute("isAdmin", isAdmin);
+
+		}
+		return "record1";
+	}
+
 	@RequestMapping(value = "/taopaiche", produces = { "application/json;charset=UTF-8" })
 	public String taopaiche(ModelMap modelMap, HttpServletRequest request, HttpSession session) {
 		String username = (String) session.getAttribute("username");
@@ -259,9 +284,65 @@ public class PosChargeDataController {
 		}
 		return Utility.gson.toJson(retMap);
 	}
-	
+
+	@RequestMapping(value = "/getParkingData", method = RequestMethod.POST, produces = {
+			"application/json;charset=utf-8" })
+	@ResponseBody
+	public String getParkingData(@RequestBody Map<String, Object> args) throws ParseException {
+		int parkId = 1;
+		try {
+			parkId = Integer.parseInt((String) args.get("parkId"));
+		} catch (Exception e) {
+			// TODO: handle exception
+			parkId = (int) args.get("parkId");
+		}
+		String startDatestr = (String) args.get("startDate");
+		String endDatestr = (String) args.get("endDate");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date startDate = sdf.parse(startDatestr);
+		Date endDate = sdf.parse(endDatestr);
+		List<PosChargeData> posChargeDatas = chargeSerivce.getParkingData(parkId, startDate, endDate);
+		Map<String, Object> retMap = new HashMap<String, Object>();
+		if (posChargeDatas.isEmpty()) {
+			retMap.put("status", 1002);
+		} else {
+			retMap.put("status", 1001);
+			retMap.put("message", "success");
+			retMap.put("body", posChargeDatas);
+		}
+		return Utility.gson.toJson(retMap);
+	}
+
+	@RequestMapping(value = "/getFreeData", method = RequestMethod.POST, produces = {
+			"application/json;charset=utf-8" })
+	@ResponseBody
+	public String getFreeData(@RequestBody Map<String, Object> args) throws ParseException {
+		int parkId = 1;
+		try {
+			parkId = Integer.parseInt((String) args.get("parkId"));
+		} catch (Exception e) {
+			// TODO: handle exception
+			parkId = (int) args.get("parkId");
+		}
+		String startDatestr = (String) args.get("startDate");
+		String endDatestr = (String) args.get("endDate");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date startDate = sdf.parse(startDatestr);
+		Date endDate = sdf.parse(endDatestr);
+		List<PosChargeData> posChargeDatas = chargeSerivce.getFreeData(parkId, startDate, endDate);
+		Map<String, Object> retMap = new HashMap<String, Object>();
+		if (posChargeDatas.isEmpty()) {
+			retMap.put("status", 1002);
+		} else {
+			retMap.put("status", 1001);
+			retMap.put("message", "success");
+			retMap.put("body", posChargeDatas);
+		}
+		return Utility.gson.toJson(retMap);
+	}
+
 	@RequestMapping(value = "/getByParkAndRange2", method = RequestMethod.POST, produces = {
-		"application/json;charset=utf-8" })
+			"application/json;charset=utf-8" })
 	@ResponseBody
 	public String getByParkAndRange2(@RequestBody Map<String, Object> args) {
 		int parkId = 1;
@@ -318,16 +399,15 @@ public class PosChargeDataController {
 		AuthUser user = authService.getUserByUsername(username);
 		List<Park> parkList = parkService.getParks();
 		if (username == null)
-			return null;	
-		if (user.getRole() == AuthUserRole.ADMIN.getValue())
-		{
+			return null;
+		if (user.getRole() == AuthUserRole.ADMIN.getValue()) {
 			return Utility.createJsonMsg(1001, "success", chargeSerivce.getByCardNumber(cardNumber));
 		}
-			parkList = parkService.filterPark(parkList, username);
-			List<PosChargeData> posChargeDatas=new ArrayList<>();
-			for (Park park : parkList) {
-				posChargeDatas.addAll(chargeSerivce.getByCardNumberAndPark(cardNumber, park.getId()));
-			}
+		parkList = parkService.filterPark(parkList, username);
+		List<PosChargeData> posChargeDatas = new ArrayList<>();
+		for (Park park : parkList) {
+			posChargeDatas.addAll(chargeSerivce.getByCardNumberAndPark(cardNumber, park.getId()));
+		}
 		return Utility.createJsonMsg(1001, "success", posChargeDatas);
 	}
 

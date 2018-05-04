@@ -1,4 +1,4 @@
-var chargeApp = angular.module("feeDetailApp", ['ui.bootstrap']);
+var chargeApp = angular.module("feeDetailApp", ['ui.bootstrap', 'tm.pagination']);
 
 chargeApp.controller("feeDetailCtrl", ['$scope', '$http', '$window','textModal', 'textModalTest','$modal', '$timeout',
 function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
@@ -16,8 +16,8 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
         }
     };
  $scope.searchDate=new Date().format('yyyy-MM-dd');
- $scope.startDate=new Date().format('yyyy-MM-dd hh:mm:ss');
- $scope.endDate=new Date().format('yyyy-MM-dd hh:mm:ss');
+ $scope.startDate=new Date().format('yyyy-MM-dd');
+ $scope.endDate=new Date().format('yyyy-MM-dd');
       var dateInitial=function(){
         $('.date').datepicker({
             autoClose: true,
@@ -35,9 +35,35 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
         });
     };  
    dateInitial();
+    
+     $scope.paginationConf = {
+        currentPage : 1,
+        totalItems : 500,
+        itemsPerPage : 20,
+        pagesLength : 10,
+        perPageOptions : [20, 30, 40, 50],
+        rememberPerPage : 'perPageItems',
+        onChange : function() {
+            getInitail($scope.pagedata);
+        }
+    };
+    $scope.pagedata = [];
+    $scope.currentData=[];
+    var getInitail = function(data) {
+        $scope.pagedata = data;
+        $scope.paginationConf.totalItems = data.length;      
+        $scope.currentData=[];
+        var start = ($scope.paginationConf.currentPage - 1) * $scope.paginationConf.itemsPerPage;
+        for (var i = 0; i < $scope.paginationConf.itemsPerPage; i++) {
+            if(data.length>(start + i))
+            $scope.currentData[i] = data[start + i];
+        };
+         $scope.detail.items = $scope.currentData;
+    };
 
+    
     $scope.detail.getCount = function() {
-        $http.get('/parkinfo/pos/charge/count').success(function(response) {
+        $http.get('count').success(function(response) {
             if (response.status == 1001) {
                 $scope.detail.page.hidden = false;
                 $scope.detail.page.allCounts = response.body;
@@ -45,6 +71,7 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
                 $scope.detail.page.indexRange = [1];
                 for (var i = 2; i <= maxIndex; i++)
                     $scope.detail.page.indexRange.push(i);
+
             } else
                 textModal.open($scope, "错误", "获取计费错误: " + response.status);
         }).error(function(response) {
@@ -79,7 +106,6 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
         $scope.detail.getPage();
     };
     $scope.searchText="";
-    $scope.parkId="";
     $scope.searchByCardnumber=function(){
         if($scope.searchText==""||$scope.searchText==undefined){
             return;
@@ -87,24 +113,24 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
         $http({
             url:'/parkinfo/pos/charge/getByCardnumberAuthority',
             method:'post',
-            data:{"cardNumber":$scope.searchText,"parkId":$scope.parkId}
+            data:{"cardNumber":$scope.searchText}
         }).success(function(response){
             if(response.status==1001){
-                $scope.detail.items=response.body;
+                getInitail(response.body);
             }
         });
     };
     $scope.getExcelByDay=function(){  
-         $window.location.href="/parkinfo/pos/charge/getExcelByDay?date="+$scope.searchDate;
+         $window.location.href="getExcelByDay?date="+$scope.searchDate;
         };
     $scope.getExcelByDayRange=function(){  
-         $window.location.href="/parkinfo/pos/charge/getExcelByDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate;
+         $window.location.href="getExcelByDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate;
         };
     $scope.getExcelByParkAndDay=function(){
-         $window.location.href="/parkinfo/pos/charge/getExcelByParkAndDay?date="+$scope.searchDate+"&parkId="+$('#park-select').val();
+         $window.location.href="getExcelByParkAndDay?date="+$scope.searchDate+"&parkId="+$('#park-select').val();
      };
      $scope.getExcelByParkAndDayRange=function(){
-         $window.location.href="/parkinfo/pos/charge/getExcelByParkAndDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate
+         $window.location.href="getExcelByParkAndDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate
          +"&parkId="+$('#park-select2').val();
      };
      $scope.searchByParkName=function(){
@@ -116,30 +142,11 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
             method:'post',
             data:{"parkName":$scope.searchParkNameText}
         }).success(function(response){
-            if(response.status==1001){  
-                $scope.detail.items=response.body;
-            }
-        });
-    };
-    //刷新
-    $scope.refreshUser=function(){
-        $http({
-            url:'/parkinfo/monthUser/getByStartAndCount',
-            method:'post',
-            params:{start:$scope.start,count:$scope.count}
-        }).success(function(response){
             if(response.status==1001){
-                $scope.users=response.body;
+                getInitail(response.body);
             }
-            else{
-               textModal.open($scope,"错误","数据请求失败");
-            }
-        }).error(function(){
-            textModal.open($scope,"错误","数据请求失败");
         });
     };
-    
-    
     //first page
     $scope.detail.firstPage = function() {
         if ($scope.detail.page.index <= 1)
@@ -184,15 +191,15 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
         };
 
           $http.post('/parkinfo/pos/charge/pageByParkId', {
-            start : ($scope.detail.page.index - 1) * $scope.detail.page.size,
-            count : $scope.detail.page.size,
+            start : 0,
+            count : 800,
             parkId: parseInt($scope.selectedPark.value)
         }).success(function(response) {
             $scope.detail.loading = false;
 
             if (response.status == 1001) {
                 $scope.detail.items = [];
-                $scope.detail.items = response.body;
+                getInitail(response.body);
             } else
                 textModal.open($scope, "错误", "获取计费信息错误:" + response.status);
 
@@ -204,7 +211,7 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
     };
 
     //init page
-    $scope.detail.getCount();
+  //  $scope.detail.getCount();
     $scope.detail.refresh = $scope.detail.getPage;
     $scope.detail.getPage();
 
@@ -217,7 +224,7 @@ function($uibModal) {
 
     this.open = function($scope, header, body) {
         $scope.textShowModal = $uibModal.open({
-            templateUrl : 'text-modal.html',
+            templateUrl : '/park/views/template/text-modal.html',
             controller : 'textCtrl',
             scope : $scope,
             resolve : {

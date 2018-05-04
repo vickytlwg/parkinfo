@@ -62,6 +62,16 @@
     <property name="connectionProperties">
       <value>clientEncoding=UTF-8</value>
     </property>
+      <!-- 只要下面两个参数设置成小于8小时(MySql默认)，就能避免MySql的8小时自动断开连接问题 -->
+        <property name="timeBetweenEvictionRunsMillis">
+            <value>18000000</value>
+        </property><!-- 5小时 -->
+        <property name="minEvictableIdleTimeMillis">
+            <value>10800000</value>
+        </property><!-- 3小时 -->
+        <property name="validationQuery">
+            <value>SELECT 1</value>
+        </property>
   </bean>
     
     <!-- mybatis文件配置，扫描所有mapper文件 -->

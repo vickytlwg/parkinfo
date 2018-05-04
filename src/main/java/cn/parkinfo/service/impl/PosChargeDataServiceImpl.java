@@ -510,5 +510,17 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 		return chargeDao.getByCardNumber(cardNumber);
 	}
 
+	@Override
+	public List<PosChargeData> getParkingData(int parkId, Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return chargeDao.getParkingData(parkId, startDate, endDate);
+	}
+
+	@Override
+	public List<PosChargeData> getFreeData(int parkId, Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return chargeDao.getFreeData(parkId, startDate, endDate);
+	}
+
 
 }
