@@ -121,16 +121,16 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
         });
     };
     $scope.getExcelByDay=function(){  
-         $window.location.href="getExcelByDay?date="+$scope.searchDate;
+         $window.location.href="/parkinfo/pos/charge/getExcelByDay?date="+$scope.searchDate;
         };
     $scope.getExcelByDayRange=function(){  
-         $window.location.href="getExcelByDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate;
+         $window.location.href="/parkinfo/pos/charge/getExcelByDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate;
         };
     $scope.getExcelByParkAndDay=function(){
-         $window.location.href="getExcelByParkAndDay?date="+$scope.searchDate+"&parkId="+$('#park-select').val();
+         $window.location.href="/parkinfo/pos/charge/getExcelByParkAndDay?date="+$scope.searchDate+"&parkId="+$('#park-select').val();
      };
      $scope.getExcelByParkAndDayRange=function(){
-         $window.location.href="getExcelByParkAndDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate
+         $window.location.href="/parkinfo/pos/charge/getExcelByParkAndDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate
          +"&parkId="+$('#park-select2').val();
      };
      $scope.searchByParkName=function(){
