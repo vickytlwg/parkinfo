@@ -37,8 +37,6 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 	@Autowired
 	ParkService parkService;
 	
-	
-	
 	@Autowired
 	PosdataService posdataService;
 	
@@ -520,6 +518,18 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 	public List<PosChargeData> getFreeData(int parkId, Date startDate, Date endDate) {
 		// TODO Auto-generated method stub
 		return chargeDao.getFreeData(parkId, startDate, endDate);
+	}
+
+	@Override
+	public List<PosChargeData> getByParkDatetime(int parkId,Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return chargeDao.getByParkDatetime(parkId,startDate, endDate);
+	}
+
+	@Override
+	public List<PosChargeData> getChargeMoneyData(int parkId, Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return chargeDao.getChargeMoneyData(parkId, startDate, endDate);
 	}
 
 

@@ -33,7 +33,7 @@
             this.place();
             this.hide();
 
-            this.format = Datepicker.fn.parseFormat(this.defaults.format);
+            this.format = Datepicker.fn.parseFormat(this.defaults.dateFormat);
             this.fillWeek();
             this.enable();
         },
@@ -642,7 +642,7 @@
 
     Datepicker.defaults = {
         autoClose: false,
-        format: "mm/dd/yyyy",
+        dateFormat: "yyyy-mm-dd",
         days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
         daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],

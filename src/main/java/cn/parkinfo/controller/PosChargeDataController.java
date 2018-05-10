@@ -284,6 +284,35 @@ public class PosChargeDataController {
 		}
 		return Utility.gson.toJson(retMap);
 	}
+	
+	@RequestMapping(value = "/getByParkDatetime", method = RequestMethod.POST, produces = {
+			"application/json;charset=utf-8" })
+	@ResponseBody
+	public String getByParkDatetime(@RequestBody Map<String, Object> args) throws ParseException{
+		int parkId = 1;
+		try {
+			parkId = Integer.parseInt((String) args.get("parkId"));
+		} catch (Exception e) {
+			// TODO: handle exception
+			parkId = (int) args.get("parkId");
+		}
+		String startDatestr = (String) args.get("startDate");
+		String endDatestr = (String) args.get("endDate");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date startDate = sdf.parse(startDatestr);
+		Date endDate = sdf.parse(endDatestr);
+		List<PosChargeData> posChargeDatas = chargeSerivce.getByParkDatetime(parkId,startDate, endDate);
+		System.out.println(posChargeDatas);
+		Map<String, Object> retMap = new HashMap<String, Object>();
+		if (posChargeDatas.isEmpty()) {
+			retMap.put("status", 1002);
+		} else {
+			retMap.put("status", 1001);
+			retMap.put("message", "success");
+			retMap.put("body", posChargeDatas);
+		}
+		return Utility.gson.toJson(retMap);
+	}
 
 	@RequestMapping(value = "/getParkingData", method = RequestMethod.POST, produces = {
 			"application/json;charset=utf-8" })
@@ -313,10 +342,10 @@ public class PosChargeDataController {
 		return Utility.gson.toJson(retMap);
 	}
 
-	@RequestMapping(value = "/getFreeData", method = RequestMethod.POST, produces = {
+	@RequestMapping(value = "/getChargeMoneyData", method = RequestMethod.POST, produces = {
 			"application/json;charset=utf-8" })
 	@ResponseBody
-	public String getFreeData(@RequestBody Map<String, Object> args) throws ParseException {
+	public String getChargeMoneyData(@RequestBody Map<String, Object> args) throws ParseException {
 		int parkId = 1;
 		try {
 			parkId = Integer.parseInt((String) args.get("parkId"));
@@ -329,7 +358,8 @@ public class PosChargeDataController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date startDate = sdf.parse(startDatestr);
 		Date endDate = sdf.parse(endDatestr);
-		List<PosChargeData> posChargeDatas = chargeSerivce.getFreeData(parkId, startDate, endDate);
+		List<PosChargeData> posChargeDatas = chargeSerivce.getChargeMoneyData(parkId, startDate, endDate);
+		System.out.println(posChargeDatas);
 		Map<String, Object> retMap = new HashMap<String, Object>();
 		if (posChargeDatas.isEmpty()) {
 			retMap.put("status", 1002);
@@ -339,6 +369,34 @@ public class PosChargeDataController {
 			retMap.put("body", posChargeDatas);
 		}
 		return Utility.gson.toJson(retMap);
+	}
+	
+	@RequestMapping(value = "/getFreeData", method = RequestMethod.POST, produces = {
+			"application/json;charset=utf-8" })
+	@ResponseBody
+	public String getFreeData(@RequestBody Map<String, Object> args) throws ParseException {
+	int parkId = 1;
+	try {
+		parkId = Integer.parseInt((String) args.get("parkId"));
+	} catch (Exception e) {
+		// TODO: handle exception
+		parkId = (int) args.get("parkId");
+	}
+	String startDatestr = (String) args.get("startDate");
+	String endDatestr = (String) args.get("endDate");
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	Date startDate = sdf.parse(startDatestr);
+	Date endDate = sdf.parse(endDatestr);
+	List<PosChargeData> posChargeDatas = chargeSerivce.getFreeData(parkId, startDate, endDate);
+	Map<String, Object> retMap = new HashMap<String, Object>();
+	if (posChargeDatas.isEmpty()) {
+		retMap.put("status", 1002);
+	} else {
+		retMap.put("status", 1001);
+		retMap.put("message", "success");
+		retMap.put("body", posChargeDatas);
+	}
+	return Utility.gson.toJson(retMap);
 	}
 
 	@RequestMapping(value = "/getByParkAndRange2", method = RequestMethod.POST, produces = {
