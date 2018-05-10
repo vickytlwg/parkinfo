@@ -1,7 +1,7 @@
-var chargeApp = angular.module("feeDetailApp", ['ui.bootstrap','tm.pagination']);
+var chargeApp = angular.module("feeDetailApp", ['ui.bootstrap', 'tm.pagination']);
 
-chargeApp.controller("feeDetailCtrl", ['$scope', '$http', '$window','textModal', 'textModalTest','$modal', '$timeout',
-function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
+chargeApp.controller("feeDetailCtrl", ['$scope', '$http', '$window', 'textModal', 'textModalTest', '$modal', '$timeout',
+function($scope, $http, $window, textModal, textModalTest, $uibModal, $timeout) {
 
     //define table content
     $scope.detail = {
@@ -15,76 +15,116 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
             index : 1
         }
     };
- $scope.searchDate=new Date().format('yyyy-MM-dd  hh:mm:ss');
- $scope.startDate=new Date(new Date().getTime()-1000*60*60*24).format('yyyy-MM-dd  hh:mm:ss');
- $scope.endDate=new Date().format('yyyy-MM-dd  hh:mm:ss');
- $scope.startDate1=new Date(new Date().getTime()-1000*60*60*24).format('yyyy-MM-dd  hh:mm:ss');
- $scope.endDate1=new Date().format('yyyy-MM-dd  hh:mm:ss');
-      var dateInitial=function(){
+    $scope.searchDate = new Date().format('yyyy-MM-dd  hh:mm:ss');
+    $scope.startDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24).format('yyyy-MM-dd  hh:mm:ss');
+    $scope.endDate = new Date().format('yyyy-MM-dd  hh:mm:ss');
+    $scope.startDate1 = new Date(new Date().getTime() - 1000 * 60 * 60 * 24).format('yyyy-MM-dd  hh:mm:ss');
+    $scope.endDate1 = new Date().format('yyyy-MM-dd  hh:mm:ss');
+    var dateInitial = function() {
         $('.date').datepicker({
-            autoClose: true,
-            dateFormat: "yyyy-mm-dd",
-            days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
-            daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
-            daysMin: ["日", "一", "二", "三", "四", "五", "六"],
-            months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
-            monthsShort: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
-            showMonthAfterYear: true,
-            viewStart: 0,
-            weekStart: 1,
-            yearSuffix: "年",
-            isDisabled: function(date){return date.valueOf() > Date.now() ? true : false;}        
+            autoClose : true,
+            dateFormat : "yyyy-mm-dd",
+            days : ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+            daysShort : ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+            daysMin : ["日", "一", "二", "三", "四", "五", "六"],
+            months : ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            monthsShort : ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+            showMonthAfterYear : true,
+            viewStart : 0,
+            weekStart : 1,
+            yearSuffix : "年",
+            isDisabled : function(date) {
+                return date.valueOf() > Date.now() ? true : false;
+            }
         });
-    };  
-    
-     $scope.paginationConf = {
-            currentPage: 1,
-            totalItems: 500,
-            itemsPerPage: 30,
-            pagesLength: 10,
-            perPageOptions: [20,30,40,50],
-            rememberPerPage: 'perPageItems',
-            onChange: function(){
-                getInitail($scope.pagedata);
+    };
+
+    $scope.paginationConf = {
+        currentPage : 1,
+        totalItems : 500,
+        itemsPerPage : 30,
+        pagesLength : 10,
+        perPageOptions : [20, 30, 40, 50],
+        rememberPerPage : 'perPageItems',
+        onChange : function() {
+            getInitail($scope.pagedata);
+        }
+    };
+    $scope.pagedata = [];
+    var getdiff = function(datediff) {
+        var nd = 1000 * 24 * 60 * 60;
+        // 一天的毫秒数
+        var nh = 1000 * 60 * 60;
+        // 一小时的毫秒数
+        var nm = 1000 * 60;
+        // 一分钟的毫秒数
+        var ns = 1000;
+        // 一秒钟的毫秒数
+
+        var day = Math.floor(datediff / nd);
+        var hour = Math.floor(datediff % nd / nh);
+        var minutes = Math.floor(datediff % nd % nh / nm);
+        if (day != 0) {
+            return day + "天" + hour + '小时' + minutes + '分钟';
+        }
+        if (day == 0 && hour != 0) {
+            return hour + '小时' + minutes + '分钟';
+        } else {
+            return minutes + '分钟';
+        }
+    };
+    var getInitail = function(data) {
+        $scope.pagedata = data;
+        $scope.paginationConf.totalItems = data.length;
+        var currentData = [];
+        var start = ($scope.paginationConf.currentPage - 1) * $scope.paginationConf.itemsPerPage;
+        for (var i = 0; i < $scope.paginationConf.itemsPerPage; i++) {
+            if (data.length > (start + i)) {
+                var tmpdata = data[start + i];
+                var enddate = new Date();
+                var startdate = new Date(tmpdata["entranceDate"]);
+
+                if (tmpdata["exitDate"] != undefined && tmpdata["exitDate"] != null) {
+                    enddate = new Date(tmpdata["exitDate"]);
+                }
+                tmpdata.range = getdiff(enddate.getTime() - startdate.getTime());
+                currentData[i] = data[start + i];
             }
         };
-        $scope.pagedata=[];
-       
-        var getInitail=function(data){
-            $scope.pagedata=data;
-             $scope.paginationConf.totalItems=data.length;
-             var currentData=[];
-             var start=($scope.paginationConf.currentPage-1)*$scope.paginationConf.itemsPerPage;
-             for (var i= 0 ; i < $scope.paginationConf.itemsPerPage; i++) {
-               if(data.length>(start + i))
-               currentData[i]=data[start+i];
-             };
-             $scope.detail.items=currentData;
-        };
-    
-    $scope.searchParkingRecords=function(){
+        $scope.detail.items = currentData;
+    };
+
+    $scope.searchParkingRecords = function() {
         $http({
-            url:'/parkinfo/pos/charge/getParkingData',
-            method:'post',
-            data:{"startDate":$scope.startDate,"endDate":$scope.endDate,"parkId":$('#park-select').val()}
-        }).success(function(response){
-            if(response.status==1001){
+            url : '/parkinfo/pos/charge/getParkingData',
+            method : 'post',
+            data : {
+                "startDate" : $scope.startDate,
+                "endDate" : $scope.endDate,
+                "parkId" : $('#park-select').val()
+            }
+        }).success(function(response) {
+            if (response.status == 1001) {
                 getInitail(response.body);
             }
         });
     };
-    $scope.searchFreeRecords=function(){
-         $http({
-            url:'/parkinfo/pos/charge/getFreeData',
-            method:'post',
-            data:{"startDate":$scope.startDate1,"endDate":$scope.endDate1,"parkId":$('#park-select2').val()}
-        }).success(function(response){
-            if(response.status==1001){
+    $scope.searchFreeRecords = function() {
+        $http({
+            url : '/parkinfo/pos/charge/getFreeData',
+            method : 'post',
+            data : {
+                "startDate" : $scope.startDate1,
+                "endDate" : $scope.endDate1,
+                "parkId" : $('#park-select2').val()
+            }
+        }).success(function(response) {
+            if (response.status == 1001) {
                 getInitail(response.body);
             }
         });
     };
-   dateInitial();
+    dateInitial();
 
     $scope.detail.getCount = function() {
         $http.get('count').success(function(response) {
@@ -111,45 +151,48 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
         $scope.detail.page.index--;
         $scope.detail.getPage();
     };
-    $scope.searchText="";
-    $scope.searchByCardnumber=function(){
-        if($scope.searchText==""||$scope.searchText==undefined){
+    $scope.searchText = "";
+    $scope.searchByCardnumber = function() {
+        if ($scope.searchText == "" || $scope.searchText == undefined) {
             return;
         }
         $http({
-            url:'getByCardnumberAuthority',
-            method:'post',
-            data:{"cardNumber":$scope.searchText}
-        }).success(function(response){
-            if(response.status==1001){
+            url : 'getByCardnumberAuthority',
+            method : 'post',
+            data : {
+                "cardNumber" : $scope.searchText
+            }
+        }).success(function(response) {
+            if (response.status == 1001) {
                 getInitail(response.body);
             }
         });
     };
-    $scope.getExcelByDay=function(){  
-         $window.location.href="getExcelByDay?date="+$scope.searchDate;
-        };
-    $scope.getExcelByDayRange=function(){  
-         $window.location.href="getExcelByDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate;
-        };
-    $scope.getExcelByParkAndDay=function(){
-         $window.location.href="getExcelByParkAndDay?date="+$scope.searchDate+"&parkId="+$('#park-select').val();
-     };
-     $scope.getExcelByParkAndDayRange=function(){
-         $window.location.href="getExcelByParkAndDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate
-         +"&parkId="+$('#park-select2').val();
-     };
-     $scope.searchByParkName=function(){
-        if($scope.searchParkNameText==""||$scope.searchParkNameText==undefined){
+    $scope.getExcelByDay = function() {
+        $window.location.href = "getExcelByDay?date=" + $scope.searchDate;
+    };
+    $scope.getExcelByDayRange = function() {
+        $window.location.href = "getExcelByDayRange?startDate=" + $scope.startDate + "&endDate=" + $scope.endDate;
+    };
+    $scope.getExcelByParkAndDay = function() {
+        $window.location.href = "getExcelByParkAndDay?date=" + $scope.searchDate + "&parkId=" + $('#park-select').val();
+    };
+    $scope.getExcelByParkAndDayRange = function() {
+        $window.location.href = "getExcelByParkAndDayRange?startDate=" + $scope.startDate + "&endDate=" + $scope.endDate + "&parkId=" + $('#park-select2').val();
+    };
+    $scope.searchByParkName = function() {
+        if ($scope.searchParkNameText == "" || $scope.searchParkNameText == undefined) {
             return;
         }
         $http({
-            url:'getByParkName',
-            method:'post',
-            data:{"parkName":$scope.searchParkNameText}
-        }).success(function(response){
-            if(response.status==1001){
-                 getInitail(response.body);
+            url : 'getByParkName',
+            method : 'post',
+            data : {
+                "parkName" : $scope.searchParkNameText
+            }
+        }).success(function(response) {
+            if (response.status == 1001) {
+                getInitail(response.body);
             }
         });
     };
@@ -250,29 +293,28 @@ function($uibModal) {
 }]);
 feeDetail.service('textModalTest', function($uibModal) {
     var modalInstance;
-    var open=function($scope){
-    modalInstance = $uibModal.open({
-        templateUrl:'myModalTest',
-        scope : $scope,
-  //      controller:'feeDetailCtrl',
-        backdrop:'static'
-    });
-    modalInstance.opened.then(function(        
-    ){
-       console.log('modalInstance is opened'); 
-    });
-    modalInstance.result.then(function(result){
-        console.log(result);
-    });
-};
-    
-    var close=function(result){
+    var open = function($scope) {
+        modalInstance = $uibModal.open({
+            templateUrl : 'myModalTest',
+            scope : $scope,
+            //      controller:'feeDetailCtrl',
+            backdrop : 'static'
+        });
+        modalInstance.opened.then(function() {
+            console.log('modalInstance is opened');
+        });
+        modalInstance.result.then(function(result) {
+            console.log(result);
+        });
+    };
+
+    var close = function(result) {
         modalInstance.close(result);
         return '能得到消息吗';
     };
-    return{
-        open:open,
-        close:close
+    return {
+        open : open,
+        close : close
     };
 });
 //show message dilog controller

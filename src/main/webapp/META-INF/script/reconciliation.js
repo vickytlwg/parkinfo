@@ -49,14 +49,47 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
     };
     $scope.pagedata = [];
     $scope.currentData=[];
+    var getdiff=function(datediff){
+        var nd = 1000 * 24 * 60 * 60;// 一天的毫秒数
+        var nh = 1000 * 60 * 60;// 一小时的毫秒数
+        var nm = 1000 * 60;// 一分钟的毫秒数
+        var ns = 1000;// 一秒钟的毫秒数
+        
+        var day=Math.floor(datediff/nd);
+        var hour=Math.floor(datediff%nd/nh);
+        var minutes=Math.floor(datediff%nd%nh/nm);
+        if(day!=0){
+            return day+"天"+hour+'小时'+minutes+'分钟';
+        }
+        if(day==0&&hour!=0){
+            return hour+'小时'+minutes+'分钟';
+        }
+        else{
+            return minutes+'分钟';
+        }
+    };
     var getInitail = function(data) {
         $scope.pagedata = data;
         $scope.paginationConf.totalItems = data.length;      
         $scope.currentData=[];
         var start = ($scope.paginationConf.currentPage - 1) * $scope.paginationConf.itemsPerPage;
         for (var i = 0; i < $scope.paginationConf.itemsPerPage; i++) {
-            if(data.length>(start + i))
-            $scope.currentData[i] = data[start + i];
+            if(data.length>(start + i)){
+                var tmpdata=data[start + i];
+                 console.log(tmpdata);
+                var enddate= new Date();
+                var startdate=new Date(tmpdata["entranceDate"]);
+                console.log(startdate);
+                console.log(enddate);
+                if(tmpdata["exitDate"]!=undefined&&tmpdata["exitDate"]!=null){
+                    enddate=new Date(tmpdata["exitDate"]);
+                }
+                tmpdata.range=getdiff(enddate.getTime()-startdate.getTime());
+                
+                console.log(tmpdata);
+               $scope.currentData[i] = data[start + i]; 
+            }
+            
         };
          $scope.detail.items = $scope.currentData;
     };
