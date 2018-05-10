@@ -642,7 +642,7 @@
 
     Datepicker.defaults = {
         autoClose: false,
-        dateFormat: "mm/dd/yyyy",
+        dateFormat: "yyyy-mm-dd",
         days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
         daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 
 import cn.parkinfo.model.Outsideparkinfo;
 import cn.parkinfo.model.PosChargeData;
@@ -21,7 +22,11 @@ public interface PosChargeDataService {
 	
 	public List<PosChargeData> getParkingData(int parkId,Date startDate,Date endDate);
 	
+	public List<PosChargeData> getByParkDatetime(int parkId,Date startDate,Date endDate);
+	
 	public List<PosChargeData> getFreeData(int parkId,Date startDate,Date endDate);
+	
+	public List<PosChargeData> getChargeMoneyData(int parkId,Date startDate,Date endDate);
 	
 	public List<PosChargeData> getByParkIdAndCardNumber(Integer parkId,String cardNumber);
 	

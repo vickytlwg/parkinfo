@@ -15,43 +15,87 @@ function($scope, $http, $window, textModal, textModalTest, $uibModal, $timeout) 
             index : 1
         }
     };
-    $scope.searchDate = new Date().format('yyyy-MM-dd  hh:mm:ss');
-    $scope.startDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24).format('yyyy-MM-dd  hh:mm:ss');
-    $scope.endDate = new Date().format('yyyy-MM-dd  hh:mm:ss');
-    $scope.startDate1 = new Date(new Date().getTime() - 1000 * 60 * 60 * 24).format('yyyy-MM-dd  hh:mm:ss');
-    $scope.endDate1 = new Date().format('yyyy-MM-dd  hh:mm:ss');
-    var dateInitial = function() {
-        $('.date').datepicker({
-            autoClose : true,
-            dateFormat : "yyyy-mm-dd",
-            days : ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
-            daysShort : ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
-            daysMin : ["日", "一", "二", "三", "四", "五", "六"],
-            months : ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
-            monthsShort : ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
-            showMonthAfterYear : true,
-            viewStart : 0,
-            weekStart : 1,
-            yearSuffix : "年",
-            isDisabled : function(date) {
-                return date.valueOf() > Date.now() ? true : false;
-            }
-        });
-    };
 
-    $scope.paginationConf = {
-        currentPage : 1,
-        totalItems : 500,
-        itemsPerPage : 30,
-        pagesLength : 10,
-        perPageOptions : [20, 30, 40, 50],
-        rememberPerPage : 'perPageItems',
-        onChange : function() {
-            getInitail($scope.pagedata);
-        }
-    };
-    $scope.pagedata = [];
-    var getdiff = function(datediff) {
+ $scope.searchDate=new Date().format('yyyy-MM-dd hh:mm:ss');
+ $scope.startDate=new Date(new Date().getTime()-1000*60*60*24).format('yyyy-MM-dd hh:mm:ss');
+ $scope.endDate=new Date().format('yyyy-MM-dd hh:mm:ss');
+ $scope.startDate1=new Date(new Date().getTime()-1000*60*60*24).format('yyyy-MM-dd hh:mm:ss');
+ $scope.endDate1=new Date().format('yyyy-MM-dd hh:mm:ss');
+ $scope.startDate22=new Date(new Date().getTime()-1000*60*60*24).format('yyyy-MM-dd hh:mm:ss');
+ $scope.endDate22=new Date().format('yyyy-MM-dd hh:mm:ss');
+ $scope.startDate33=new Date(new Date().getTime()-1000*60*60*24).format('yyyy-MM-dd hh:mm:ss');
+ $scope.endDate33=new Date().format('yyyy-MM-dd hh:mm:ss');
+      var dateInitial=function(){
+    	  /*在停车*/
+    	  $('#date').datetimepicker({
+    		  format: 'YYYY-MM-DD HH:mm:ss', 
+    		  locale: moment.locale('zh-cn')
+    	   });
+    	  $('#date1').datetimepicker({
+    		  format: 'YYYY-MM-DD HH:mm:ss', 
+    		  locale: moment.locale('zh-cn')
+   	   		});
+    	  
+    	  /*免费*/
+    	   $('#date2').datetimepicker({
+    		   format: 'YYYY-MM-DD HH:mm:ss', 
+     		  locale: moment.locale('zh-cn') 
+  	   		});
+    	   $('#date3').datetimepicker({
+    		   format: 'YYYY-MM-DD HH:mm:ss', 
+     		  locale: moment.locale('zh-cn') 
+  	   		});
+    	   
+    	   /*记录时间查*/
+    	   $('#date4').datetimepicker({
+    		   format: 'YYYY-MM-DD HH:mm:ss', 
+     		  	locale: moment.locale('zh-cn')
+  	   		});
+    	   $('#date5').datetimepicker({
+    		   format: 'YYYY-MM-DD HH:mm:ss', 
+     		  	locale: moment.locale('zh-cn')
+  	   		});
+    	   
+    	   /*收费记录*/
+    	   $('#date6').datetimepicker({
+    		   format: 'YYYY-MM-DD HH:mm:ss', 
+     		  	locale: moment.locale('zh-cn')
+  	   		});
+    	   $('#date7').datetimepicker({
+    		   format: 'YYYY-MM-DD HH:mm:ss', 
+     		  	locale: moment.locale('zh-cn')
+  	   		});
+    	   
+        /*$('.date').datepicker({
+            autoClose: true,
+            dateFormat: "yyyy-mm-dd",
+            days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+            daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+            daysMin: ["日", "一", "二", "三", "四", "五", "六"],
+            months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            monthsShort: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+            showMonthAfterYear: true,
+            viewStart: 0,
+            weekStart: 1,
+            yearSuffix: "年",
+            isDisabled: function(date){return date.valueOf() > Date.now() ? true : false;}        
+        });*/
+    };  
+    
+     $scope.paginationConf = {
+            currentPage: 1,
+            totalItems: 500,
+            itemsPerPage: 30,
+            pagesLength: 10,
+            perPageOptions: [20,30,40,50],
+            rememberPerPage: 'perPageItems',
+            onChange: function(){
+                getInitail($scope.pagedata);
+            }
+        };
+        $scope.pagedata=[];
+       
+      var getdiff = function(datediff) {
         var nd = 1000 * 24 * 60 * 60;
         // 一天的毫秒数
         var nh = 1000 * 60 * 60;
@@ -93,38 +137,56 @@ function($scope, $http, $window, textModal, textModalTest, $uibModal, $timeout) 
         };
         $scope.detail.items = currentData;
     };
+        
+    $scope.searchDateTime=function(){
+    	$http({
+    		url:'/parkinfo/pos/charge/getByParkDatetime',
+	    	method:'post',
+	    	data:{"startDate":$("#date4").val(),"endDate":$("#date5").val(),"parkId":$('#park-select3').val()}
+    	}).success(function(response){
+            if(response.status==1001){
+                getInitail(response.body);
+            }
+        });
+    };
+    
+    $scope.searchParkingRecords=function(){
+        $http({
+            url:'/parkinfo/pos/charge/getParkingData',
+            method:'post',
+            data:{"startDate":$("#date").val(),"endDate":$("#date1").val(),"parkId":$('#park-select').val()}
+        }).success(function(response){
+            if(response.status==1001){
+                getInitail(response.body);
+            }
+        });
+    };
 
-    $scope.searchParkingRecords = function() {
-        $http({
-            url : '/parkinfo/pos/charge/getParkingData',
-            method : 'post',
-            data : {
-                "startDate" : $scope.startDate,
-                "endDate" : $scope.endDate,
-                "parkId" : $('#park-select').val()
-            }
-        }).success(function(response) {
-            if (response.status == 1001) {
+    $scope.searchFreeRecords=function(){
+         $http({
+            url:'/parkinfo/pos/charge/getFreeData',
+            method:'post',
+            data:{"startDate":$("#date2").val(),"endDate":$("#date3").val(),"parkId":$('#park-select2').val()}
+        }).success(function(response){
+            if(response.status==1001){
                 getInitail(response.body);
             }
         });
     };
-    $scope.searchFreeRecords = function() {
-        $http({
-            url : '/parkinfo/pos/charge/getFreeData',
-            method : 'post',
-            data : {
-                "startDate" : $scope.startDate1,
-                "endDate" : $scope.endDate1,
-                "parkId" : $('#park-select2').val()
-            }
-        }).success(function(response) {
-            if (response.status == 1001) {
+
+    $scope.searchChargeMoney=function(){
+    	/*alert("开始时间："+$scope.startDate333+"结束时间："+$scope.endDate333);*/
+    	$http({
+            url:'/parkinfo/pos/charge/getChargeMoneyData',
+            method:'post',
+            data:{"startDate":$("#date6").val(),"endDate":$("#date7").val(),"parkId":$('#park-select4').val()}
+        }).success(function(response){
+            if(response.status==1001){
                 getInitail(response.body);
             }
         });
-    };
-    dateInitial();
+    }
+   dateInitial();
 
     $scope.detail.getCount = function() {
         $http.get('count').success(function(response) {
@@ -135,7 +197,6 @@ function($scope, $http, $window, textModal, textModalTest, $uibModal, $timeout) 
                 $scope.detail.page.indexRange = [1];
                 for (var i = 2; i <= maxIndex; i++)
                     $scope.detail.page.indexRange.push(i);
-
             } else
                 textModal.open($scope, "错误", "获取计费错误: " + response.status);
         }).error(function(response) {
