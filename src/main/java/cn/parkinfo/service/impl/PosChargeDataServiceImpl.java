@@ -532,5 +532,73 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 		return chargeDao.getChargeMoneyData(parkId, startDate, endDate);
 	}
 
+	@Override
+	public List<PosChargeData> getByDateDiffNoOut(int parkId,int days, int start, int count) {
+		// TODO Auto-generated method stub
+		return chargeDao.getByDateDiffNoOut(parkId,days, start, count);
+	}
+
+	@Override
+	public List<Map<String, Object>> getCarTimesByDateRangeAndParkId(int parkId, Date startDate, Date endDate,
+			int start, int count) {
+		// TODO Auto-generated method stub
+		return chargeDao.getCarTimesByDateRangeAndParkId(parkId, startDate, endDate, start, count);
+	}
+
+	@Override
+	public Map<String, Object> getByDayDateDiffNoOut(int parkId, String day) {
+		// TODO Auto-generated method stub
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+		Date parsedStartDay = null;
+		try {
+			parsedStartDay = sdf.parse(day + " 00:00:00");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}	
+		Date parsedEndDay  = null;
+		try {
+			parsedEndDay = sdf.parse(day + " 23:59:59");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}	
+		List<Map<String , Object>> results=getCarTimesByDateRangeAndParkId(parkId, parsedStartDay, parsedEndDay, 0, 3000);
+		Map<String, Object> ret=new HashMap<>();
+		ret.put("count", results.size());
+		return ret;
+	}
+	@Override
+	public Map<String, Object> getParkChargeCountByDay(int parkId, String day) {
+		// TODO Auto-generated method stub
+	
+		Park park = parkService.getParkById(parkId);
+		String parkName=park.getName();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+		Date parsedStartDay = null;
+		try {
+			parsedStartDay = sdf.parse(day + " 00:00:00");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}	
+		Date parsedEndDay  = null;
+		try {
+			parsedEndDay = sdf.parse(day + " 23:59:59");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}	
+		List<PosChargeData> posChargeDatas=selectPosdataByParkAndRange(parsedStartDay, parsedEndDay, parkId);
+		List<PosChargeData> posChargeDatasout=chargeDao.selectPosdataByExitDateAndParkAndRange(parsedStartDay, parsedEndDay, parkId);
+		Map<String, Object> retmap=new HashMap<>();
+		
+		if (posChargeDatas.isEmpty()) {
+			retmap.put("in", 0);
+			retmap.put("out", 0);
+		}else {
+			
+			retmap.put("in", posChargeDatas.size());
+			retmap.put("out", posChargeDatasout.size());
+		}
+		
+		return retmap;
+	}
 
 }

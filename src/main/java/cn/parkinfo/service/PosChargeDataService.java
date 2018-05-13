@@ -20,6 +20,10 @@ public interface PosChargeDataService {
 	
 	public List<PosChargeData> getPage(int low, int count);
 	
+	public Map<String, Object> getByDayDateDiffNoOut(int parkId,String day);
+	
+	public List<PosChargeData> getByDateDiffNoOut(int parkId,int days,int start,int count);
+	
 	public List<PosChargeData> getParkingData(int parkId,Date startDate,Date endDate);
 	
 	public List<PosChargeData> getByParkDatetime(int parkId,Date startDate,Date endDate);
@@ -89,12 +93,16 @@ public interface PosChargeDataService {
 	public List<PosChargeData> getByParkAuthority(String userName);
 	
 	public List<Map<String, Object>> getFeeOperatorChargeData(Date startDate,Date endDate);
+	
+	public List<Map<String, Object>> getCarTimesByDateRangeAndParkId(int parkId,Date startDate, Date endDate,int start,int count);
 
 	List<PosChargeData> getByParkAndDayRange(int parkId, String startDate,String endDate) throws ParseException;
 
 	List<PosChargeData> getAllByDayRange(String startDate, String endDate) throws ParseException;
 	
 	public Outsideparkinfo getOutsideparkinfoByOrigin(int parkId,String day);
+
+	public Map<String, Object> getParkChargeCountByDay(int parkId, String day);
 
 	/*List<PosChargeData> getByCardNumber(int parkId, String cardNumber);*/
 }

@@ -150,11 +150,23 @@ function($scope, $http, $window, textModal, textModalTest, $uibModal, $timeout) 
         });
     };
     
+    $scope.searchDaysNoOut=function(){
+        $http({
+            url:'/parkinfo/pos/charge/getByDateDiffNoOut',
+            method:'post',
+            data:{"days":parseInt($scope.daysText),"parkId":parseInt($('#park-select3').val()),"start":0,"count":800}
+        }).success(function(response){
+            if(response.status==1001){
+                getInitail(response.body);
+            }
+        });
+    };
+    
     $scope.searchParkingRecords=function(){
         $http({
             url:'/parkinfo/pos/charge/getParkingData',
             method:'post',
-            data:{"startDate":$("#date").val(),"endDate":$("#date1").val(),"parkId":$('#park-select').val()}
+            data:{"startDate":$("#date4").val(),"endDate":$("#date5").val(),"parkId":$('#park-select3').val()}
         }).success(function(response){
             if(response.status==1001){
                 getInitail(response.body);
@@ -166,7 +178,7 @@ function($scope, $http, $window, textModal, textModalTest, $uibModal, $timeout) 
          $http({
             url:'/parkinfo/pos/charge/getFreeData',
             method:'post',
-            data:{"startDate":$("#date2").val(),"endDate":$("#date3").val(),"parkId":$('#park-select2').val()}
+            data:{"startDate":$("#date4").val(),"endDate":$("#date5").val(),"parkId":$('#park-select3').val()}
         }).success(function(response){
             if(response.status==1001){
                 getInitail(response.body);
@@ -179,7 +191,7 @@ function($scope, $http, $window, textModal, textModalTest, $uibModal, $timeout) 
     	$http({
             url:'/parkinfo/pos/charge/getChargeMoneyData',
             method:'post',
-            data:{"startDate":$("#date6").val(),"endDate":$("#date7").val(),"parkId":$('#park-select4').val()}
+            data:{"startDate":$("#date4").val(),"endDate":$("#date5").val(),"parkId":$('#park-select3').val()}
         }).success(function(response){
             if(response.status==1001){
                 getInitail(response.body);

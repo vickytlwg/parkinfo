@@ -17,7 +17,7 @@
 <script src="/parkinfo/script/datepicker.js"></script>
 <script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>
 <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
-<script src="/parkinfo/script/outsideParkStatusAdmin1.js?v=1.1"></script>
+<script src="/parkinfo/script/outsideParkStatusAdmin1.js?v=1.22"></script>
 <!-- <script src="/parkinfo/script/outsideParkStatusAdmin2.js?v=1.1"></script> -->
 <script type="text/javascript">
 require.config({
@@ -192,7 +192,7 @@ require(
             </div>
             <div class="col-md-3">
                 <label class="control-label" >停车场</label>
-                <select class="form-control" ng-options="park.id as park.name for park in parks" ng-model="parkid" ng-change="selectPosdataByParkAndRange()"></select>
+                <select class="form-control" ng-options="park.id as park.name for park in parks" ng-model="parkid" ng-change="selectPosdataByParkAndRange(parkid)"></select>
             </div>
         </div>
         <!-- <div class="xx-list">
@@ -354,7 +354,7 @@ require(
                         </div>
 
                         <div class="row" style="padding-top:25px">
-                        	<div class="img_count" style="position: absolute;float: right;margin-left: 80px;margin-top: 20px;"/>
+                        	<div class="img_count" style="position: absolute;float: right;margin-left: 80px;margin-top: 20px;">
                         			<img src="images/today_place.png" style="z-index:888;height: 100px;">
                         			<p>总订单7000条</p>
                         	</div>
@@ -425,26 +425,60 @@ require(
 						<div class="row" style="padding-top:25px">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="parkMonth" class="control-label">选择月份</label>
-                                    <input type="text" ng-model="monthDate" ng-change="getParkChargeByRange()" id="parkMonth" class="form-control">
+                                    <label for="parkMonth" class="control-label">按月份查看每日应收实收金额</label>
+                                    <input type="text" ng-model="monthDate" id="parkMonth" class="form-control">
                                 </div>
                             </div>
+                               <div class="col-md-1">
+                                     <div class="form-group" style="padding-top:25px">
+                                        <button  type="button" class="btn btn-info" ng-click="getParkChargeByRange()" style="float:left">
+                                            查看
+                                        </button>
+                                        </div>  </div>
                         </div>
                         <div class="row" >
+                                <p ng-show="show1">正在数据查询,请稍等...</p>
                             <div style="height:400px;width:95%;padding-left:10px" id = "chart_park_period_charge"></div>
                         </div>
 
                         <div class="row" style="padding-top:25px">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="parkMonth2" class="control-label">选择月份</label>
-                                    <input type="text" ng-model="monthDate2" ng-change="getParkChargeByRange2()" id="parkMonth2" class="form-control">
+                                    <label for="parkMonth2" class="control-label">按月份查看每日进出流量</label>
+                                    <input type="text" ng-model="monthDate2"  id="parkMonth2" class="form-control">
                                 </div>
-                            </div>
+                                </div>
+                            <div class="col-md-1" style="padding-top:25px">
+                                  
+                                        <button  type="button" class="btn btn-info" ng-click="getParkRecordsCountByRange()" style="float:left">
+                                            查看
+                                        </button>
+                                        </div>
                         </div>
                         <div class="row" >
+                                <p ng-show="show2">正在数据查询,请稍等...</p>
                             <div style="height:400px;width:95%;padding-left:10px;" id = "chart_park_period_charge2"></div>
                         </div>
+                        
+                               <div class="row" style="padding-top:25px">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="parkMonth2" class="control-label">按月份查看每日进出车数量</label>
+                                    <input type="text" ng-model="monthDate3"  id="parkMonth3" class="form-control">
+                                </div>
+                                </div>
+                            <div class="col-md-1" style="padding-top:25px">
+                                  
+                                        <button  type="button" class="btn btn-info" ng-click="getByDayAndDateDiffNoOut()" style="float:left">
+                                            查看
+                                        </button>
+                                        </div>
+                        </div>
+                        <div class="row" >
+                            <p ng-show="show3">正在数据查询,请稍等...</p>
+                            <div style="height:400px;width:95%;padding-left:10px;" id = "chart_park_period_charge3"></div>
+                        </div>
+                        
                         
                     </div>
     </section>
