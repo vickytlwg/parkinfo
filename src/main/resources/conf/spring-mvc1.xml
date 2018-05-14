@@ -79,7 +79,7 @@
 		<mvc:exclude-mapping path="/usermanage/**"/>	
 		<mvc:exclude-mapping path="/user/**"/>
 		<mvc:exclude-mapping path="/set/**"/>	
-				
+		<mvc:exclude-mapping path="/pos/charge/**"/>			
 		<bean class="cn.parkinfo.controller.LoginInterceptor1"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

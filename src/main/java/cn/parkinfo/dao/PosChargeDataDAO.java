@@ -18,6 +18,8 @@ public interface PosChargeDataDAO {
 	
 	public List<PosChargeData> getPage(int low, int count);
 	
+	public List<PosChargeData> getByDateDiffNoOut(@Param("parkId")int parkId,@Param("days")int days,@Param("start")int start,@Param("count")int count);
+	
 	public List<PosChargeData> getParkingData(@Param("parkId")int parkId,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
 	
 	public List<PosChargeData> getByParkDatetime(@Param("parkId")int parkId,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
@@ -56,11 +58,15 @@ public interface PosChargeDataDAO {
 	
 	public List<PosChargeData> selectPosdataByParkAndRange(@Param("startDay") Date startDay, @Param("endDay") Date endDay,@Param("parkId")int parkId);
 	
+	public List<PosChargeData> selectPosdataByExitDateAndParkAndRange(@Param("startDay") Date startDay, @Param("endDay") Date endDay,@Param("parkId")int parkId);
+	
 	public List<PosChargeData> selectPosdataByParkAndRange2(@Param("startDay") Date startDay, @Param("endDay") Date endDay,@Param("parkId")int parkId);
 	
 	public List<PosChargeData> getByCardNumber(@Param("cardNumber")String cardNumber);
 	
 	public List<PosChargeData> getByParkName(@Param("parkName")String parkName);
+	
+	public List<Map<String, Object>> getCarTimesByDateRangeAndParkId(@Param("parkId")int parkId,@Param("startDate") Date startDate, @Param("endDate") Date endDate,@Param("start")int start,@Param("count")int count);
 	
 	public List<Map<String, Object>> getFeeOperatorChargeData(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }

@@ -129,11 +129,11 @@ public class AreaController {
 		}
 		return Utility.gson.toJson(result);
 	}
-	@RequestMapping(value="/getByStartAndCount",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})
+	@RequestMapping(value="/getByStartAndCount",method={RequestMethod.POST,RequestMethod.GET},produces={"application/json;charset=utf-8"})
 	@ResponseBody
-	public String getByStartAndCount(@RequestParam("start")int start,@RequestParam("count")int count){
+	public String getByStartAndCount(){
 		Map<String, Object> result=new HashMap<>();
-		List<Area> areas=areaService.getByStartAndCount(start, count);
+		List<Area> areas=areaService.getByStartAndCount(0, 300);
 		if (areas!=null) {
 			result.put("status", 1001);
 			result.put("body", areas);

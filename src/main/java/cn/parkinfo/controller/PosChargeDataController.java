@@ -8,11 +8,13 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -284,6 +286,95 @@ public class PosChargeDataController {
 		}
 		return Utility.gson.toJson(retMap);
 	}
+	/**
+	 * 获取某个时间段内 按天的车辆次数
+	 * */
+	@RequestMapping(value = "/getByDayAndDateDiffNoOut", method = RequestMethod.POST, produces = {
+	"application/json;charset=utf-8" })
+	@ResponseBody
+	public String getByDayAndDateDiffNoOut(@RequestBody Map<String, Object> args){
+		int parkId=Integer.parseInt((String)args.get("parkId"));
+		String startDay=(String)args.get("startDay");
+		String endDay=(String)args.get("endDay");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+		Date parsedStartDay = null;
+		try {
+			parsedStartDay = sdf.parse(startDay + " 00:00:00");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}	
+		Date parsedEndDay  = null;
+		try {
+			parsedEndDay = sdf.parse(endDay + " 00:00:00");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		Calendar start =Calendar.getInstance(); 
+		start.setTime(parsedStartDay);
+		Long startTime = start.getTimeInMillis();
+		Calendar end = Calendar.getInstance();
+		end.setTime(parsedEndDay);
+		Long endTime = end.getTimeInMillis();
+		Long oneDay = 1000 * 60 * 60 * 24l;
+		Long time = startTime;  
+		
+		Map<Long, Object> comparemap=new TreeMap<>();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		  while (time <= endTime) {  
+		        Date d = new Date(time);  
+		        Map<String, Object> dMap=chargeSerivce.getByDayDateDiffNoOut(parkId,  df.format(d));
+		        comparemap.put(d.getTime(), dMap);
+		        time += oneDay;  
+		    }     
+		return  Utility.gson.toJson(comparemap);
+		
+	}
+	/**
+	 * 获取某个时间段内 车牌与其对应的停车次数
+	 * */
+	@RequestMapping(value = "/getByDateDiffNoOut", method = RequestMethod.POST, produces = {
+	"application/json;charset=utf-8" })
+	@ResponseBody
+	public String getByDateDiffNoOut(@RequestBody Map<String, Object> args){
+		int days=(int) args.get("days");
+		int parkId=(int) args.get("parkId");
+		int start=args.get("start")!=null?(int) args.get("start"):0;
+		int count=args.get("count")!=null?(int)args.get("count"):300;
+		List<PosChargeData> posChargeDatas = chargeSerivce.getByDateDiffNoOut(parkId, days, start, count);
+		Map<String, Object> retMap = new HashMap<String, Object>();
+		if (posChargeDatas.isEmpty()) {
+			retMap.put("status", 1002);
+		} else {
+			retMap.put("status", 1001);
+			retMap.put("message", "success");
+			retMap.put("body", posChargeDatas);
+		}
+		return Utility.gson.toJson(retMap);
+	};
+	@RequestMapping(value = "/getCarTimesByDateRangeAndParkId", method = RequestMethod.POST, produces = {
+	"application/json;charset=utf-8" })
+@ResponseBody
+public String getCarTimesByDateRangeAndParkId(@RequestBody Map<String, Object> args) throws ParseException{
+		String startDatestr = (String) args.get("startDate");
+		String endDatestr = (String) args.get("endDate");		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date startDate = sdf.parse(startDatestr);
+		Date endDate = sdf.parse(endDatestr);
+		int parkId=(int) args.get("parkId");
+		int start=args.get("start")!=null?(int) args.get("start"):0;
+		int count=args.get("count")!=null?(int)args.get("count"):300;
+		List<Map<String , Object>> results=chargeSerivce.getCarTimesByDateRangeAndParkId(parkId, startDate, endDate, start, count);
+		Map<String, Object> retMap = new HashMap<String, Object>();
+		if (results.isEmpty()) {
+			retMap.put("status", 1002);
+		} else {
+			retMap.put("status", 1001);
+			retMap.put("message", "success");
+			retMap.put("body", results);
+		}
+		return Utility.gson.toJson(retMap);
+	}
 	
 	@RequestMapping(value = "/getByParkDatetime", method = RequestMethod.POST, produces = {
 			"application/json;charset=utf-8" })
@@ -302,7 +393,7 @@ public class PosChargeDataController {
 		Date startDate = sdf.parse(startDatestr);
 		Date endDate = sdf.parse(endDatestr);
 		List<PosChargeData> posChargeDatas = chargeSerivce.getByParkDatetime(parkId,startDate, endDate);
-		System.out.println(posChargeDatas);
+		
 		Map<String, Object> retMap = new HashMap<String, Object>();
 		if (posChargeDatas.isEmpty()) {
 			retMap.put("status", 1002);
@@ -498,6 +589,82 @@ public class PosChargeDataController {
 		int count = (int) args.get("count");
 		List<PosChargeData> posChargeDatas = chargeSerivce.getPage(low, count);
 		return Utility.createJsonMsg(1001, "success", posChargeDatas);
+	}
+	@RequestMapping(value="/getParkChargeByRange",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})
+	@ResponseBody
+	public String getParkChargeByRange(@RequestBody Map<String, Object> args){
+		int parkId=Integer.parseInt((String)args.get("parkId"));
+		String startDay=(String)args.get("startDay");
+		String endDay=(String)args.get("endDay");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+		Date parsedStartDay = null;
+		try {
+			parsedStartDay = sdf.parse(startDay + " 00:00:00");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}	
+		Date parsedEndDay  = null;
+		try {
+			parsedEndDay = sdf.parse(endDay + " 00:00:00");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}	
+		
+		Calendar start =Calendar.getInstance(); 
+		start.setTime(parsedStartDay);
+		Long startTime = start.getTimeInMillis();
+		Calendar end = Calendar.getInstance();
+		end.setTime(parsedEndDay);
+		Long endTime = end.getTimeInMillis();
+		Long oneDay = 1000 * 60 * 60 * 24l;
+		Long time = startTime;  
+		Map<Long, Object> comparemap=new TreeMap<>();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		  while (time <= endTime) {  
+		        Date d = new Date(time);            
+		        Map<String, Object> posChargeDatas = chargeSerivce.getParkChargeByDay(parkId, df.format(d));
+		        comparemap.put(d.getTime(), posChargeDatas);
+		        time += oneDay;  
+		    }     
+		return  Utility.gson.toJson(comparemap);
+	}
+	@RequestMapping(value="/getParkRecordsCountByRange",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})
+	@ResponseBody
+	public String getParkRecordsCountByRange(@RequestBody Map<String, Object> args){
+		int parkId=Integer.parseInt((String)args.get("parkId"));
+		String startDay=(String)args.get("startDay");
+		String endDay=(String)args.get("endDay");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+		Date parsedStartDay = null;
+		try {
+			parsedStartDay = sdf.parse(startDay + " 00:00:00");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}	
+		Date parsedEndDay  = null;
+		try {
+			parsedEndDay = sdf.parse(endDay + " 00:00:00");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}	
+		
+		Calendar start =Calendar.getInstance(); 
+		start.setTime(parsedStartDay);
+		Long startTime = start.getTimeInMillis();
+		Calendar end = Calendar.getInstance();
+		end.setTime(parsedEndDay);
+		Long endTime = end.getTimeInMillis();
+		Long oneDay = 1000 * 60 * 60 * 24l;
+		Long time = startTime;  
+		Map<Long, Object> comparemap=new TreeMap<>();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		  while (time <= endTime) {  
+		        Date d = new Date(time);            
+		        Map<String, Object> posChargeDatas = chargeSerivce.getParkChargeCountByDay(parkId, df.format(d));
+		        comparemap.put(d.getTime(), posChargeDatas);
+		        time += oneDay;  
+		    }     
+		return  Utility.gson.toJson(comparemap);
 	}
 
 	@RequestMapping(value = "/pageByParkId", method = RequestMethod.POST, produces = {

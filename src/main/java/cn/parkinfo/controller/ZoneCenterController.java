@@ -35,7 +35,6 @@ public class ZoneCenterController {
 	@Autowired
 	private AuthorityService authService;
 	
-
 	
 	@RequestMapping(value="insert",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})
 	@ResponseBody
@@ -98,9 +97,9 @@ public class ZoneCenterController {
 		result.put("count", count);
 		return Utility.gson.toJson(result);
 	}
-	@RequestMapping(value="/getByStartAndCount",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})
+	@RequestMapping(value="/getByStartAndCount",method={RequestMethod.POST,RequestMethod.GET},produces={"application/json;charset=utf-8"})
 	@ResponseBody
-	public String getByStartAndCount(@RequestParam("start")int start,@RequestParam("count")int count,HttpSession session){
+	public String getByStartAndCount(HttpSession session){
 		String username=(String) session.getAttribute("username");
 		Map<String, Object> result=new HashMap<>();
 		List<Zonecenter> zoneCenters=zoneCenterService.getByUserName(username);

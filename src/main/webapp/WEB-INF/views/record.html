@@ -16,22 +16,43 @@
 <!-- <script src="/parkinfo/script/datepicker.js"></script> -->
 <script src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
 <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
-          rel="stylesheet">
+rel="stylesheet">
 <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <script src="/parkinfo/script/reconciliation.js"></script>
 <script src="/parkinfo/script/tm.pagination.js"></script>
 <script src="/parkinfo/script/feeDetail.js?v=1.3"></script>
 
 <style>
-        .page-list .pagination {float:left;}
-        .page-list .pagination span {cursor: pointer;}
-        .page-list .pagination .separate span{cursor: default; border-top:none;border-bottom:none;}
-        .page-list .pagination .separate span:hover {background: none;}
-        .page-list .page-total {float:left; margin: 25px 20px;}
-        .page-list .page-total input, .page-list .page-total select{height: 26px; border: 1px solid #ddd;}
-        .page-list .page-total input {width: 40px; padding-left:3px;}
-        .page-list .page-total select {width: 50px;}
-        
+    .page-list .pagination {
+        float: left;
+    }
+    .page-list .pagination span {
+        cursor: pointer;
+    }
+    .page-list .pagination .separate span {
+        cursor: default;
+        border-top: none;
+        border-bottom: none;
+    }
+    .page-list .pagination .separate span:hover {
+        background: none;
+    }
+    .page-list .page-total {
+        float: left;
+        margin: 25px 20px;
+    }
+    .page-list .page-total input, .page-list .page-total select {
+        height: 26px;
+        border: 1px solid #ddd;
+    }
+    .page-list .page-total input {
+        width: 40px;
+        padding-left: 3px;
+    }
+    .page-list .page-total select {
+        width: 50px;
+    }
+
 </style>
 
 <div class="" ng-app="feeDetailApp" ng-controller="feeDetailCtrl">
@@ -73,18 +94,18 @@
                                         </button>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row" style="padding-top:15px" >
-                                	<div class="col-md-1" style="margin-left:-5px;width:8.8%;">
-                                        <label class="label-control" style="float:right;padding-top:10px;"> 记录查询:</label>
+                                    <div class="col-md-1" style="margin-left:-5px;width:8.8%;">
+                                        <label class="label-control" style="float:right;padding-top:10px;"> 查询条件:</label>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <select id="park-select3" class="form-control" style="font-weight:bold">
-	                                            #foreach( $park in $parks)
-	                                            <option value=$park.id>$park.name</option>
-	                                            #end
-	                                        </select>
-	                                    </div>
+                                            #foreach( $park in $parks)
+                                            <option value=$park.id>$park.name</option>
+                                            #end
+                                        </select>
+                                    </div>
                                     <div class="col-md-3">
                                         <input type="text" id="date4" ng-model="startDate22" class="form-control date">
                                     </div>
@@ -92,101 +113,50 @@
                                     <div class="col-md-3">
                                         <input type="text" id="date5" ng-model="endDate22" class="form-control date">
                                     </div>
-                                    <div class="col-md-1">
-                                        <button  type="button" class="btn btn-info" ng-click="searchDateTime()" style="float:left">
-                                                                                                    查找
-                                        </button>
-                                    </div>
+
                                 </div>
 
                                 <div class="row" style="padding-top:15px">
-                                    <div class="col-md-1">
-                                        <label class="label-control" style="float:right;padding-top:10px;">在停车:</label>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-2">
+                                        <button  type="button" class="btn btn-info" ng-click="searchDateTime()" style="float:left">
+                                            所有记录
+                                        </button>
                                     </div>
-                                    <div class="col-md-3">
-                                        <select id="park-select" class="form-control" style="font-weight:bold;float: right;">
-                                            #foreach( $park in $parks)
-                                            <option value=$park.id>$park.name</option>
-                                            #end
-                                        </select>
-                                    </div>
-                                   <div class="col-md-3">
-                                        <input type="text" id="date" ng-model="startDate" class="form-control date">
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <input type="text" id="date1" ng-model="endDate" class="form-control date">
-                                    </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <button  type="button" class="btn btn-info" ng-click="searchParkingRecords()" style="float:left">
-                                            查找在停
+                                            在停记录
                                         </button>
                                     </div>
 
-                                </div>
-
-                                <div class="row" style="padding-top:15px" >
-
-                                    <div class="col-md-1">
-                                        <label class="label-control" style="float:right;padding-top:10px"> 免费:</label>
-                                    </div>
-                                     <div class="col-md-3">
-                                        <select id="park-select2" class="form-control" style="font-weight:bold">
-                                            #foreach( $park in $parks)
-                                            <option value=$park.id>$park.name</option>
-                                            #end
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" id="date2" ng-model="startDate1" class="form-control date">
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <input type="text" id="date3" ng-model="endDate1" class="form-control date">
-                                    </div>
-                                   
-                                 
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <button  type="button" class="btn btn-info" ng-click="searchFreeRecords()" style="float:left">
-                                                                                                    免费记录
+                                            免费记录
                                         </button>
                                     </div>
-                                </div>
-                                
-                                <div class="row" style="padding-top:15px" >
-
-                                    <div class="col-md-1">
-                                        <label class="label-control" style="float:right;padding-top:10px"> 收費:</label>
-                                    </div>
-                                     <div class="col-md-3">
-                                        <select id="park-select4" class="form-control" style="font-weight:bold">
-                                            #foreach( $park in $parks)
-                                            <option value=$park.id>$park.name</option>
-                                            #end
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" id="date6" ng-model="startDate33" class="form-control date">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" id="date7" ng-model="endDate33" class="form-control date">
-                                    </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <button  type="button" class="btn btn-info" ng-click="searchChargeMoney()" style="float:left">
-                                                                                                    收費记录
+                                            收费记录
                                         </button>
                                     </div>
+
                                 </div>
-                                
+                                <div class="row" style="padding-top:15px" >
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-2">
+                                        <input type="text" ng-model="daysText" class="form-control" placeholder="超时的天数" style="float:right"/>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button  type="button" class="btn btn-info" ng-click="searchDaysNoOut()" style="float:left">
+                                            超时记录
+                                        </button>
+                                    </div>
+
+                                </div>
+
                             </div>
                         </div>
-                        <div class="btn-group">
-                            <button  ng-click="refreshUser()" type="button" class="btn bg-purple">
-                                <span class="glyphicon glyphicon-refresh"></span> 刷新
-                            </button>
-                        </div>
-                        <br/>
-                        <br/>
+                   
                         <div>
                             <table class="table table-hover  table-condensed" id='channelTable' style="font-size:12px">
                                 <tr>
@@ -203,6 +173,7 @@
                                     <th hidden><span>找零</span></th>	 -->
                                     <th><span>进场时间</span></th>
                                     <th><span>离场时间</span></th>
+                                    <th><span>停车时长</span></th>
                                     <!-- <th><span>查看图片</span></th> -->
                                 </tr>
                                 <tbody id="channelBody"></tbody>
@@ -223,17 +194,17 @@
                                     <td ng-bind="item.changeMoney" hidden></td> -->
                                     <td ng-bind="item.entranceDate"></td>
                                     <td ng-bind="item.exitDate"></td>
+                                    <td ng-bind="item.range"></td>
                                     <!-- <td ng-if="item.url!=''"><a href={{item.url}} target="_blank">查看
                                     </a></td>
                                     <td ng-if="item.url==''">暂无</td> -->
                             </table>
                         </div>
-                <tm-pagination conf="paginationConf"></tm-pagination>
-                       
+                        <tm-pagination conf="paginationConf"></tm-pagination>
 
+                    </div>
                 </div>
             </div>
-        </div>
 
     </section>
 
