@@ -266,7 +266,7 @@ $(function(){
 <th><span style="padding-left:15%">开始时间</div></th>
 <th><span style="padding-left:15%">结束时间</div></th>
 <th hidden><span style="padding-left:15%" >支付金额</div></th>
-<th><span style="padding-left:15%">状态</div></th>
+<!-- <th><span style="padding-left:15%">状态</div></th> -->
 </tr>
 
 <tbody id="parkBody"></tbody>
@@ -292,8 +292,8 @@ $(function(){
     <td ng-bind="user.starttime"></td>
     <td ng-bind="user.endtime"></td>
     <td ng-bind="user.payment | currency:'￥'" hidden></td>
-    <td ng-if="user.status==1">已支付</td>
-    <td ng-if="user.status==0">未支付</td>
+    <!-- <td ng-if="user.status==1">已支付</td>
+    <td ng-if="user.status==0">未支付</td> -->
 </tr>
 </table>
 <tm-pagination conf="paginationConf"></tm-pagination>
@@ -465,13 +465,13 @@ $(function(){
     <input type="text" class="form-control" placeholder="请输入支付金额" ng-model="tempUser.payment">
     </div>
     </div>
-    <div class="form-group">
+    <!--<div class="form-group">
     <label class="col-sm-2 control-label" style="width:105px;">状态</label>
     <div class="col-sm-8">
     <select ng-model="tempUser.status" ng-options="status.value as status.text for status in statuses" class="form-control">
     </select>
     </div>
-    </div>
+    </div>-->
     <div class="alert alert-info" ng-show="(showResult || showLoader)">
     <span  ng-show='showLoader'  skip-ng-show= "yes" ng-activity-indicator= "CircledGrey"></span>
     <span ng-show='showResult'>{{result}}</span>

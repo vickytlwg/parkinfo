@@ -5,7 +5,8 @@
         <title></title>
         <link href="/parkinfo/css/style.css" rel="stylesheet" type="text/css" />
         <link href="/parkinfo/css/style1.css" rel="stylesheet" type="text/css" />
-        <link href="/parkinfo/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/parkinfo/bootstrap/css/bootstrap.css" rel="stylesheet" />
+        <link href="/parkinfo/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
         <link href="/parkinfo/bootstrap/css/style.min.css" rel="stylesheet" />
         <script src="/parkinfo/js/jquery-1.7.2.min.js"></script>
         <script src="/parkinfo/angular/angular.min.js"></script>
@@ -14,7 +15,7 @@
         <script src="/parkinfo/angular/angular-ui-router.min.js"></script>
         <script src="/parkinfo/angular/ocLazyLoad.min.js"></script>
         <script src="/parkinfo/angular/ui-bootstrap-tpls.min.js"></script>
-        <script src="/parkinfo/bootstrap/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/parkinfo/bootstrap/js/bootstrap.min.js"></script>
         <script src="/parkinfo/js/generalDataView.js?v=1.5"></script>
        	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=c7A2jm3enN7T0s5V8QbDHx85"></script>       
 		<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
@@ -24,8 +25,8 @@
 		<script type="text/javascript" src="/parkinfo/script/utility.js"></script>
 		<script type="text/javascript" src="/parkinfo/script/parkinfoBigData.js?v=1.0"></script>
 		<script type="text/javascript" src="/parkinfo/script/parkinfoBigDataAngular.js?v=1.0"></script>
-		<!-- <script type="text/javascript" src="/parkinfo/script/echarts.js"></script>
-		<script type="text/javascript" src="/parkinfo/script/mainBar2.js"></script> -->
+		<script type="text/javascript" src="/parkinfo/script/dist/echarts.js"></script>
+		<script type="text/javascript" src="/parkinfo/script/mainBar2.js"></script>
     </head>
 
     <body ng-app="generalDataViewApp" ng-controller="generalDataViewCtrl">
@@ -102,128 +103,8 @@
             </div>
         </div>
         
-        	
-			<!-- <div class="con1 mg2 mb10">
-				<ul>
-					<li class="bgbai btop4hui">
-						<div class="con1s mg2">
-							<div class="con1sl f xi14">临停年度收入</div>
-							<div class="con1sr r bai bglan cen">全年</div>
-						</div>
-						<div class="con1x mg2 xi22">¥ 305,072.5</div>
-					</li>
-					<li class="bgbai btop4hui">
-						<div class="con1s mg2">
-							<div class="con1sl f xi14">临停本月收入</div>
-							<div class="con1sr r bai bglv cen">月</div>
-						</div>
-						<div class="con1x mg2 xi22">¥ 305,072.5</div>
-					</li>
-					<li class="bgbai btop4hui">
-						<div class="con1s mg2">
-							<div class="con1sl f xi14">临停年度收入</div>
-							<div class="con1sr r bai bglv cen">今天</div>
-						</div>
-						<div class="con1x mg2 xi22">¥ 305,072.5</div>
-					</li>
-					<li class="bgbai btop4hui">
-						<div class="con1s mg2">
-							<div class="con1sl f xi14">月租车辆数</div>
-							<div class="con1sr r bai bghong cen">全部</div>
-						</div>
-						<div class="con1x mg2 xi22">64</div>
-					</li>
-				</ul>
-			</div>
-        	<div class="con2 mg2 bgbai btop4hui">
-				<div class="con1s mg2">
-					<div class="con1sl f xi14">总收入分析</div>
-					<div class="button_qh" style="float: right;font-size: 0px;">
-						<input type="button" id="day" value="天" onclick="change('mainBar')" />
-						<input type="button" id="month" value="月" onclick="change('mainBar2')" />
-						<input type="button" id="year" value="年" onclick="change('mainBar3')" />
-					</div>
-				</div>
-				<div class="con2x mg2">
-					<div class="con2xl f">
-						<div id="mainBar" style="heig ht: 280px;width: 100%;"></div>
-						<div id="mainBar2" style="height: 280px;width: 100%;"></div>
-						<div id="mainBar3" style="height: 280px;width: 100%;"></div>
-					</div>
-					<div class="con2xr r">
-						<ul class="stat-list">
-							<li>
-								<h2 class="no-margins" id="year" style="color: #000000;font-weight: 500;">¥ 315942</h2>
-								<small>年总收入</small>
-								<div class="stat-percent" id="yearIn" >
-									2322311.00%
-									<i class="fa fa-bolt text-navy" style="color: #1AB394"></i>
-								</div>
-								<div class="progress progress-mini">
-									<div class="progress-bar" id="yearInwidth" style="width: 100%;"></div>
-								</div>
-							</li>
-							<li>
-								<h2 class="no-margins" id="month" style="color: #000000;font-weight: 500;">¥ 71470</h2>
-								<small>本月收入</small>
-								<div class="stat-percent" id="monthIn">
-									41.25%
-									<i class="fa fa-level-down text-navy"></i>
-								</div>
-								<div class="progress progress-mini">
-									<div class="progress-bar" id="monthInwidth" style="width: 41.25%;"></div>
-								</div>
-							</li>
-							<li>
-								<h2 class="no-margins" id="month" style="color: #000000;font-weight: 500;">¥ 2785.5</h2>
-								<small>今日总收入</small>
-								<div class="stat-percent" id="dayIn">
-									83.91%
-									<i class="fa fa-level-down text-navy"></i>
-								</div>
-								<div class="progress progress-mini">
-									<div class="progress-bar" id="dayInwidth" style="width: 83.91%;"></div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			
-			<style>
-			#mainBar2 {
-				display: none;
-			}
-			
-			#mainBar3 {
-				display: none;
-			}
-			</style>
-		
-		<script type="text/javascript">
-			initEchatsJS();
-			function change(id) {
-					if(id == 'mainBar') {
-						document.getElementById("mainBar2").style.display = 'none';
-						document.getElementById("mainBar3").style.display = 'none';
-						document.getElementById("mainBar").style.display = 'block';
-					} else if(id == 'mainBar2') {
-						document.getElementById("mainBar").style.display = 'none';
-						document.getElementById("mainBar3").style.display = 'none';
-						document.getElementById("mainBar2").style.display = 'block';
-						loadMonthEchatsJS();
-						
-					} else {
-						document.getElementById("mainBar").style.display = 'none';
-						document.getElementById("mainBar2").style.display = 'none';
-						document.getElementById("mainBar3").style.display = 'block';
-						loadYearEchatsJS();
-					}
-				}
-		</script> -->
-        
        <div class="gaikuang mg2">
-            <div class="gaikuang1 mg2 xi15">
+            <div class="gaikuang1 mg2 xi15" style="margin-left: 35px;">
                 今日数据发布
             </div>
             <div class="gaikuang2 mg2 cen">
@@ -283,6 +164,19 @@
                     <li>
                         <div class="gaikuang2s mg2 gaikuangbg5">
                             <div class="gaikuang2ss mg2 xi14 bai">
+                                今日运营泊位数
+                            </div>
+                            <div class="gaikuang2sc mg2 xi26">
+                                {{dayOnlineCarportCount}}<span class="xi14"></span>
+                            </div>
+                            <div class="gaikuang2sx mg2 xi13 hui">
+                                总泊位数{{dayCarportCount}}
+                            </div>
+                        </div>
+                    </li>
+                    <!-- <li>
+                        <div class="gaikuang2s mg2 gaikuangbg5">
+                            <div class="gaikuang2ss mg2 xi14 bai">
                                 今日逃费率
                             </div>
                             <div class="gaikuang2sc mg2 xi26">
@@ -292,8 +186,8 @@
                                 总逃费率{{((dayAmountMoney-dayRealMoney)/dayAmountMoney|number:3)>0?((dayAmountMoney-dayRealMoney)/dayAmountMoney|number:3):0}}
                             </div>
                         </div>
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                         <div class="gaikuang2s mg2 gaikuangbg6">
                             <div class="gaikuang2ss mg2 xi14 bai">
                                 今日运营站点数
@@ -357,7 +251,7 @@
                                 总泊位周转率{{dayOutCount/dayOnlineCarportCount|number:4}}
                             </div>
                         </div>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             
@@ -413,6 +307,126 @@
                 </div>
             </div>
         </div> -->
+        
+        <!-- <div class="con1 mg2 mb10">
+				<ul>
+					<li class="bgbai btop4hui">
+						<div class="con1s mg2">
+							<div class="con1sl f xi14">临停年度收入</div>
+							<div class="con1sr r bai bglan cen">全年</div>
+						</div>
+						<div class="con1x mg2 xi22">¥ 305,072.5</div>
+					</li>
+					<li class="bgbai btop4hui">
+						<div class="con1s mg2">
+							<div class="con1sl f xi14">临停本月收入</div>
+							<div class="con1sr r bai bglv cen">月</div>
+						</div>
+						<div class="con1x mg2 xi22">¥ 305,072.5</div>
+					</li>
+					<li class="bgbai btop4hui">
+						<div class="con1s mg2">
+							<div class="con1sl f xi14">临停年度收入</div>
+							<div class="con1sr r bai bglv cen">今天</div>
+						</div>
+						<div class="con1x mg2 xi22">¥ 305,072.5</div>
+					</li>
+					<li class="bgbai btop4hui">
+						<div class="con1s mg2">
+							<div class="con1sl f xi14">月租车辆数</div>
+							<div class="con1sr r bai bghong cen">全部</div>
+						</div>
+						<div class="con1x mg2 xi22">64</div>
+					</li>
+				</ul>
+			</div> -->
+        	<div class="con2 mg2 bgbai btop4hui">
+				<div class="con1s mg2">
+					<div class="con1sl f xi14">总收入分析</div>
+					<!-- <div class="button_qh" style="float: right;font-size: 0px;">
+						<input type="button" id="day1" value="天" onclick="change('mainBar')" />
+						<input type="button" id="month1" value="月" onclick="change('mainBar2')" />
+						<input type="button" id="year1" value="年" onclick="change('mainBar3')" />
+					</div> -->
+				</div>
+				<div class="con2x mg2">
+					<div class="con2xl f">
+                          <div style="height:280px;width:100%;padding-left:10px" id = "chart_park_period_charge"></div>
+						<!-- <div id="mainBar" style="height: 280px;width: 100%;text-align: center;"></div> -->
+						<!-- <div id="mainBar2" style="height: 280px;width: 100%;text-align: center;"></div>
+						<div id="mainBar3" style="height: 280px;width: 100%;text-align: center;"></div> -->
+					</div>
+					<div class="con2xr r">
+						<ul class="stat-list">
+							<li>
+								<h2 class="no-margins" id="year" style="color: #000000;font-weight: 500;">¥ 315942</h2>
+								<small>年总收入</small>
+								<div class="stat-percent" id="yearIn" >
+									2322311.00%
+									<i class="fa fa-bolt text-navy" style="color: #1AB394"></i>
+								</div>
+								<div class="progress progress-mini">
+									<div class="progress-bar" id="yearInwidth" style="width: 100%;"></div>
+								</div>
+							</li>
+							<li>
+								<h2 class="no-margins" id="month" style="color: #000000;font-weight: 500;">¥ 71470</h2>
+								<small>本月收入</small>
+								<div class="stat-percent" id="monthIn">
+									41.25%
+									<i class="fa fa-level-down text-navy"></i>
+								</div>
+								<div class="progress progress-mini">
+									<div class="progress-bar" id="monthInwidth" style="width: 41.25%;"></div>
+								</div>
+							</li>
+							<li>
+								<h2 class="no-margins" id="month" style="color: #000000;font-weight: 500;">¥ 2785.5</h2>
+								<small>今日总收入</small>
+								<div class="stat-percent" id="dayIn">
+									83.91%
+									<i class="fa fa-level-down text-navy"></i>
+								</div>
+								<div class="progress progress-mini">
+									<div class="progress-bar" id="dayInwidth" style="width: 83.91%;"></div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			<!-- <style>
+			#mainBar2 {
+				display: none;
+			}
+			
+			#mainBar3 {
+				display: none;
+			}
+			</style> -->
+		
+		<!-- <script type="text/javascript">
+			initEchatsJS();
+			function change(id) {
+					if(id == 'mainBar') {
+						document.getElementById("mainBar2").style.display = 'none';
+						document.getElementById("mainBar3").style.display = 'none';
+						document.getElementById("mainBar").style.display = 'block';
+					} else if(id == 'mainBar2') {
+						document.getElementById("mainBar").style.display = 'none';
+						document.getElementById("mainBar3").style.display = 'none';
+						document.getElementById("mainBar2").style.display = 'block';
+						loadMonthEchatsJS();
+						
+					} else {
+						document.getElementById("mainBar").style.display = 'none';
+						document.getElementById("mainBar2").style.display = 'none';
+						document.getElementById("mainBar3").style.display = 'block';
+						loadYearEchatsJS();
+					}
+				}
+		</script> -->
 
             <div class="gaikuang1 mg2 xi15">
                 停车场今日数据

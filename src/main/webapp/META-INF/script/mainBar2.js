@@ -1,4 +1,4 @@
-function initEchatsJS(){
+/*function initEchatsJS(){*/
 	require.config({
 				paths: {
 					echarts: 'js/dist',
@@ -22,7 +22,7 @@ function initEchatsJS(){
 						},
 						legend: {
 							y: '20',
-							data: ['停车订单数量', '临时车收入', '月租车充值收入']
+							data: ['应收费用', '实收费用']
 						},
 						calculable: true,
 						toolbox: {
@@ -30,18 +30,34 @@ function initEchatsJS(){
 							y: '20',
 							x: 720,
 							feature: {
-								/*dataView:{show:true},*/
+								dataView:{show:true},
 								magicType: { show: true, type: ['line', 'bar'] },
 								restore: { show: true }
 							}
+							/*feature : {
+			                    mark : {
+			                        show : true
+			                    },
+			                    saveAsImage : {
+			                        show : true
+			                    }
+			                }*/
 						},
 						xAxis: [{
 							type: 'category',
-							data: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"]
+							data: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"],
+							
+							type : 'category',
+			                boundaryGap : false,
+			                data : category
 						}],
 						yAxis: [{
 							type: 'value',
-							position: 'right'
+							position: 'right',
+							type : 'value',
+			                axisLabel : {
+			                    formatter : '{value} 元'
+			                }
 						}],
 						series: [{
 								name: "停车订单数量",
@@ -86,11 +102,81 @@ function initEchatsJS(){
 					mychart.setOption(option);
 				}
 			);
-}
+			
+/*}*/
+
+/*//作图1
+    var renderChart = function(category, seriesData) {
+        var myChart = echarts.init(document.getElementById('chart_park_period_charge'));
+        var option = {
+            title : {
+                text : '停车场每日应收/实收费用对比',
+                subtext : '月单位'
+            },
+            tooltip : {
+                trigger : 'axis'
+            },
+            legend : {
+                data : ['应收费用', '实收费用']
+            },
+            toolbox : {
+                show : true,
+                feature : {
+                    mark : {
+                        show : true
+                    },
+                    saveAsImage : {
+                        show : true
+                    }
+                }
+            },
+            calculable : true,
+            xAxis : [{
+                type : 'category',
+                boundaryGap : false,
+                data : category
+            }],
+            yAxis : [{
+                type : 'value',
+                axisLabel : {
+                    formatter : '{value} 元'
+                }
+            }],
+            series : seriesData,
+        };
+        myChart.setOption(option);
+    };
+
+    var chartData = function() {
+        var series1 = {
+            name : '应收费用',
+            type : 'line',
+            data : $scope.totalMoney
+        };
+        var series2 = {
+            name : '实收费用',
+            type : 'line',
+            data : $scope.realMoney
+        };
+        renderChart($scope.catagory, [series1, series2]);
+    };
+    
+    $scope.catagory = [];
+    $scope.totalMoney = [];
+    $scope.realMoney = [];
+    $.each(result, function(name, value) {
+        var date = new Date(parseInt(name));
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        $scope.catagory.push(month + '-' + day);
+        $scope.totalMoney.push(value['totalMoney']);
+        $scope.realMoney.push(value['realMoney']);
+    });
+    chartData();
+*/
 
 
-
-function loadMonthEchatsJS(){
+/*function loadMonthEchatsJS(){
 require.config({
 				paths: {
 					echarts: '../js/dist'
@@ -120,7 +206,7 @@ require.config({
 							y: '20',
 							x: 720,
 							feature: {
-								/*dataView:{show:true},*/
+								dataView:{show:true},
 								magicType: { show: true, type: ['line', 'bar'] },
 								restore: { show: true }
 							}
@@ -219,7 +305,7 @@ function loadYearEchatsJS(){
 							y: '20',
 							x: 720,
 							feature: {
-								/*dataView:{show:true},*/
+								dataView:{show:true},
 								magicType: { show: true, type: ['line', 'bar'] },
 								restore: { show: true }
 							}
@@ -275,7 +361,7 @@ function loadYearEchatsJS(){
 					mychart.setOption(option);
 				}
 			);
-}
+}*/
 
 
 //	require.config({

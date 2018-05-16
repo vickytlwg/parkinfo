@@ -273,7 +273,7 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
         var myChart3 = echarts.init(document.getElementById('chart_park_period_charge3'));
         var option3 = {
             title : {
-                text : '停车场每日进出车辆数',
+                text : '停车场每日收费车辆数',
                 subtext : '月单位'
             },
             tooltip : {

@@ -262,13 +262,13 @@ monthUserApp.controller("monthUserModify", function($scope, textModal, $modalIns
         $scope.tempUser.starttime = new Date().format("yyyy-MM-dd hh:mm:ss");
         $scope.tempUser.endtime = new Date().format("yyyy-MM-dd hh:mm:ss");
     }
-    $scope.statuses = [{
+    /*$scope.statuses = [{
         value : 0,
         text : '未支付'
     }, {
         value : 1,
         text : '已支付'
-    }];
+    }];*/
     $scope.orderTypes = [{
         value : 0,
         text : '包月用户'
@@ -316,13 +316,13 @@ monthUserApp.controller("monthUserModify", function($scope, textModal, $modalIns
                 $scope.$parent.refreshUser();
 
             } else {
-                $scope.result = "开卡失败";
+                $scope.result = "开卡失败,录入信息有误或车牌号重复！";
                 $scope.showResult = true;
                 $scope.showLoader = false;
                 textModal.open($scope, "失败", "操作失败");
             }
         }).error(function() {
-            $scope.result = "开卡失败";
+            $scope.result = "开卡失败,录入信息有误或车牌号重复！";
             $scope.showResult = true;
             $scope.showLoader = false;
             textModal.open($scope, "失败", "操作失败");
