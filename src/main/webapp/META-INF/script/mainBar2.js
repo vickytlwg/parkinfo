@@ -1,4 +1,3 @@
-/*function initEchatsJS(){*/
 	require.config({
 				paths: {
 					echarts: 'js/dist',
@@ -85,8 +84,6 @@
 					mychart.setOption(option);
 				}
 			);
-			
-/*}*/
 
 
 /*function loadMonthEchatsJS(){
