@@ -22,6 +22,12 @@ public interface PosChargeDataDAO {
 	
 	public List<PosChargeData> getParkingData(@Param("parkId")int parkId,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
 	
+	public Map<String, Object> calMoneyByParkAndRange(@Param("parkId")int parkId,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
+	
+	public Map<String, Object> calInByParkAndRange(@Param("parkId")int parkId,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
+	
+	public Map<String, Object> calOutByParkAndRange(@Param("parkId")int parkId,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
+	
 	public List<PosChargeData> getByParkDatetime(@Param("parkId")int parkId,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
 	
 	public List<PosChargeData> getFreeData(@Param("parkId")int parkId,@Param("startDate")Date startDate,@Param("endDate")Date endDate);

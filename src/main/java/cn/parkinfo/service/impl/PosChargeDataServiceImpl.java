@@ -211,14 +211,21 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}	
-		List<PosChargeData> posChargeDatas=selectPosdataByParkAndRange(parsedStartDay, parsedEndDay, parkId);
+		Map<String, Object> tmMap=calMoneyByParkAndRange(parkId, parsedStartDay, parsedEndDay);
+	//	List<PosChargeData> posChargeDatas=selectPosdataByParkAndRange(parsedStartDay, parsedEndDay, parkId);
 		Map<String, Object> retmap=new HashMap<>();
 		float chargeTotal=0;
 		float realReceiveMoney=0;
-		for(PosChargeData posData:posChargeDatas){
-			chargeTotal+=posData.getChargeMoney();
-			realReceiveMoney+=posData.getGivenMoney()+posData.getPaidMoney()-posData.getChangeMoney();
+		if (tmMap!=null) {
+			 chargeTotal=(float)(double) tmMap.get("chargeMoney");
+			realReceiveMoney=(float)((double) tmMap.get("givenMoney")+(double)tmMap.get("paidMoney")-(double)tmMap.get("changeMoney"));
 		}
+		
+		
+//		for(PosChargeData posData:posChargeDatas){
+//			chargeTotal+=posData.getChargeMoney();
+//			realReceiveMoney+=posData.getGivenMoney()+posData.getPaidMoney()-posData.getChangeMoney();
+//		}
 		retmap.put("totalMoney", chargeTotal);
 		retmap.put("realMoney", realReceiveMoney);
 		return retmap;
@@ -570,8 +577,7 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 	public Map<String, Object> getParkChargeCountByDay(int parkId, String day) {
 		// TODO Auto-generated method stub
 	
-		Park park = parkService.getParkById(parkId);
-		String parkName=park.getName();
+	
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		Date parsedStartDay = null;
 		try {
@@ -585,20 +591,45 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}	
-		List<PosChargeData> posChargeDatas=selectPosdataByParkAndRange(parsedStartDay, parsedEndDay, parkId);
-		List<PosChargeData> posChargeDatasout=chargeDao.selectPosdataByExitDateAndParkAndRange(parsedStartDay, parsedEndDay, parkId);
+		long incount=0;
+		long outcount=0;
+	//	List<PosChargeData> posChargeDatas=selectPosdataByParkAndRange(parsedStartDay, parsedEndDay, parkId);
+	//	List<PosChargeData> posChargeDatasout=chargeDao.selectPosdataByExitDateAndParkAndRange(parsedStartDay, parsedEndDay, parkId);
+		Map<String, Object> incountMap=calInByParkAndRange(parkId, parsedStartDay, parsedEndDay);
+		Map<String, Object> outcountMap=calOutByParkAndRange(parkId, parsedStartDay, parsedEndDay);
+		if (incountMap!=null) {
+			incount=(long) incountMap.get("count");
+		}
+		if (outcountMap!=null) {
+			outcount=(long) outcountMap.get("count");
+		}
 		Map<String, Object> retmap=new HashMap<>();
 		
-		if (posChargeDatas.isEmpty()) {
-			retmap.put("in", 0);
-			retmap.put("out", 0);
-		}else {
+		
 			
-			retmap.put("in", posChargeDatas.size());
-			retmap.put("out", posChargeDatasout.size());
-		}
+			retmap.put("in", incount);
+			retmap.put("out",outcount);
+		
 		
 		return retmap;
+	}
+
+	@Override
+	public Map<String, Object> calMoneyByParkAndRange(int parkId, Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return chargeDao.calMoneyByParkAndRange(parkId, startDate, endDate);
+	}
+
+	@Override
+	public Map<String, Object> calInByParkAndRange(int parkId, Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return chargeDao.calInByParkAndRange(parkId, startDate, endDate);
+	}
+
+	@Override
+	public Map<String, Object> calOutByParkAndRange(int parkId, Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return chargeDao.calOutByParkAndRange(parkId, startDate, endDate);
 	}
 
 }

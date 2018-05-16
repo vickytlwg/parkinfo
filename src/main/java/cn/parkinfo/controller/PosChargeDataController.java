@@ -590,6 +590,7 @@ public String getCarTimesByDateRangeAndParkId(@RequestBody Map<String, Object> a
 		List<PosChargeData> posChargeDatas = chargeSerivce.getPage(low, count);
 		return Utility.createJsonMsg(1001, "success", posChargeDatas);
 	}
+	//计算应收实收
 	@RequestMapping(value="/getParkChargeByRange",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})
 	@ResponseBody
 	public String getParkChargeByRange(@RequestBody Map<String, Object> args){

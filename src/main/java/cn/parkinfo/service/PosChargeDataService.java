@@ -22,6 +22,8 @@ public interface PosChargeDataService {
 	
 	public Map<String, Object> getByDayDateDiffNoOut(int parkId,String day);
 	
+	public Map<String, Object> calMoneyByParkAndRange(int parkId,Date startDate,Date endDate);
+	
 	public List<PosChargeData> getByDateDiffNoOut(int parkId,int days,int start,int count);
 	
 	public List<PosChargeData> getParkingData(int parkId,Date startDate,Date endDate);
@@ -95,7 +97,11 @@ public interface PosChargeDataService {
 	public List<Map<String, Object>> getFeeOperatorChargeData(Date startDate,Date endDate);
 	
 	public List<Map<String, Object>> getCarTimesByDateRangeAndParkId(int parkId,Date startDate, Date endDate,int start,int count);
-
+	
+	public Map<String, Object> calInByParkAndRange(int parkId, Date startDate, Date endDate);
+	
+	public Map<String, Object> calOutByParkAndRange(int parkId, Date startDate, Date endDate);
+	
 	List<PosChargeData> getByParkAndDayRange(int parkId, String startDate,String endDate) throws ParseException;
 
 	List<PosChargeData> getAllByDayRange(String startDate, String endDate) throws ParseException;
