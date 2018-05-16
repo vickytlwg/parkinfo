@@ -30,7 +30,6 @@
 							y: '20',
 							x: 720,
 							feature: {
-								/*dataView:{show:true},*/
 								magicType: { show: true, type: ['line', 'bar'] },
 								restore: { show: true }
 							}
@@ -88,7 +87,6 @@
 			);
 			
 /*}*/
-
 
 
 /*function loadMonthEchatsJS(){
