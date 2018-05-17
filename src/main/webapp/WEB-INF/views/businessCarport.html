@@ -1,62 +1,95 @@
 <script src="/parkinfo/js/jquery.min.js"></script>
-<script src="/parkinfo/script/datepicker.js"></script>
 <link href="/parkinfo/css/bootstrap.min.css" rel="stylesheet"/>
-<script src="/parkinfo/script/utility.js"></script>
-<script src="/parkinfo/script/jquery.cookie.js"></script>
-<link href="/parkinfo/datepicker/datepicker.css" rel="stylesheet">
-<script src="/parkinfo/script/datepicker.js"></script>
-<script src="/parkinfo/script/highcharts.js"></script>
-<script src="/parkinfo/script/HighchartTheme.js"></script>
-<script type="text/javascript" src="/parkinfo/script/highcharts-more.js"></script>
-<script src="/parkinfo/script/bootstrap.min.js"></script>
-<script src="/parkinfo/script/highcharts.js"></script>
-<script src="/parkinfo/script/businessCarport.js"></script>
 
+<link rel="stylesheet" href="/parkinfo/dist/css/skins/skin-blue.min.css">
+<script src="/parkinfo/angular/angular.min.js"></script>
+<script src="/parkinfo/angular/angular-animate.min.js"></script>
+<script src="/parkinfo/angular/angular-cookies.min.js"></script>
+<script src="/parkinfo/angular/angular-ui-router.min.js"></script>
+<script src="/parkinfo/angular/ocLazyLoad.min.js"></script>
+<script src="/parkinfo/angular/ui-bootstrap-tpls.min.js"></script>
+<link href="/parkinfo/css/xx_list_admin.css" rel="stylesheet"/>
+<script src="/parkinfo/script/businessCarport.js?v=1.21"></script>
+<link href="/parkinfo/plugins/datepicker/datepicker.css" rel="stylesheet">
+<script src="/parkinfo/js/datepicker.js"></script>
+<script src="/parkinfo/js/highcharts.js"></script>
+<script src="/parkinfo/js/tm.pagination.js"></script>
+<script src="/parkinfo/js/businessCarportAngular.js?v=1.32"></script>
+<!--<script src="/park/script/exporting.js"></script>-->
+<script src="/parkinfo/js/HighchartTheme.js"></script>
+<script type="text/javascript" src="/parkinfo/js/highcharts-more.js"></script>
 
-<div class="content-wrapper">
+<style>
+        .page-list .pagination {float:left;}
+        .page-list .pagination span {cursor: pointer;}
+        .page-list .pagination .separate span{cursor: default; border-top:none;border-bottom:none;}
+        .page-list .pagination .separate span:hover {background: none;}
+        .page-list .page-total {float:left; margin: 25px 20px;}
+        .page-list .page-total input, .page-list .page-total select{height: 26px; border: 1px solid #ddd;}
+        .page-list .page-total input {width: 40px; padding-left:3px;}
+        .page-list .page-total select {width: 50px;}
+</style>
+<div class="content-wrapper" ng-app="businessCarportApp" ng-controller="businessCarportCtrl" style="padding-left:4px">
 	<section class="content-header">
           <h1>
-            <small>车位状态</small>
-          </h1>
-        
+            车位状态
+          </h1>        
     </section>
 
     <section class="content">
        <div class="row">
             <div class="col-xs-12">
               	<div class="box">
-	                <div class="box-header">
-	                  <h3 class="box-title"></h3>
-	                </div><!-- /.box-header -->
+	              
 	                <div class="box-body">  
-		                
+		                	<div class="btn-group" hidden>
+		                		<button #if(!$isAdmin) disabled#end ng-click='refreshData()' id="refresh" type="button" class="btn bg-purple"><span class="glyphicon glyphicon-refresh"></span> 刷新</button>
+		                		<!-- <button #if(!$isAdmin) disabled#end id='addBusinessCarport' type="button" class="btn bg-olive"><span class="glyphicon glyphicon-pencil"></span> 添加</button>
+		                		<button #if(!$isAdmin) disabled#end id='updateBusinessCarport' type="button" class="btn bg-navy"><span class="glyphicon glyphicon-edit"></span> 更新</button>
+		                		<button #if(!$isAdmin) disabled#end id='deleteBusinessCarport' type="button" class="btn bg-orange"><span class="glyphicon glyphicon-remove"></span> 删除</button>
+								<button #if(!$isAdmin) disabled#end id='addBusinessCarportNum' type="button" class="btn bg-olive"><span class="glyphicon glyphicon-pencil"></span> 分配车位</button>
+								<button #if(!$isAdmin) disabled#end type="button" class="btn bg-navy" ng-click="addMacAndInsertBusinessCarport()"><span class="glyphicon glyphicon-pencil"></span> 添加硬件与绑定</button> -->
+		                	</div>
 	                	<div class="pull-right">
-	                	<select class="form-control" style="padding:1px;font-size:14px;height:35px" id="searchPark">
-	                		#foreach( $park in $parks)
-                                                <option value=$park.id>$park.name</option>
-                            #end							
+	                	<select class="form-control" style="padding:1px;font-size:14px;height:35px" id="searchPark" ng-model="selectValue" ng-options="park.name for park in parks" ng-change="selectChange()">
+	                		 <option value=-1>所有停车场</option>						
 	                	</select>
 	                	</div>
 	                	
 	                	<br/>   
 	                    <br/> 
-						<div>
+						<div >
 							 <table class="table table-bordered table-hover" id='businessCarportTable' style="font-size:12px;vertical-align: middle;">
 					            <tr>
-					             <th><span style=""><input type="checkbox" /></div></th>
-										<th ><span style="padding-left:15%">Id</div></th>		
-										<th><span style="padding-left:15%">停车场名称</div></th>
-										<th><span style="padding-left:15%">停车位编号</div></th>
-										<th><span style="padding-left:15%">MAC Id</div></th>
-										<th><span style="padding-left:15%">状态</div></th>
-										<th><span style="padding-left:15%">楼层</div></th>
-										<th><span style="padding-left:15%">位置</div></th>
-										<th><span style="padding-left:15%">描述</div></th>
-										<th><span style="padding-left:15%">日期</div></th>	
+										<!-- <th ></th> -->
+										<th ><span style="padding-left:15%">Id</span></th>		
+										<th><span style="padding-left:15%">停车场名称</span></th>
+										<th><span style="padding-left:15%">停车位编号</span></th>
+										<th><span style="padding-left:15%">MAC</span></th>
+										<th><span style="padding-left:15%">状态</span></th>
+										<th><span style="padding-left:15%">楼层</span></th>
+										<th><span style="padding-left:15%">位置</span></th>
+										<th><span style="padding-left:15%">描述</span></th>
+										<th><span style="padding-left:15%">日期</span></th>	
 					            </tr>
 					          <tbody id="businessCarportBody"></tbody>
+							  <tr ng-repeat="item in carportDetails|orderBy:'carportNumber'" >
+								<!-- <td style=" text-align: center;vertical-align: middle;" ><input type="checkbox" /></td> -->
+								<td style=" text-align: center;vertical-align: middle;" ng-if="$odd" class='success'>{{item.id}}</td>
+								<td style=" text-align: center;vertical-align: middle;" ng-if="$even" class='info'>{{item.id}}</td>
+								<td style=" text-align: center;vertical-align: middle;">{{item.parkName}}</td>
+								<td style=" text-align: center;vertical-align: middle;">{{item.carportNumber}}</td>
+								<td style=" text-align: center;vertical-align: middle;" data={{item.macId}}>{{item.mac}}</td>
+								<td style=" text-align: center;vertical-align: middle;" ng-if="item.status==1" data=1><button type='button' class='btn btn-danger'>有车</button></td>
+								<td style=" text-align: center;vertical-align: middle;" ng-if="item.status==0" data=0><button type='button' class='btn btn-success'>无车</button></td>
+								<td style=" text-align: center;vertical-align: middle;">{{item.floor}}</td>
+								<td style=" text-align: center;vertical-align: middle;">{{item.position}}</td>
+								<td style=" text-align: center;vertical-align: middle;">{{item.description}}</td>
+								<td style=" text-align: center;vertical-align: middle;">{{item.date}}</td>
+                              </tr>
 					          </table>
     					</div>
+						 <tm-pagination conf="paginationConf"></tm-pagination>
     				</div>
     				<div class="box-footer clearfix">
       					<div id='pagination'></div>
@@ -65,6 +98,53 @@
             </div>
         </div>
     </section>
+	
+<script  type="text/ng-template" id="addMacAndBind">
+ <ng-form name="formData">
+<div class="modal-header panel panel-success">
+<div class="panel-heading">
+	<button type='button' class='close' ng-click="close()" aria-hidden='true'>&times;</button>				
+	<h4 class="modal-title" >添加硬件并绑定</h4>
+</div>	
+</div>	
+<div class="modal-body">
+	<form class='form-horizontal'  role='form'>
+			<div class='form-group'>
+				<label class='col-sm-2 control-label' for='mac'>MAC</label>
+				<div class='col-sm-8'>
+				<input type='text' class='form-control' ng-model="mac" placeholder='MAC地址'  required>
+				</div>
+			</div>
+			<div class='form-group'>
+					<label class='col-sm-2 control-label' for='macDesc'>描述</label>
+					<div class='col-sm-8'>
+					<input type='text' class='form-control' ng-model="macDesc" required placeholder='请输入描述信息'>
+					</div>
+			</div>
+			<div class='form-group'>
+					<label class='col-sm-2 control-label' for='macDesc'>所在停车场</label>
+					<div class='col-sm-8'>
+					<select class="form-control" ng-options="p.name for p in parks" ng-model="selectP"></select>                
+					</div>
+			</div>
+			<div class='form-group'>
+					<label class='col-sm-2 control-label' for='macDesc'>停车位编号</label>
+					<div class='col-sm-8'>
+					<input type='text' class='form-control' ng-model="carportNumber" placeholder='' required>
+					</div>
+			</div>
+	</form>
+</div>
+<div class="alert alert-info" ng-show="loading || submitted">
+            <span  ng-show='loading' > <i class="fa fa-spinner"></i></span>
+            <span ng-show='submitted'>{{result}}</span>
+        </div>
+<div class="modal-footer">
+	<button ng-click="close()" type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	<button ng-click="submit()"  type="button" class="btn btn-primary" ng-disabled="formData.$invalid">提交数据</button>
+</div>
+</ng-form>
+</script>
 </div>
     
 <div class="modal fade" id="addBusinessCarportModal" tabindex="-1" role="dialog" aria-labelledby='addBusinessCarportLabel' aria-hidden='true'>
@@ -151,6 +231,8 @@
 <div id='showErrorMessage'>
 </div>
 
+
+
 <div class="modal fade" id="addCarportNum" tabindex="-1" role="dialog"  aria-hidden='true'>
 	<div class='modal-dialog'>
 		<div class='modal-content'>
@@ -201,8 +283,8 @@
          </div>
         </div>
     </div>
-	 </div>
-<div class="modal fade" id="carportUsage" tabindex="-1" role="dialog"  aria-hidden='true'>
+</div>
+	<div class="modal fade" id="carportUsage" tabindex="-1" role="dialog" style="min-width:600px" aria-hidden='true'>
 	<div class='modal-dialog'>
 		<div class='modal-content'>
 		
@@ -213,27 +295,14 @@
 			
 			<div class='modal-body'>
 				<div>
-					<ul id="myTab" class="nav nav-tabs">
-   						<li class="active"><a href="#usageChart" data-toggle="tab">图表</a></li>
-   						<li><a href="#usageTable" data-toggle="tab">表格</a></li>
+					<ul id="myTab" class="nav nav-tabs">  						
+   						<li class="active"><a href="#usageTable" data-toggle="tab">表格</a></li>
+						<li ><a href="#usageChart" data-toggle="tab">图表</a></li>
    					</ul>
 				</div>
 				<div class="tab-content">
-					<div class="tab-pane fade in active" id="usageChart">
-						<div class="form-group">
-							<label for="carportStartDate" class="control-label">开始日期</label>
-							<input type="text" id="carportStartDate"  class="form-control date">									
-						</div>
-						<div class="form-group">
-							<label for="carportEndDate" class="control-label">结束日期</label>
-							<input type="text" id="carportEndDate"  class="form-control date">									
-						</div>
-						<div id = "carportUsageRateChart">
-						</div>
-						<div id = "carportUsageChart">
-						</div>
-					</div>
-					<div class="tab-pane fade" id="usageTable">
+
+				<div class="tab-pane fade in active" id="usageTable">
 						<div class="form-group">
 							<label for="carportStartDateForTable" class="control-label">开始日期</label>
 							<input type="text" id="carportStartDateForTable"  class="form-control date">									
@@ -248,13 +317,30 @@
 								<th>ID</th>
 								<th>开始时间</th>
 								<th>结束时间</th>
-								
+								<!--<th>应付</th>
+								<th>实付</th>-->
 							</tr>
 							</thead>
 							<tbody id="carportUsageTbody">
 							</tbody>
 						</table>
 					</div>
+					
+						<div class="tab-pane fade " id="usageChart">
+						<div class="form-group">
+							<label for="carportStartDate" class="control-label">开始日期</label>
+							<input type="text" id="carportStartDate"  class="form-control date">									
+						</div>
+						<div class="form-group">
+							<label for="carportEndDate" class="control-label">结束日期</label>
+							<input type="text" id="carportEndDate"  class="form-control date">									
+						</div>					
+						<div class="form-group" style="width:100%">
+						<div id = "carportUsageChart" >
+						</div>
+						</div>
+					</div>
+					
 				</div>
 			</div>
 			
@@ -266,11 +352,12 @@
 	</div>
 </div>
 
+	
+
 <script>
 $(document).ready(function(){
 	$.fn.businessCarport.initial();
 });
-
 </script>
 
 </script>

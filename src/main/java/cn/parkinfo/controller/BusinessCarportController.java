@@ -92,6 +92,7 @@ public class BusinessCarportController {
 			@RequestParam(value = "parkId", required = false) Integer parkId, HttpServletResponse response) {
 		String url = Constants.WEBAPIURL + "/getBusinessCarportDetail?parkId=" + parkId + "&low=" + low + "&count="
 				+ count;
+//		String url = Constants.WEBAPIURL + "/getBusinessCarportStatusByParkId?parkId=" + parkId ;
 		Map<String, Object> result = HttpUtil.get(url);
 		return result.get("body");
 	}
