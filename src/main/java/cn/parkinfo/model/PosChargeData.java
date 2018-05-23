@@ -8,33 +8,37 @@ public class PosChargeData {
 
 	int id;
 	
-	String cardNumber;
 	
-	int parkId;
+	String cardNumber="";
 	
-	String parkDesc;
+	int parkId=4;
 	
-//	String rejectReason="";
+	String parkDesc="";
 	
-	String portNumber;
+	String portNumber="0";
 	
-	boolean isEntrance;
-	
-	String operatorId;
-	
-	String posId;
-	
-	double chargeMoney;
-	
-	double paidMoney;
-	
-	double unPaidMoney;
-	
-	double givenMoney;
+	String rejectReason="";
+//0是支付宝 1是微信 2是现金
+    int payType=2;
 
-	double changeMoney;
+	boolean isEntrance=true;
 	
-	int isOneTimeExpense;
+	String operatorId ="operator";
+	
+	String posId ="posid";
+	
+	double chargeMoney=0;
+	
+	double paidMoney=0.0;
+	
+	double unPaidMoney=0.0;
+	
+	double givenMoney=0.0;
+
+	double changeMoney=0.0;
+	
+	int isOneTimeExpense=0;
+	
 	
 	boolean paidCompleted=false;
 	
@@ -53,7 +57,13 @@ public class PosChargeData {
 //		return "return===="+id+"/n"+cardNumber+"/n"+parkDesc+"/n";
 //	}
 //	
+	public int getPayType() {
+		return payType;
+	}
 
+	public void setPayType(int payType) {
+		this.payType = payType;
+	}
 	public int getId() {
 		return id;
 	}
