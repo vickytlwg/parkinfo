@@ -127,7 +127,7 @@
                             </div>
                         </div>
                     </li>
-                    <li>
+                    <!-- <li>
                         <div class="gaikuang2s mg2 gaikuangbg2">
                             <div class="gaikuang2ss mg2 xi14 bai">
                                 今日实收金额
@@ -139,8 +139,8 @@
                                 实收总金额{{dayRealMoney}}
                             </div>
                         </div>
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                         <div class="gaikuang2s mg2 gaikuangbg3">
                             <div class="gaikuang2ss mg2 xi14 bai">
                                 今日欠费金额
@@ -152,11 +152,11 @@
                                 欠费总金额{{(dayAmountMoney-dayRealMoney)>0?(dayAmountMoney-dayRealMoney):0}}元
                             </div>
                         </div>
-                    </li>
+                    </li> -->
                     <li>
                         <div class="gaikuang2s mg2 gaikuangbg4">
                             <div class="gaikuang2ss mg2 xi14 bai">
-                                今日交易次数
+                                订单数
                             </div>
                             <div class="gaikuang2sc mg2 xi26">
                                 {{dayOutCount}}<span class="xi14">笔</span>
@@ -166,20 +166,20 @@
                             </div>
                         </div>
                     </li>
-                    <!-- <li>
-                        <div class="gaikuang2s mg2 gaikuangbg5">
+                    <li>
+                        <div class="gaikuang2s mg2 gaikuangbg8">
                             <div class="gaikuang2ss mg2 xi14 bai">
-                                今日运营泊位数
+                                停车次数
                             </div>
                             <div class="gaikuang2sc mg2 xi26">
-                                {{dayOnlineCarportCount}}<span class="xi14"></span>
+                                {{dayOutCount}}<span class="xi14">次</span>
                             </div>
                             <div class="gaikuang2sx mg2 xi13 hui">
-                                总泊位数{{dayCarportCount}}
+                                停车总次数{{dayOutCount}}次
                             </div>
                         </div>
-                    </li> -->
-                    <li>
+                    </li>
+                   <!--  <li>
                         <div class="gaikuang2s mg2 gaikuangbg5">
                             <div class="gaikuang2ss mg2 xi14 bai">
                                 今日逃费率
@@ -191,8 +191,8 @@
                                 总逃费率{{((dayAmountMoney-dayRealMoney)/dayAmountMoney|number:3)>0?((dayAmountMoney-dayRealMoney)/dayAmountMoney|number:3):0}}
                             </div>
                         </div>
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                         <div class="gaikuang2s mg2 gaikuangbg6">
                             <div class="gaikuang2ss mg2 xi14 bai">
                                 今日运营站点数
@@ -204,9 +204,9 @@
                                 合计运营站点数{{dayParkCount}}个
                             </div>
                         </div>
-                    </li>
+                    </li> -->
                     <li>
-                        <div class="gaikuang2s mg2 gaikuangbg7">
+                        <div class="gaikuang2s mg2 gaikuangbg6">
                             <div class="gaikuang2ss mg2 xi14 bai">
                                 今日运营泊位数
                             </div>
@@ -218,7 +218,7 @@
                             </div>
                         </div>
                     </li>
-                    <li>
+                    <!-- <li>
                         <div class="gaikuang2s mg2 gaikuangbg8">
                             <div class="gaikuang2ss mg2 xi14 bai">
                                 今日泊位在线率
@@ -230,8 +230,8 @@
                                 总泊位在线率{{dayOnlineCarportCount/dayCarportCount|number:4}}
                             </div>
                         </div>
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                         <div class="gaikuang2s mg2 gaikuangbg9">
                             <div class="gaikuang2ss mg2 xi14 bai">
                                 今日泊位饱和度
@@ -243,7 +243,7 @@
                                 总泊位饱和度{{1-(dayCarportLeftCount/dayCarportCount)|number:4}}
                             </div>
                         </div>
-                    </li>
+                    </li> -->
                     <li>
                         <div class="gaikuang2s mg2 gaikuangbg10">
                             <div class="gaikuang2ss mg2 xi14 bai">
