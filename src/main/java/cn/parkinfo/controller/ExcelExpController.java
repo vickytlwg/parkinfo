@@ -21,6 +21,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import cn.parkinfo.dao.MonthuserDAO;
 import cn.parkinfo.model.Monthuser;
 import cn.parkinfo.service.ExcelExpService;
+import jxl.write.DateFormat;
+import jxl.write.WritableCellFormat;
 
 @Controller
 @RequestMapping("user") 
@@ -47,14 +49,14 @@ public class ExcelExpController{
 			List<Map<String, Object>> dataList=ExcelUtil.parse(filePath, dfi.getName(), 1, 0);
 			for(int i=1;i<=dataList.size()-1;i++) {
 				Map<String, Object> dataMap = dataList.get(i);
-				String parkid=StringUtil.getString(dataMap.get("停车场名"));
-				String owner=StringUtil.getString(dataMap.get("车主"));
-				String platenumber =StringUtil.getString(dataMap.get("车牌号"));
-				String certificatetype=StringUtil.getString(dataMap.get("描述"));
-				String type=StringUtil.getString(dataMap.get("类型"));
-				String starttime =StringUtil.getString(dataMap.get("开始日期"));
-				String endtime =StringUtil.getString(dataMap.get("结束日期"));
-				String status =StringUtil.getString(dataMap.get("状态"));
+				String parkid=StringUtil.getString(dataMap.get("停车场名")).trim();
+				String owner=StringUtil.getString(dataMap.get("车主")).trim();
+				String platenumber =StringUtil.getString(dataMap.get("车牌号")).trim();
+				String certificatetype=StringUtil.getString(dataMap.get("描述")).trim();
+				String type=StringUtil.getString(dataMap.get("类型")).trim();
+				String starttime =StringUtil.getString(dataMap.get("开始日期")).trim();
+				String endtime =StringUtil.getString(dataMap.get("结束日期")).trim();
+				String status =StringUtil.getString(dataMap.get("状态")).trim();
 				
 				List<Monthuser> listplatenumber = mdao.getByPlateNumber(platenumber);
 				if(listplatenumber.size()==0){
@@ -70,9 +72,9 @@ public class ExcelExpController{
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 					Date dt = new Date(lSysTime1 * 1000);
 					String a = sdf.format(dt);
-					e2.setStarttime(a);
+					e2.setStarttime(starttime);
 					String b = sdf.format(dt);
-					e2.setEndtime(b);
+					e2.setEndtime(endtime);
 					e2.setStatus(Integer.valueOf(status));
 					mdao.insert(e2);
 				}else{
