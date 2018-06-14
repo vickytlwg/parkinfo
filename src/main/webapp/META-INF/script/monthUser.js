@@ -275,7 +275,20 @@ monthUserApp.controller("monthUserModify", function($scope, textModal, $modalIns
     }, {
         value : 1,
         text : '预约'
-    }];
+    }, {
+        value : 2,
+        text : '月卡A'
+    }, {
+        value : 3,
+        text : '月卡A2'
+    }, {
+        value : 4,
+        text : '月卡B'
+    }, {
+        value : 5,
+        text : '月卡C'
+    }
+    ];
     $scope.tempUser.type = 0;
 
     $scope.parks = [];

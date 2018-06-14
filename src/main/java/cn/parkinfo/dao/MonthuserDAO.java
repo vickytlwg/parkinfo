@@ -40,6 +40,8 @@ public interface MonthuserDAO {
     
     List<Monthuser> getByPlateNumber(@Param("platenumber")String platenumber);
     
+    List<Monthuser> getByPlateNumber22(@Param("platenumber")String platenumber,@Param("parkId")int parkId);
+    
     List<Monthuser> getByParkIdAndCount(@Param("parkId")int parkId,@Param("start")int start,@Param("count")int count);
     
     List<Monthuser> getByParkIdAndCountOrder(@Param("parkId")int parkId,@Param("start")int start,@Param("count")int count,@Param("type")int type);

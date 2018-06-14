@@ -1,5 +1,7 @@
 package cn.parkinfo.controller;
 
+import java.awt.Component;
+import java.awt.Window;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,6 +11,8 @@ import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
+
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +25,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import cn.parkinfo.dao.MonthuserDAO;
 import cn.parkinfo.model.Monthuser;
 import cn.parkinfo.service.ExcelExpService;
+import cn.parkinfo.service.ParkService;
 import jxl.write.DateFormat;
 import jxl.write.WritableCellFormat;
 
@@ -32,6 +37,8 @@ public class ExcelExpController{
 	private ExcelExpService excelExpService;
 	@Autowired
 	private MonthuserDAO mdao;
+	@Autowired
+	private ParkService parkService;
 	
 	/**  
      * 描述：通过form表单提交方式导入excel文件  
@@ -57,28 +64,38 @@ public class ExcelExpController{
 				String starttime =StringUtil.getString(dataMap.get("开始日期")).trim();
 				String endtime =StringUtil.getString(dataMap.get("结束日期")).trim();
 				String status =StringUtil.getString(dataMap.get("状态")).trim();
+				int parkid3=parkService.nameToId(parkid);
+				List<Monthuser> listplatenumber = mdao.getByPlateNumber22(platenumber,parkid3);
 				
-				List<Monthuser> listplatenumber = mdao.getByPlateNumber(platenumber);
-				if(listplatenumber.size()==0){
+				if(listplatenumber.size() == 0){
 					//添加
 					Monthuser e2 = new Monthuser();
-					e2.setParkid(Integer.valueOf(parkid));
+					/*e2.setParkid(Integer.valueOf(parkid));*/
 					e2.setOwner(owner);
 					e2.setPlatenumber(platenumber);
 					e2.setCertificatetype(certificatetype);
 					e2.setType(Integer.valueOf(type));
-					Date date=new Date();
+					/*Date date=new Date();
 					long lSysTime1 = date.getTime() / 1000 ;
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-					Date dt = new Date(lSysTime1 * 1000);
-					String a = sdf.format(dt);
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); */
+					/*Date dt = new Date(lSysTime1 * 1000);*/
+					/*String a = sdf.format(dt);*/
 					e2.setStarttime(starttime);
-					String b = sdf.format(dt);
+					/*String b = sdf.format(dt);*/
 					e2.setEndtime(endtime);
 					e2.setStatus(Integer.valueOf(status));
-					mdao.insert(e2);
+					/*mdao.insert(e2);*/
+//					int parkid2=parkService.nameToId(parkid);
+					if(parkid3>0){
+						e2.setParkid(parkid3);
+						mdao.insert(e2);
+					}else{
+						System.err.println("此停车场不存在！");
+					}
+					
 				}else{
 					System.err.println("此车牌已存在！");
+					
 				}
 			}
 		} catch (Exception e) {
@@ -86,44 +103,6 @@ public class ExcelExpController{
 		}
     }  
 	
-	
-	 /**
-     * 导入Excel功能
-     *
-     * @param file
-     * @param request
-     * @param response
-     * @return
-     * @throws IOException
-     */
-//    @RequestMapping(value = "addExcelpark",method = RequestMethod.POST,produces={"application/json;charset=utf-8"})
-//    @ResponseBody
-//    public int addExcelpark(@RequestParam("file") MultipartFile file,
-//                           HttpServletRequest request, HttpServletResponse response) throws IOException {
-//
-//        int flag = 0;//上传标志
-//        if (!file.isEmpty()) {
-//            String clientFileName = file.getOriginalFilename();
-//            System.out.println("clientFileName:" + clientFileName);
-//            String path = request.getSession().getServletContext().getRealPath("/uploadExcel");
-//            if (!new File(path).exists()) {
-//                new File(path).mkdirs();
-//            }
-//
-//            String fileName = path + "/" + clientFileName;
-//            System.out.println("fileName:" + fileName);
-//            File saveFile = new File(fileName);
-//            System.out.println("saveFile:" + saveFile);
-//            file.transferTo(saveFile);
-//
-//            List<ExcelExp> list_pop = readExcelFile(fileName, request.getSession());
-//            System.out.println("list_pop_size:" + list_pop.size());
-//            for (ExcelExp pop : list_pop) {
-//                flag = this.excelExpService.addExcelpark(pop);
-//            }
-//        }
-//        return flag > 0 ? 1 : 0;
-//    }
 //    
 //    
 //    /**

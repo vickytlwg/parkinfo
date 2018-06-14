@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+import org.apache.struts.mock.MockAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -129,6 +131,12 @@ public class MonthUserServiceImpl implements MonthUserService {
 		Date dstartDate=sFormat.parse(starttime+" 00:00:00");
 		Date dendDate=sFormat.parse(endtime+" 23:59:59");
 		return monthUserDao.getByRange(parkId, starttime, endtime);
+	}
+
+	@Override
+	public List<Monthuser> getByPlateNumber22(String platenumber,int parkId) {
+		// TODO Auto-generated method stub
+		return monthUserDao.getByPlateNumber22(platenumber,parkId);
 	}
 
 }

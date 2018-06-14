@@ -118,19 +118,6 @@ $(function(){
                                                 </button>
                                             </div>
                                             
-                                            
-                                           <!-- <div class="col-md-1">
-                                           <button class="btn btn-success btn-xs" id="uploadEventBtn" style="height:33px;margin-left: 0px;"  type="button" >选择文件</button>
-                                            </div>
-                                            <form enctype="multipart/form-data" id="batchUpload"  action="/user/addExcelpark" method="post" class="form-horizontal">    
-											    <input type="file" name="file"  style="width:0px;height:0px;" id="uploadEventFile">  
-											    <input id="uploadEventFile" type="file" name="file" accept="xlsx" style="width:0px;height:0px;"/>
-											    <input id="uploadEventPath"  disabled="disabled"  type="text" placeholder="请选择excel表" style="border: 1px solid #e6e6e6; height: 35px;width: 223px;margin-left: 15px;" >                                           
-											</form>  
-											<div class="col-md-1">
-                                                <button type="button" class="btn btn-info" onclick="parkexp.uploadBtn()" style="margin-top: -50px;margin-left: 676px;">上传</button>
-                                            </div> -->
-                                            
                                             <div class="col-md-1">
                                             	<button class="btn btn-success btn-xs" id="uploadEventBtn" style="height:33px;margin-left: 85px;"  type="button" >选择文件</button>
 											</div>
@@ -285,10 +272,10 @@ $(function(){
     <td ng-bind="user.certificatetype"></td>
     <td ng-if="user.type==0">包月用户</td>
     <td ng-if="user.type==1">预约</td>
-    <td ng-if="user.type==2">预约</td>
-    <td ng-if="user.type==3">预约</td>
-    <td ng-if="user.type==4">预约</td>
-    <td ng-if="user.type==9">临停</td>
+    <td ng-if="user.type==2">月卡A</td>
+    <td ng-if="user.type==3">月卡A2</td>
+    <td ng-if="user.type==4">月卡B</td>
+    <td ng-if="user.type==5">月卡C</td>
     <td ng-bind="user.certificatenumber" hidden></td>
     <td ng-bind="user.starttime"></td>
     <td ng-bind="user.endtime"></td>

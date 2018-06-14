@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
 
 import cn.parkinfo.model.Monthuser;
@@ -38,6 +39,8 @@ public interface  MonthUserService {
 	    List<Monthuser> getByCarnumberAndPark2(String platenumber,int parkId);
 	    
 	    List<Monthuser> getByPlateNumber(String platenumber);
+	    
+	    List<Monthuser> getByPlateNumber22(String platenumber,int parkId);
 	    
 	    List<Monthuser> getByPark(int parkId) throws ParseException;
 	    

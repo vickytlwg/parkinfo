@@ -206,6 +206,9 @@
   	from monthUser left join park on park.id=monthUser.parkId  where monthUser.plateNumber like '%${platenumber}%' or
   	monthUser.owner like '%${platenumber}%' or monthUser.certificateType like '%${platenumber}%' order by monthUser.id desc
   </select>
+  <select id="getByPlateNumber22" resultType="cn.parkinfo.model.Monthuser">
+  	select * from monthUser where plateNumber=#{platenumber} and parkId = #{parkId} 
+  </select>
   <select id="getByCardNumber" resultType="cn.parkinfo.model.Monthuser">
   	select * from monthUser where plateNumber = #{cardNumber}
   </select>
