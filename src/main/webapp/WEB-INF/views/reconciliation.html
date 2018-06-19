@@ -151,24 +151,33 @@
 													class="form-control date">
 											</div>
 											<div class="col-md-2">
-												<select ng-model="tempUser.type"
-													ng-options="status.value as status.text for status in orderTypes"
-													class="form-control">
+												<select id="park-select2" class="form-control" style="font-size:10px;padding:5px;"
+													style="font-weight: bold"> #foreach( $park in
+													$parks)
+													<option value=$park.id>$park.name</option> #end
 												</select>
 											</div>
-											<div class="col-md-3">
-												<input type='text' class='form-control' id='locationKeyWords'
-								placeholder='停车次数'>
-											</div>
 											<div class="col-md-2">
+												<select id="" class="form-control" style="font-size:10px;padding:5px;"
+													style="font-weight: bold">
+													<option value=>月卡类型</option>
+												</select>
+											</div>
+
+											<div class="col-md-2">
+												<input type='text' class='form-control'
+													id='locationKeyWords' placeholder='停车次数'>
+											</div>
+
+											<div class="col-md-1">
 												<button id="excelBtn" ng-click="getExcelByParkAndDayRange()"
 													type="button" class="btn btn-info">导出</button>
 											</div>
-											<div class="col-md-1" hidden>
+											<!-- <div class="col-md-1" hidden>
 												<button type="button" class="btn btn-info"
 													ng-click="getExcelByDayRange()" style="float: left">
 													所有停车场</button>
-											</div>
+											</div> -->
 
 										</div>
 									</div>
