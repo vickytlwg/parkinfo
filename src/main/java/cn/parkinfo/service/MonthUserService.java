@@ -11,6 +11,7 @@ import cn.parkinfo.model.Monthuser;
 import cn.parkinfo.model.PosChargeData;
 
 public interface  MonthUserService {
+		int updateBatchRenewal(Monthuser record);
 
 	    int deleteByPrimaryKey(Integer id);
 

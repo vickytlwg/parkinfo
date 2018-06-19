@@ -139,4 +139,10 @@ public class MonthUserServiceImpl implements MonthUserService {
 		return monthUserDao.getByPlateNumber22(platenumber,parkId);
 	}
 
+	@Override
+	public int updateBatchRenewal(Monthuser record) {
+		// TODO Auto-generated method stub
+		return monthUserDao.updateBatchRenewal(record);
+	}
+
 }
