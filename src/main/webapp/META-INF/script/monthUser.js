@@ -1,3 +1,6 @@
+var num=0;
+
+
 var monthUserApp = angular.module("monthUserApp", ['ui.bootstrap', 'tm.pagination']);
 monthUserApp.controller("monthUserCtrl", ['$scope', '$http', '$window', '$modal', 'textModalTest', 'textModal', '$timeout',
 function($scope, $http, $window, $uibModal, textModalTest, textModal, $timeout) {
@@ -200,6 +203,7 @@ function($scope, $http, $window, $uibModal, textModalTest, textModal, $timeout) 
         });
     };
     $scope.updateUser = function() {
+    	num=1;
         if ($scope.checkedIndex == -1) {
             alert("请选择");
             return;
@@ -215,6 +219,22 @@ function($scope, $http, $window, $uibModal, textModalTest, textModal, $timeout) 
             }
         });
     };
+    //批量续费
+    $scope.updateBatchRenewal = function() {
+    	num=4;
+        $uibModal.open({
+            templateUrl : 'modifyUser3',
+            controller : 'monthUserModify',
+            scope : $scope,
+            resolve : {
+                index : function() {
+                    return undefined;
+                }
+            }
+
+        });
+    };
+
     $scope.deleteUser = function() {
         if ($scope.checkedIndex == -1) {
             alert("请选择");
@@ -252,6 +272,7 @@ function($scope, $http, $window, $uibModal, textModalTest, textModal, $timeout) 
     $scope.refreshUser();
 }]);
 
+
 monthUserApp.controller("monthUserModify", function($scope, textModal, $modalInstance, $http, $timeout, index) {
     var url = '/parkinfo/monthUser/insert';
     $scope.tempUser = {};
@@ -262,6 +283,13 @@ monthUserApp.controller("monthUserModify", function($scope, textModal, $modalIns
         $scope.tempUser.starttime = new Date().format("yyyy-MM-dd hh:mm:ss");
         $scope.tempUser.endtime = new Date().format("yyyy-MM-dd hh:mm:ss");
     }
+    if(num==1){
+    	url='/parkinfo/monthUser/update';
+    }else if(num==4){
+    	url='/parkinfo/monthUser/updateBatchRenewal';
+       }
+    
+    
     /*$scope.statuses = [{
         value : 0,
         text : '未支付'
@@ -277,7 +305,7 @@ monthUserApp.controller("monthUserModify", function($scope, textModal, $modalIns
         text : '预约'
     }, {
         value : 2,
-        text : '月卡A'
+        text : '月卡A1'
     }, {
         value : 3,
         text : '月卡A2'
@@ -289,7 +317,7 @@ monthUserApp.controller("monthUserModify", function($scope, textModal, $modalIns
         text : '月卡C'
     }
     ];
-    $scope.tempUser.type = 0;
+    /*$scope.tempUser.type = 0;*/
 
     $scope.parks = [];
     $scope.getParks = function() {
@@ -329,13 +357,13 @@ monthUserApp.controller("monthUserModify", function($scope, textModal, $modalIns
                 $scope.$parent.refreshUser();
 
             } else {
-                $scope.result = "开卡失败,录入信息有误或车牌号重复！";
+                $scope.result = "开卡失败,录入信息有误！";
                 $scope.showResult = true;
                 $scope.showLoader = false;
                 textModal.open($scope, "失败", "操作失败");
             }
         }).error(function() {
-            $scope.result = "开卡失败,录入信息有误或车牌号重复！";
+            $scope.result = "开卡失败,录入信息有误！";
             $scope.showResult = true;
             $scope.showLoader = false;
             textModal.open($scope, "失败", "操作失败");

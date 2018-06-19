@@ -74,6 +74,12 @@ private PosChargeDataService chargeSerivce;
 @Autowired
 private MonthuserDAO mdao;
 
+/*@RequestMapping(value="update",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})
+@ResponseBody
+public void String(){
+	
+}*/
+
 
 @RequestMapping(value = "/getExcel")
 @ResponseBody
@@ -410,6 +416,22 @@ public String deleteByCarnumberAndPark(@RequestBody Map<String, Object> args){
 	else {
 		result.put("status", 1002);
 		result.put("message", "删除失败");
+	}
+	return Utility.gson.toJson(result);
+}
+
+@RequestMapping(value="updateBatchRenewal",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})
+@ResponseBody
+public String updateBatchRenewal(@RequestBody Monthuser monthUser){
+	Map<String, Object> result=new HashMap<>();
+	int num=monthUserService.updateBatchRenewal(monthUser);
+	if (num>0) {
+		result.put("status", 1001);
+		result.put("message", "ok");
+	}
+	else {
+		result.put("status", 1002);
+		result.put("message", "failed");
 	}
 	return Utility.gson.toJson(result);
 }
