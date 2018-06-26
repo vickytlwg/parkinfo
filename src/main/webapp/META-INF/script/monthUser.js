@@ -20,10 +20,10 @@ function($scope, $http, $window, $uibModal, textModalTest, textModal, $timeout) 
         $window.location.href = "/parkinfo/monthUser/getExcel?date=" + $scope.searchDate + "&parkId=" + $scope.selectedParkidd;
     };
     $scope.searchDate = new Date().format('yyyy-MM-dd');
-    $scope.startDate = new Date().format('yyyy-MM-dd');
-    $scope.endDate = new Date().format('yyyy-MM-dd');
+    $scope.startDate = new Date().format('yyyy-MM-dd hh:mm:ss');
+    $scope.endDate = new Date().format('yyyy-MM-dd hh:mm:ss');
     var dateInitial = function() {
-        $('.date').datepicker({
+        /*$('.date').datepicker({
             autoClose : true,
             dateFormat : "yyyy-mm-dd",
             days : ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
@@ -38,7 +38,15 @@ function($scope, $http, $window, $uibModal, textModalTest, textModal, $timeout) 
             isDisabled : function(date) {
                 return date.valueOf() > Date.now() ? true : false;
             }
-        });
+        });*/
+    	 $('#date1').datetimepicker({
+  		   format: 'YYYY-MM-DD HH:mm:ss',
+  		   locale: moment.locale('zh-cn')
+  	 	});
+   	   $('#date2').datetimepicker({
+  		   format: 'YYYY-MM-DD HH:mm:ss',
+  		   locale: moment.locale('zh-cn')
+  	 	});
     };
     dateInitial();
 
@@ -88,10 +96,10 @@ function($scope, $http, $window, $uibModal, textModalTest, textModal, $timeout) 
         };
         $scope.users = $scope.currentData;
     };
-
-    $scope.getExcelByParkAndDayRange = function() {
-        $window.location.href = "/pos/charge/getExcelByParkAndDayRange?startDate=" + $scope.startDate + "&endDate=" + $scope.endDate + "&parkId=" + $scope.selectedParkidd;
-    };
+    //月卡按时间段导出
+   /* $scope.getExcelByParkAndDayRange = function() {
+        $window.location.href = "/parkinfo/monthUser/getExcelByParkAndDayRange?startDate=" + $("#date1").val() + "&endDate=" + $("#date2").val() + "&parkId=" + $scope.selectedParkidd;
+    };*/
 
     $scope.getExcelByDayRange = function() {
         $window.location.href = "getExcelByDayRange?startDate=" + $scope.startDate + "&endDate=" + $scope.endDate + "&parkId=" + $scope.selectedParkidd;
@@ -314,7 +322,10 @@ monthUserApp.controller("monthUserModify", function($scope, textModal, $modalIns
         text : '月卡B'
     }, {
         value : 5,
-        text : '月卡C'
+        text : '月卡D'
+    }, {
+        value : 6,
+        text : '月卡E'
     }
     ];
     /*$scope.tempUser.type = 0;*/

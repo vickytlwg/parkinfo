@@ -3,6 +3,7 @@ package cn.parkinfo.dao;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,10 @@ import cn.parkinfo.model.Monthuser;
 import cn.parkinfo.model.PosChargeData;
 @Repository
 public interface MonthuserDAO {
+	List<Monthuser> getByParkAndDayRange(@Param("parkId")int parkId, @Param("startDate")String startDate, @Param("endDate")String endDate) throws ParseException;
+	
+	List<Map<String, Object>> getMonthuserCountsByDateRangeAndPark(@Param("parkId")int parkId,@Param("startDate")String startDate,@Param("endDate")String endDate,@Param("type")int type,@Param("maxCount")int maxCount);
+	
 	int updateBatchRenewal(Monthuser record);
 	
     int deleteByPrimaryKey(Integer id);

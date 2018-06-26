@@ -74,12 +74,6 @@ private PosChargeDataService chargeSerivce;
 @Autowired
 private MonthuserDAO mdao;
 
-/*@RequestMapping(value="update",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})
-@ResponseBody
-public void String(){
-	
-}*/
-
 
 @RequestMapping(value = "/getExcel")
 @ResponseBody
@@ -110,13 +104,13 @@ public void getExcelByParkAndDayRange(HttpServletRequest request, HttpServletRes
 	String endDate = request.getParameter("endDate");
 	String parkId = request.getParameter("parkId");
 
-	List<PosChargeData> posdatas = chargeSerivce.getByParkAndDayRange(Integer.parseInt(parkId), startDate, endDate);
+	List<Monthuser> posdatas = monthUserService.getByParkAndDayRange(Integer.parseInt(parkId), startDate, endDate);
 	String docsPath = request.getSession().getServletContext().getRealPath("/");
 	final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
-	String[] headers = { "停车场名", "卡号", "车主姓名", "车牌号", "描述", "证件号码", "开始时间", "结束时间", "支付金额", "状态" };
-	OutputStream out = new FileOutputStream(docsPath + FILE_SEPARATOR + "poschargedata.xlsx");
+	String[] headers = { "停车场名", "卡号", "车主姓名", "车牌号", "描述", "类型", "开始时间", "结束时间", "支付金额", "状态" };
+	OutputStream out = new FileOutputStream(docsPath + FILE_SEPARATOR + "monthusers.xlsx");
 	XSSFWorkbook workbook = new XSSFWorkbook();
-	excelExportService.produceExceldataPosChargeData("收费明细", headers, posdatas, workbook);
+	excelExportService.produceExceldataMonthUser("收费明细", headers, posdatas, workbook);
 	try {
 		workbook.write(out);
 	} catch (IOException e) {

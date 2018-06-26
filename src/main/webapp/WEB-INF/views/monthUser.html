@@ -19,7 +19,10 @@
 <script src="/parkinfo/js/jquery.form.js"></script>
 <script src="/parkinfo/script/tm.pagination.js"></script>
 <script src="/parkinfo/js/monthUser2.js"></script>
-<!-- <script src="/parkinfo/script/reconciliation.js"></script> -->
+<script src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
+<link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+rel="stylesheet">
+<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <style>
         .page-list .pagination {float:left;}
         .page-list .pagination span {cursor: pointer;}
@@ -153,11 +156,11 @@ $(function(){
                                                 <label class="label-control" style="float:right;padding-top:10px"> 时间段:</label>
                                             </div>
                                             <div class="col-md-2">
-                                                <input type="text" id="date" ng-model="startDate" class="form-control date">
+                                                <input type="text" id="date1" ng-model="startDate" class="form-control date">
                                             </div>
 
                                             <div class="col-md-2">
-                                                <input type="text" id="date" ng-model="endDate" class="form-control date">
+                                                <input type="text" id="date2" ng-model="endDate" class="form-control date">
                                             </div>
                                             <div class="col-md-3">
                                                 <select class="form-control" style="padding:1px;font-size:14px;height:35px" ng-options="park.id as park.name for park in parks" ng-model="selectedParkidd" >
@@ -278,7 +281,8 @@ $(function(){
     <td ng-if="user.type==2">月卡A1</td>
     <td ng-if="user.type==3">月卡A2</td>
     <td ng-if="user.type==4">月卡B</td>
-    <td ng-if="user.type==5">月卡C</td>
+    <td ng-if="user.type==5">月卡D</td>
+    <td ng-if="user.type==6">月卡E</td>
     <td ng-bind="user.certificatenumber" hidden></td>
     <td ng-bind="user.starttime"></td>
     <td ng-bind="user.endtime"></td>

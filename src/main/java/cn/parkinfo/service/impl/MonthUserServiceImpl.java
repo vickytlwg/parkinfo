@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.struts.mock.MockAction;
@@ -144,5 +145,17 @@ public class MonthUserServiceImpl implements MonthUserService {
 		// TODO Auto-generated method stub
 		return monthUserDao.updateBatchRenewal(record);
 	}
+	
+	@Override
+	public List<Map<String, Object>> getMonthuserCountsByDateRangeAndPark(int parkId, String startDate, String endDate,
+			int type,int maxCount) {
+		// TODO Auto-generated method stub
+		return monthUserDao.getMonthuserCountsByDateRangeAndPark(parkId, startDate, endDate,type, maxCount);
+	}
 
+	@Override
+	public List<Monthuser> getByParkAndDayRange(int parkId, String startDate, String endDate) throws ParseException {
+		// TODO Auto-generated method stub
+		return monthUserDao.getByParkAndDayRange(parkId, startDate, endDate);
+	}
 }

@@ -1,5 +1,4 @@
 <script src="/parkinfo/js/jquery.min.js"></script>
-<script src="/parkinfo/script/datepicker.js"></script>
 <link href="/parkinfo/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="/parkinfo/dist/css/AdminLTE.css">
 <link rel="stylesheet" href="/parkinfo/dist/css/skins/skin-blue.min.css">
@@ -9,13 +8,17 @@
 <script src="/parkinfo/angular/angular-ui-router.min.js"></script>
 <script src="/parkinfo/angular/ocLazyLoad.min.js"></script>
 <script src="/parkinfo/angular/ui-bootstrap-tpls.min.js"></script>
-<link href="/parkinfo/datepicker/datepicker.css" rel="stylesheet" />
+<!-- <link href="/parkinfo/datepicker/datepicker.css" rel="stylesheet" /> -->
 <link href="/parkinfo/css/xx_list_admin.css" rel="stylesheet" />
 <script src="/parkinfo/js/utility.js"></script>
 <script src="/parkinfo/js/bootstrap.min.js"></script>
-<script src="/parkinfo/script/datepicker.js"></script>
+<!-- <script src="/parkinfo/script/datepicker.js"></script> -->
 <script src="/parkinfo/script/tm.pagination.js"></script>
 <script src="/parkinfo/script/reconciliation.js?v=1.4"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
+<link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+rel="stylesheet">
+<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
 <style>
 .page-list .pagination {
@@ -84,16 +87,16 @@
 
 											<div class="col-md-3">
 												<input type="text" id="date" ng-model="searchDate"
-													class="form-control date" style="width: 305px;">
+													class="form-control date" >
 											</div>
 											<div class="col-md-4">
 												<select id="park-select" class="form-control"
-													style="font-weight: bold; width: 220.5px; float: right;">
+													style="font-weight: bold; width: 222px; ">
 													#foreach( $park in $parks)
 													<option value=$park.id>$park.name</option> #end
 												</select>
 											</div>
-											<div class="col-md-2">
+											<div class="col-md-2" style="margin-left:-80px;">
 												<button id="excelBtn" ng-click="getExcelByParkAndDay()"
 													type="button" class="btn bg-purple">导出</button>
 											</div>
@@ -110,12 +113,12 @@
 													style="float: right; padding-top: 10px"> 时间段:</label>
 											</div>
 											<div class="col-md-3">
-												<input type="text" id="date" ng-model="startDate"
+												<input type="text" id="date2" ng-model="startDate"
 													class="form-control date">
 											</div>
 
 											<div class="col-md-3">
-												<input type="text" id="date" ng-model="endDate"
+												<input type="text" id="date3" ng-model="endDate"
 													class="form-control date">
 											</div>
 											<div class="col-md-3">
@@ -141,36 +144,55 @@
 											<div class="col-md-1" style="padding-right: 0">
 												<label class="label-control"> 违规停车:</label>
 											</div>
-											<div class="col-md-2">
-												<input type="text" id="date" ng-model="startDate"
+											<!-- div class="col-md-2">
+												<input type="text" id="date" ng-model="startDate2"
 													class="form-control date">
 											</div>
 
 											<div class="col-md-2">
-												<input type="text" id="date" ng-model="endDate"
+												<input type="text" id="date" ng-model="endDate2"
 													class="form-control date">
-											</div>
+											</div> -->
+											
 											<div class="col-md-2">
-												<select id="park-select2" class="form-control" style="font-size:10px;padding:5px;"
+		                                        <input type="text" id="date4" ng-model="startDate22" class="form-control date">
+		                                    </div>
+
+		                                    <div class="col-md-2">
+		                                        <input type="text" id="date5" ng-model="endDate22" class="form-control date">
+		                                    </div>
+											<div class="col-md-2">
+												<select id="park-select3" class="form-control" style="font-size:10px;padding:5px;"
 													style="font-weight: bold"> #foreach( $park in
 													$parks)
 													<option value=$park.id>$park.name</option> #end
 												</select>
 											</div>
 											<div class="col-md-2">
-												<select id="" class="form-control" style="font-size:10px;padding:5px;"
+												<select id="park-select4" class="form-control" style="font-size:10px;padding:5px;"
 													style="font-weight: bold">
-													<option value=>月卡类型</option>
+													<!-- #foreach( $monthUser in $monthUsers)
+													<option value=$monthUser.type>$monthUser.type</option> #end -->
+													<option value=0>包月用户</option>
+													<option value=1>预约</option>
+													<option value=2>月卡A1</option>
+													<option value=3>月卡A2</option>
+													<option value=4>月卡B</option>
+													<option value=5>月卡D</option>
+													<option value=6>月卡E</option>
 												</select>
-											</div>
+												</div>
+										
+											<!-- <div class="col-md-2">
+												<input type='text' class='form-control text' ng-model="type" >
+											</div> -->
 
 											<div class="col-md-2">
-												<input type='text' class='form-control'
-													id='locationKeyWords' placeholder='停车次数'>
+												<input type='text' class='form-control text' ng-model="count" placeholder='停车次数'>
 											</div>
 
 											<div class="col-md-1">
-												<button id="excelBtn" ng-click="getExcelByParkAndDayRange()"
+												<button id="excelBtn" ng-click="getExcelByParkIllegalparking()"
 													type="button" class="btn btn-info">导出</button>
 											</div>
 											<!-- <div class="col-md-1" hidden>

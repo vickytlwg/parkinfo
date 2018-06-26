@@ -239,10 +239,15 @@
     where parkId = #{parkid,jdbcType=INTEGER} and type=#{type,jdbcType=INTEGER}
   </update>
   
-  <!-- <insert id="upload" parameterType="cn.parkinfo.model.ExcelExp">
-  	insert into monthUser(owner,cardnumber,starttime,endtime,status)values(#{owner},#{cardnumber},#{starttime},#{endtime},#{status})
-  </insert> -->
-  
+  <select id="getMonthuserCountsByDateRangeAndPark" resultType="java.util.HashMap">
+  	<![CDATA[
+  	SELECT DISTINCT d.count,d.cardNumber,monthUser.`owner`, monthUser.`type`  FROM (SELECT COUNT(p.cardNumber) AS COUNT,p.cardNumber FROM 
+  	posChargeData AS p LEFT JOIN monthUser AS m ON p.cardNumber=m.plateNumber
+	WHERE p.parkId=#{parkId} AND p.entranceDate BETWEEN #{startDate} AND #{endDate} and type=#{type}
+	GROUP BY p.cardNumber  ORDER BY COUNT DESC)d LEFT JOIN monthUser ON monthUser.plateNumber=d.cardNumber  
+	WHERE d.count>=#{maxCount} ORDER BY d.count DESC
+  	 ]]>
+  </select>
   
   <select id="getCount" resultType="int">
   	select count(*) from monthUser
@@ -275,6 +280,15 @@
   	monthUser.platecolor as platecolor,monthUser.certificatetype as certificatetype,monthUser.certificatenumber as certificatenumber,
   	monthUser.starttime as starttime,monthUser.endtime as endtime,monthUser.payment as payment,monthUser.status as status
   	from monthUser left join park on park.id=monthUser.parkId where monthUser.owner=#{username} and monthUser.parkId=#{parkId} and monthUser.type=0
+  </select>
+  
+  <select id="getByParkAndDayRange" resultMap="BaseResultMap">
+ select monthUser.id as id,monthUser.parkId as parkid,park.name as parkname,monthUser.type as type,
+  	monthUser.certificatetype as certificatetype,
+  	monthUser.cardnumber as cardnumber,monthUser.owner as owner,monthUser.platenumber as platenumber,
+  	monthUser.starttime as starttime,monthUser.endtime as endtime,monthUser.payment as payment,monthUser.status as status
+  	from monthUser left join park on park.id=monthUser.parkId where monthUser.startTime BETWEEN #{startDate} and #{endDate}
+ and monthUser.parkId=#{parkId} order by id asc
   </select>
   
     <select id="getByCarnumberAndPark" resultType="cn.parkinfo.model.Monthuser">

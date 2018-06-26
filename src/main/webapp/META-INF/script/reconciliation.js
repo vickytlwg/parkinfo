@@ -16,10 +16,12 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
         }
     };
  $scope.searchDate=new Date().format('yyyy-MM-dd');
- $scope.startDate=new Date().format('yyyy-MM-dd');
- $scope.endDate=new Date().format('yyyy-MM-dd');
+ $scope.startDate=new Date().format('yyyy-MM-dd hh:mm:ss');
+ $scope.endDate=new Date().format('yyyy-MM-dd hh:mm:ss');
+ $scope.startDate22=new Date().format('yyyy-MM-dd hh:mm:ss');
+ $scope.endDate22=new Date().format('yyyy-MM-dd hh:mm:ss');
       var dateInitial=function(){
-        $('.date').datepicker({
+    	 /*$('.date').datepicker({
             autoClose: true,
             dateFormat: "yyyy-mm-dd",
             days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
@@ -31,8 +33,29 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
             viewStart: 0,
             weekStart: 1,
             yearSuffix: "年",
-            isDisabled: function(date){return date.valueOf() > Date.now() ? true : false;}        
-        });
+            isDisabled: function(date){return date.valueOf() > Date.now() ? true : false;}       
+        });*/
+ 	   $('#date').datetimepicker({
+		   format: 'YYYY-MM-DD',
+		   locale: moment.locale('zh-cn')
+	 	});
+ 	   $('#date2').datetimepicker({
+		   format: 'YYYY-MM-DD HH:mm:ss',
+		   locale: moment.locale('zh-cn')
+	 	});
+ 	   $('#date3').datetimepicker({
+		   format: 'YYYY-MM-DD HH:mm:ss',
+		   locale: moment.locale('zh-cn')
+	 	});
+       $('#date4').datetimepicker({
+ 		   format: 'YYYY-MM-DD HH:mm:ss', 
+  		  	locale: moment.locale('zh-cn')
+	   	});
+ 	   $('#date5').datetimepicker({
+ 		   format: 'YYYY-MM-DD HH:mm:ss', 
+  		  	locale: moment.locale('zh-cn')
+	   });
+ 	   
     };  
    dateInitial();
     
@@ -112,6 +135,7 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
 
         });
     };
+    
 
     $scope.selectedPark={};
     $scope.selectParks = [];
@@ -160,11 +184,15 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
          $window.location.href="/parkinfo/pos/charge/getExcelByDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate;
         };
     $scope.getExcelByParkAndDay=function(){
-         $window.location.href="/parkinfo/pos/charge/getExcelByParkAndDay?date="+$scope.searchDate+"&parkId="+$('#park-select').val();
+         $window.location.href="/parkinfo/pos/charge/getExcelByParkAndDay?date="+$("#date").val()+"&parkId="+$('#park-select').val();
      };
      $scope.getExcelByParkAndDayRange=function(){
-         $window.location.href="/parkinfo/pos/charge/getExcelByParkAndDayRange?startDate="+$scope.startDate+"&endDate="+$scope.endDate
+         $window.location.href="/parkinfo/pos/charge/getExcelByParkAndDayRange?startDate="+$("#date2").val()+"&endDate="+$("#date3").val()
          +"&parkId="+$('#park-select2').val();
+     };
+     $scope.getExcelByParkIllegalparking=function(){
+         $window.location.href="/parkinfo/pos/charge/getMonthuserCountsByPark?startDate="+$("#date4").val()+"&endDate="+$("#date5").val()+"&type="+$('#park-select4').val()+"&count="+$scope.count
+         +"&parkId="+$('#park-select3').val();
      };
      $scope.searchByParkName=function(){
         if($scope.searchParkNameText==""||$scope.searchParkNameText==undefined){

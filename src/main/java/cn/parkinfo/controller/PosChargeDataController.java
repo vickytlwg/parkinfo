@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import cn.parkinfo.model.AuthUser;
 import cn.parkinfo.model.AuthUserRole;
 import cn.parkinfo.model.Constants;
@@ -39,6 +40,7 @@ import cn.parkinfo.model.PosChargeData;
 import cn.parkinfo.model.Posdata;
 import cn.parkinfo.service.AuthorityService;
 import cn.parkinfo.service.ExcelExportService;
+import cn.parkinfo.service.MonthUserService;
 import cn.parkinfo.service.ParkService;
 import cn.parkinfo.service.PosChargeDataService;
 import cn.parkinfo.service.Utility;
@@ -57,6 +59,34 @@ public class PosChargeDataController {
 
 	@Autowired
 	private ExcelExportService excelService;
+	
+	@Autowired
+	private MonthUserService monthUserService;
+	
+	@RequestMapping(value = "/getMonthuserCountsByPark",produces = { "application/json;charset=UTF-8" })
+	@ResponseBody
+	public void getMonthuserCountsByPark(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, ParseException, FileNotFoundException{
+		String startDate = request.getParameter("startDate");
+		/*startDate=startDate+ " 00:00:00";*/
+		String endDate = request.getParameter("endDate");
+		/*endDate=endDate+ " 23:59:59";*/
+		String parkId = request.getParameter("parkId");
+		String count = request.getParameter("count");
+		String type = request.getParameter("type");
+ 		List<Map<String, Object>> datas=monthUserService.getMonthuserCountsByDateRangeAndPark(Integer.parseInt(parkId), startDate,endDate,Integer.parseInt(type), Integer.parseInt(count));
+		String docsPath = request.getSession().getServletContext().getRealPath("/");
+		final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
+		String[] headers = { "姓名", "停车次数", "车牌号","类型"};
+		OutputStream out = new FileOutputStream(docsPath + FILE_SEPARATOR + "monthusercount.xlsx");
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		excelService.produceMonthCountsInfoExcel("停车次数", headers, datas, workbook);
+		try {
+			workbook.write(out);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Utility.download(docsPath + FILE_SEPARATOR + "monthusercount.xlsx", response);
+	}
 
 	@RequestMapping(value = "/detail", produces = { "application/json;charset=UTF-8" })
 	public String feeDetailIndex(ModelMap modelMap, HttpServletRequest request, HttpSession session) {
@@ -450,7 +480,7 @@ public String getCarTimesByDateRangeAndParkId(@RequestBody Map<String, Object> a
 		Date startDate = sdf.parse(startDatestr);
 		Date endDate = sdf.parse(endDatestr);
 		List<PosChargeData> posChargeDatas = chargeSerivce.getChargeMoneyData(parkId, startDate, endDate);
-		System.out.println(posChargeDatas);
+		/*System.out.println(posChargeDatas);*/
 		Map<String, Object> retMap = new HashMap<String, Object>();
 		if (posChargeDatas.isEmpty()) {
 			retMap.put("status", 1002);

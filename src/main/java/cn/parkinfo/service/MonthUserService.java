@@ -3,6 +3,7 @@ package cn.parkinfo.service;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,6 +12,10 @@ import cn.parkinfo.model.Monthuser;
 import cn.parkinfo.model.PosChargeData;
 
 public interface  MonthUserService {
+	    List<Monthuser> getByParkAndDayRange(int parkId, String startDate,String endDate) throws ParseException;
+	
+		List<Map<String, Object>> getMonthuserCountsByDateRangeAndPark(int parkId,String startDate,String endDate,int type,int maxCount);
+	
 		int updateBatchRenewal(Monthuser record);
 
 	    int deleteByPrimaryKey(Integer id);
