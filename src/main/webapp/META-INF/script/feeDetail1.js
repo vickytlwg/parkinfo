@@ -67,7 +67,7 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
             return;
         }
         $http({
-            url:'getByCardnumberAuthority',
+            url:'getBySearchCardNumber',
             method:'post',
             data:{"cardNumber":$scope.searchText}
         }).success(function(response){

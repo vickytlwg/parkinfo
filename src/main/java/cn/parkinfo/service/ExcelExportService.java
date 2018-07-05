@@ -342,6 +342,30 @@ public class ExcelExportService {
 			} else {
 				cell11.setCellValue("");
 			}
+			
+			XSSFCell cell12 = row1.createCell(11);				
+			cell12.setCellStyle(style2);
+			int result=(Integer)posdata.getPayType();
+			switch (result) {
+			case 0:
+				cell12.setCellValue("支付宝");
+				break;
+			case 1:
+				cell12.setCellValue("微信");
+				break;
+			case 2:
+				cell12.setCellValue("现金");
+				break;
+			case 3:
+				cell12.setCellValue("工行");
+				break;
+			case 9:
+				cell12.setCellValue("现金");
+				break;
+			default:
+				cell12.setCellValue("无");
+				break;
+			}
 //			
 //			XSSFCell cell12= row1.createCell(11);				
 //			cell12.setCellStyle(style2);

@@ -276,9 +276,9 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 	}
 
 	@Override
-	public List<PosChargeData> getByCardNumber(int parkId,String cardNumber) {
+	public List<PosChargeData> getBySearchCardNumber(String cardNumber) {
 		// TODO Auto-generated method stub
-		return null;
+		return chargeDao.getBySearchCardNumber(cardNumber);
 	}
 
 	@Override
@@ -510,9 +510,9 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 	}
 
 	@Override
-	public List<PosChargeData> getByCardNumber(String cardNumber) {
+	public List<PosChargeData> getByCardNumber(Integer parkId,String cardNumber) {
 		// TODO Auto-generated method stub
-		return chargeDao.getByCardNumber(cardNumber);
+		return chargeDao.getByCardNumber(parkId,cardNumber);
 	}
 
 	@Override
