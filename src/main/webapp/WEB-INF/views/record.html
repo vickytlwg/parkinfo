@@ -1,7 +1,9 @@
 <script src="/parkinfo/js/jquery.min.js"></script>
-<link href="/parkinfo/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/parkinfo/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="/parkinfo/dist/css/AdminLTE.css">
 <link rel="stylesheet" href="/parkinfo/dist/css/skins/skin-blue.min.css">
+<link rel="stylesheet" href="/parkinfo/css/stylexh.css">
+
 <script src="/parkinfo/angular/angular.min.js"></script>
 <script src="/parkinfo/angular/angular-animate.min.js"></script>
 <script src="/parkinfo/angular/angular-cookies.min.js"></script>
@@ -9,220 +11,206 @@
 <script src="/parkinfo/angular/ocLazyLoad.min.js"></script>
 <script src="/parkinfo/angular/ui-bootstrap-tpls.min.js"></script>
 <!-- <link href="/parkinfo/datepicker/datepicker.css" rel="stylesheet"/> -->
-<link href="/parkinfo/css/jquery-ui.min.css" rel="stylesheet"/>
-<link href="/parkinfo/css/xx_list_admin.css" rel="stylesheet"/>
+<link href="/parkinfo/css/jquery-ui.min.css" rel="stylesheet" />
+<link href="/parkinfo/css/xx_list_admin.css" rel="stylesheet" />
 <script src="/parkinfo/js/utility.js"></script>
 <script src="/parkinfo/js/bootstrap.min.js"></script>
 <!-- <script src="/parkinfo/script/datepicker.js"></script> -->
-<script src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
-<link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
-rel="stylesheet">
-<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script
+	src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
+<link
+	href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <script src="/parkinfo/script/reconciliation.js"></script>
 <script src="/parkinfo/script/tm.pagination.js"></script>
 <script src="/parkinfo/script/feeDetail.js?v=1.3"></script>
 
 <style>
-    .page-list .pagination {
-        float: left;
-    }
-    .page-list .pagination span {
-        cursor: pointer;
-    }
-    .page-list .pagination .separate span {
-        cursor: default;
-        border-top: none;
-        border-bottom: none;
-    }
-    .page-list .pagination .separate span:hover {
-        background: none;
-    }
-    .page-list .page-total {
-        float: left;
-        margin: 25px 20px;
-    }
-    .page-list .page-total input, .page-list .page-total select {
-        height: 26px;
-        border: 1px solid #ddd;
-    }
-    .page-list .page-total input {
-        width: 40px;
-        padding-left: 3px;
-    }
-    .page-list .page-total select {
-        width: 50px;
-    }
+.page-list .pagination {
+	float: left;
+}
 
+.page-list .pagination span {
+	cursor: pointer;
+}
+
+.page-list .pagination .separate span {
+	cursor: default;
+	border-top: none;
+	border-bottom: none;
+}
+
+.page-list .pagination .separate span:hover {
+	background: none;
+}
+
+.page-list .page-total {
+	float: left;
+	margin: 25px 20px;
+}
+
+.page-list .page-total input, .page-list .page-total select {
+	height: 26px;
+	border: 1px solid #ddd;
+}
+
+.page-list .page-total input {
+	width: 40px;
+	padding-left: 3px;
+}
+
+.page-list .page-total select {
+	width: 50px;
+}
 </style>
 
-<div class="" ng-app="feeDetailApp" ng-controller="feeDetailCtrl">
-    <section class="content-header">
-        <h1> 停车记录 <small></small></h1>
-    </section>
-    <section class="content">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box">
-                    <!-- <div class="box-header">
-                    <h3 class="box-title"></h3>
-                    </div> --><!-- /.box-header -->
-                    <div class="box-body">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="row" style="padding-top:15px">
+<div class="container" ng-app="feeDetailApp"
+	ng-controller="feeDetailCtrl">
 
-                                    <div class="col-md-1">
-                                        <label class="label-control" style="float:right;padding-top:10px">车牌号:</label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="text" ng-model="searchText" class="form-control" style="float:right"/>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <select id="park-select2" class="form-control" style="font-weight:bold;width:70%;">
-                                            #foreach( $park in $parks)
-                                            <option value=$park.id>$park.name</option>
-                                            #end
-                                        </select>
-                                    </div>
-                                    <div class="col-md-1" style="margin-left:-90px;">
-                                        <button  type="button" class="btn btn-info" ng-click="searchByCardnumber()" style="float:left">
-                                            查找
-                                        </button>
-                                    </div>
-                                    <div class="col-md-1" style="margin-left: -10px;width:11%;">
-                                        <label class="label-control" style="float:left;padding-top:10px">输入停车场:</label>
-                                    </div>
-                                    <div class="col-md-2" style="margin-left: -17px;width:17%;">
-                                        <input type="text" ng-model="searchParkNameText" class="form-control" style="float:right"/>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button  type="button" class="btn btn-info" ng-click="searchByParkName()" style="float:left">
-                                            查找
-                                        </button>
-                                    </div>
-                                </div>
+	<div class="col-xs-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">记录查询</h3>
+					</div>
+					<div class="panel-body">
+						<div class="row" style="padding: 15px 0 0 80px">
+							<div class="col-md-1">
+								<label class="label-control"
+									style="float: right; padding-top: 5px">车牌号:</label>
+							</div>
+							<div class="col-md-2">
+								<input type="text" ng-model="searchText" class="form-control" />
+							</div>
+							<div class="col-md-2">
+								<select id="park-select2" class="form-control"
+									style="font-weight: bold;"> #foreach( $park in $parks)
+									<option value=$park.id>$park.name</option> #end
+								</select>
+							</div>
+							<div class="col-md-1">
+								<button type="button" class="btn btn-info"
+									ng-click="searchByCardnumber()" style="float: left">查找</button>
+							</div>
 
-                                <div class="row" style="padding-top:15px" >
-                                    <div class="col-md-1" style="margin-left:-5px;width:8.8%;">
-                                        <label class="label-control" style="float:right;padding-top:10px;"> 查询条件:</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <select id="park-select3" class="form-control" style="font-weight:bold">
-                                            #foreach( $park in $parks)
-                                            <option value=$park.id>$park.name</option>
-                                            #end
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" id="date4" ng-model="startDate22" class="form-control date">
-                                    </div>
+						</div>
+						<div class="row" style="padding: 15px 0 0 80px">
+							<div class="col-md-1">
+								<label class="label-control"
+									style="float: right; padding-top: 10px;"> 超时查询:</label>
+							</div>
+							<div class="col-md-4">
+								<input type="text" ng-model="daysText" class="form-control"
+									placeholder="超时的天数" style="float: right" />
+							</div>
+							<div class="col-md-2">
+								<button type="button" class="btn btn-info"
+									ng-click="searchDaysNoOut()" style="float: left">搜索</button>
+							</div>
 
-                                    <div class="col-md-3">
-                                        <input type="text" id="date5" ng-model="endDate22" class="form-control date">
-                                    </div>
+						</div>
+						<div class="row" style="padding: 15px 0 0 80px">
+							<div class="col-md-1">
+								<label class="label-control"
+									style="float: right; padding-top: 10px;"> 查询条件:</label>
+							</div>
+							<div class="col-md-2">
+								<select id="park-select3" class="form-control"
+									style="font-weight: bold"> #foreach( $park in $parks)
+									<option value=$park.id>$park.name</option> #end
+								</select>
+							</div>
+							<div class="col-md-2">
+								<input type="text" id="date4" ng-model="startDate22"
+									class="form-control date">
+							</div>
 
-                                </div>
+							<div class="col-md-2">
+								<input type="text" id="date5" ng-model="endDate22"
+									class="form-control date">
+							</div>
+							<div class="btn-group col-md-5" role="group" aria-label="..."
+								style="border-shadow: 5px 5px #888888">
+								<button type="button" class="btn btn-info"
+									ng-click="searchDateTime()">所有记录</button>
+								<button type="button" class="btn btn-primary"
+									ng-click="searchParkingRecords()">在停记录</button>
+								<button type="button" class="btn bg-light-blue-active"
+									ng-click="searchFreeRecords()">免费记录</button>
+								<button type="button" class="btn bg-purple"
+									ng-click="searchChargeMoney()">收费记录</button>
 
-                                <div class="row" style="padding-top:15px">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-2">
-                                        <button  type="button" class="btn btn-info" ng-click="searchDateTime()" style="float:left">
-                                            所有记录
-                                        </button>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button  type="button" class="btn btn-info" ng-click="searchParkingRecords()" style="float:left">
-                                            在停记录
-                                        </button>
-                                    </div>
+							</div>
+						</div>
+					</div>
 
-                                    <div class="col-md-2">
-                                        <button  type="button" class="btn btn-info" ng-click="searchFreeRecords()" style="float:left">
-                                            免费记录
-                                        </button>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button  type="button" class="btn btn-info" ng-click="searchChargeMoney()" style="float:left">
-                                            收费记录
-                                        </button>
-                                    </div>
 
-                                </div>
-                                <div class="row" style="padding-top:15px" >
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-2">
-                                        <input type="text" ng-model="daysText" class="form-control" placeholder="超时的天数" style="float:right"/>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button  type="button" class="btn btn-info" ng-click="searchDaysNoOut()" style="float:left">
-                                            超时记录
-                                        </button>
-                                    </div>
+				</div>
 
-                                </div>
 
-                            </div>
-                        </div>
-                   
-                        <div>
-                            <table class="table table-hover  table-condensed" id='channelTable' style="font-size:12px">
-                                <tr>
-                                    <th><span style=""><input type="checkbox" /></th>
-                                    <th><span >id</span></th>
-                                    <th><span>车牌</span></th>
-                                    <th><span>停车场名</span></th>
-                                    <!-- <th hidden><span>车位号</span></th>
+
+
+
+				<div>
+					<table class="table table-hover table-striped table-condensed"
+						id='channelTable' style="font-size: 12px">
+						<tr class="info">
+							<th><span style=""><input type="checkbox" /></th>
+							<th><span>id</span></th>
+							<th><span>车牌</span></th>
+							<th><span>停车场名</span></th>
+							<!-- <th hidden><span>车位号</span></th>
                                     <th hidden><span>操作员id</span></th> -->
-                                    <th><span>收费状态</span></th>
-                                    <!-- <th><span>实收</span></th> -->
-                                    <th><span>金额</span></th>
-                                    <!-- <th hidden><span>补交</span></th>
+							<th><span>收费状态</span></th>
+							<!-- <th><span>实收</span></th> -->
+							<th><span>金额</span></th>
+							<!-- <th hidden><span>补交</span></th>
                                     <th hidden><span>找零</span></th>	 -->
-                                    <th><span>进场时间</span></th>
-                                    <th><span>离场时间</span></th>
-                                    <th><span>停车时长</span></th>
-                                    <th><span>缴费渠道</span></th>
-                                    <th><span>查看图片</span></th>
-                                </tr>
-                                <tbody id="channelBody"></tbody>
-                                <tr  ng-repeat = "item in detail.items">
-                                    <td >
-                                    <input type="checkbox" ng-model="item.checked" />
-                                    </td>
-                                    <td ng-bind="item.id"></td>
-                                    <td ng-bind="item.cardNumber"></td>
-                                    <td ng-bind="item.parkDesc"></td>
-                                    <!-- <td ng-bind="item.portNumber" hidden></td>
+							<th><span>进场时间</span></th>
+							<th><span>离场时间</span></th>
+							<th><span>停车时长</span></th>
+							<th><span>缴费渠道</span></th>
+							<th><span>查看图片</span></th>
+						</tr>
+						<tbody id="channelBody"></tbody>
+						<tr ng-repeat="item in detail.items">
+							<td><input type="checkbox" ng-model="item.checked" /></td>
+							<td ng-bind="item.id"></td>
+							<td ng-bind="item.cardNumber"></td>
+							<td ng-bind="item.parkDesc"></td>
+							<!-- <td ng-bind="item.portNumber" hidden></td>
                                     <td ng-bind="item.operatorId" hidden></td> -->
-                                    <td ng-if="item.paidCompleted==true" class="success">已出场</td>
-                                    <td ng-if="item.paidCompleted==false" class="warning">未出场</td>
-                                    <!-- <td ng-bind="item.paidMoney"></td> -->
-                                    <td ng-bind="item.chargeMoney"></td>
-                                    <!-- <td ng-bind="item.givenMoney" hidden></td>
+							<td ng-if="item.paidCompleted==true" class="success">已出场</td>
+							<td ng-if="item.paidCompleted==false" class="warning">未出场</td>
+							<!-- <td ng-bind="item.paidMoney"></td> -->
+							<td ng-bind="item.chargeMoney"></td>
+							<!-- <td ng-bind="item.givenMoney" hidden></td>
                                     <td ng-bind="item.changeMoney" hidden></td> -->
-                                    <td ng-bind="item.entranceDate"></td>
-                                    <td ng-bind="item.exitDate"></td>
-                                    <td ng-bind="item.range"></td>
-                                    <td ng-if="item.paidCompleted==false">无</td>
-                                <td ng-if="item.paidCompleted==true&&item.payType==0">支付宝</td>
-                                <td ng-if="item.paidCompleted==true&&item.payType==1">微信</td>
-                                <td ng-if="item.paidCompleted==true&&item.payType==2">现金</td>
-                                <td ng-if="item.paidCompleted==true&&item.payType==3">工行</td>
-                                <td ng-if="item.paidCompleted==true&&item.payType==9">现金</td>
-                                    <td ng-if="item.url!=''"><a href={{item.url}} target="_blank">查看
-                                    </a></td>
-                                    <td ng-if="item.url==''">暂无</td>
-                            </table>
-                        </div>
-                        <tm-pagination conf="paginationConf"></tm-pagination>
+							<td ng-bind="item.entranceDate"></td>
+							<td ng-bind="item.exitDate"></td>
+							<td ng-bind="item.range"></td>
+							<td ng-if="item.paidCompleted==false">无</td>
+							<td ng-if="item.paidCompleted==true&&item.payType==0">支付宝</td>
+							<td ng-if="item.paidCompleted==true&&item.payType==1">微信</td>
+							<td ng-if="item.paidCompleted==true&&item.payType==2">现金</td>
+							<td ng-if="item.paidCompleted==true&&item.payType==3">工行</td>
+							<td ng-if="item.paidCompleted==true&&item.payType==9">现金</td>
+							<td ng-if="item.url!=''"><a href={{item.url}}
+								target="_blank">查看 </a></td>
+							<td ng-if="item.url==''">暂无</td>
+					</table>
+				</div>
+				<tm-pagination conf="paginationConf"></tm-pagination>
 
-                    </div>
-                </div>
-            </div>
+			</div>
+		</div>
+	</div>
 
-    </section>
 
-    <script type="text/ng-template" id="myModalTest">
+	<script type="text/ng-template" id="myModalTest">
         <!-- 模态框（Modal） -->
         <div class="modal-dialog">
         <div class="modal-content">
