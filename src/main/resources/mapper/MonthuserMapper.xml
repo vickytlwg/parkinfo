@@ -245,7 +245,7 @@
   	posChargeData AS p LEFT JOIN monthUser AS m ON p.cardNumber=m.plateNumber
 	WHERE p.parkId=#{parkId} AND p.entranceDate BETWEEN #{startDate} AND #{endDate} and type=#{type}
 	GROUP BY p.cardNumber  ORDER BY COUNT DESC)d LEFT JOIN monthUser ON monthUser.plateNumber=d.cardNumber  
-	WHERE d.count>=#{maxCount} ORDER BY d.count DESC
+	WHERE d.count>=#{maxCount} and type=#{type} ORDER BY d.count DESC
   	 ]]>
   </select>
   

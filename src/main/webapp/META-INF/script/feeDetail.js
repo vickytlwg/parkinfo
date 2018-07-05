@@ -233,7 +233,8 @@ function($scope, $http, $window, textModal, textModalTest, $uibModal, $timeout) 
             url : 'getByCardnumberAuthority',
             method : 'post',
             data : {
-                "cardNumber" : $scope.searchText
+            	"cardNumber" : $scope.searchText,
+            	"parkId":$('#park-select2').val()
             }
         }).success(function(response) {
             if (response.status == 1001) {

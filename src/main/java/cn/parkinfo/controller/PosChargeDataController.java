@@ -568,11 +568,11 @@ public String getCarTimesByDateRangeAndParkId(@RequestBody Map<String, Object> a
 		/* System.out.println(parkId); */
 		return Utility.createJsonMsg(1001, "success", chargeSerivce.getByCardNumber(parkId, cardNumber));
 	}
-
-	@RequestMapping(value = "getByCardnumberAuthority", method = RequestMethod.POST, produces = {
-			"application/json;charset=UTF-8" })
-	@ResponseBody
-	public String getByCardnumberAuthority(@RequestBody Map<String, String> args, HttpSession session) {
+	
+	@RequestMapping(value = "getBySearchCardNumber", method = RequestMethod.POST, produces = {
+	"application/json;charset=UTF-8" })
+@ResponseBody
+public String getBySearchCardNumber(@RequestBody Map<String, String> args, HttpSession session) {
 		String cardNumber = args.get("cardNumber");
 		String username = (String) session.getAttribute("username");
 		AuthUser user = authService.getUserByUsername(username);
@@ -580,7 +580,29 @@ public String getCarTimesByDateRangeAndParkId(@RequestBody Map<String, Object> a
 		if (username == null)
 			return null;
 		if (user.getRole() == AuthUserRole.ADMIN.getValue()) {
-			return Utility.createJsonMsg(1001, "success", chargeSerivce.getByCardNumber(cardNumber));
+			return Utility.createJsonMsg(1001, "success", chargeSerivce.getBySearchCardNumber(cardNumber));
+		}
+		parkList = parkService.filterPark(parkList, username);
+		List<PosChargeData> posChargeDatas = new ArrayList<>();
+		for (Park park : parkList) {
+			posChargeDatas.addAll(chargeSerivce.getByCardNumberAndPark(cardNumber, park.getId()));
+		}
+		return Utility.createJsonMsg(1001, "success", posChargeDatas);
+}
+
+	@RequestMapping(value = "getByCardnumberAuthority", method = RequestMethod.POST, produces = {
+			"application/json;charset=UTF-8" })
+	@ResponseBody
+	public String getByCardnumberAuthority(@RequestBody Map<String, String> args, HttpSession session) {
+		String cardNumber = args.get("cardNumber");
+		String username = (String) session.getAttribute("username");
+		int parkId=Integer.parseInt((String)args.get("parkId"));
+		AuthUser user = authService.getUserByUsername(username);	
+		List<Park> parkList = parkService.getParks();
+		if (username == null)
+			return null;
+		if (user.getRole() == AuthUserRole.ADMIN.getValue()) {
+			return Utility.createJsonMsg(1001, "success", chargeSerivce.getByCardNumber(parkId,cardNumber));
 		}
 		parkList = parkService.filterPark(parkList, username);
 		List<PosChargeData> posChargeDatas = new ArrayList<>();
@@ -599,9 +621,22 @@ public String getCarTimesByDateRangeAndParkId(@RequestBody Map<String, Object> a
 	@RequestMapping(value = "/getByParkName", method = RequestMethod.POST, produces = {
 			"application/json;charset=UTF-8" })
 	@ResponseBody
-	public String getByParkName(@RequestBody Map<String, String> args) {
+	public String getByParkName(@RequestBody Map<String, String> args, HttpSession session) {
 		String parkName = args.get("parkName");
-		return Utility.createJsonMsg(1001, "success", chargeSerivce.getByParkName(parkName));
+		/*String username = (String) session.getAttribute("username");
+		AuthUser user = authService.getUserByUsername(username);	
+		List<Park> parkList = parkService.getParks();
+		if (username == null)
+			return null;
+		if (user.getRole() == AuthUserRole.ADMIN.getValue()) {*/
+			return Utility.createJsonMsg(1001, "success", chargeSerivce.getByParkName(parkName));
+		/*}
+		parkList = parkService.filterPark(parkList, username);
+		List<PosChargeData> posChargeDatas = new ArrayList<>();
+		for (Park park : parkList) {
+			posChargeDatas.addAll(chargeSerivce.getByCardNumberAndPark(parkName, park.getId()));
+		}
+		return Utility.createJsonMsg(1001, "success", posChargeDatas);*/
 	}
 
 	@RequestMapping(value = "/page", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
@@ -987,7 +1022,7 @@ public String getCarTimesByDateRangeAndParkId(@RequestBody Map<String, Object> a
 		List<PosChargeData> posdatas = chargeSerivce.getByParkAndDay(Integer.parseInt(parkId), date);
 		String docsPath = request.getSession().getServletContext().getRealPath("/");
 		final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
-		String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "实收费", "应收费", "补交", "返还", "进场时间", "离场时间" };
+		String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "实收费", "应收费", "补交", "返还", "进场时间", "离场时间","渠道" };
 		OutputStream out = new FileOutputStream(docsPath + FILE_SEPARATOR + "poschargedata.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		excelService.produceExceldataPosChargeData("收费明细", headers, posdatas, workbook);
@@ -1030,7 +1065,7 @@ public String getCarTimesByDateRangeAndParkId(@RequestBody Map<String, Object> a
 		List<PosChargeData> posdatas = chargeSerivce.getByParkAndDayRange(Integer.parseInt(parkId), startDate, endDate);
 		String docsPath = request.getSession().getServletContext().getRealPath("/");
 		final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
-		String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "实收费", "应收费", "补交", "返还", "进场时间", "离场时间" };
+		String[] headers = { "车牌", "停车场名", "车位号", "操作员id", "收费状态", "实收费", "应收费", "补交", "返还", "进场时间", "离场时间","渠道" };
 		OutputStream out = new FileOutputStream(docsPath + FILE_SEPARATOR + "poschargedata.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		excelService.produceExceldataPosChargeData("收费明细", headers, posdatas, workbook);

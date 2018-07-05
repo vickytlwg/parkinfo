@@ -601,7 +601,7 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
         var deferred = $q.defer();
         var promise = deferred.promise;
         $http({
-            url : '/parkinfo/pos/getParkChargeByRange',
+            url : '/parkinfo/pos/charge/getParkChargeByRange',
             method : 'post',
             data : {
                 'parkId' : parkId,

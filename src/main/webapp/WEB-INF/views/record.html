@@ -77,15 +77,22 @@ rel="stylesheet">
                                     <div class="col-md-2">
                                         <input type="text" ng-model="searchText" class="form-control" style="float:right"/>
                                     </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-4">
+                                        <select id="park-select2" class="form-control" style="font-weight:bold;width:70%;">
+                                            #foreach( $park in $parks)
+                                            <option value=$park.id>$park.name</option>
+                                            #end
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1" style="margin-left:-90px;">
                                         <button  type="button" class="btn btn-info" ng-click="searchByCardnumber()" style="float:left">
                                             查找
                                         </button>
                                     </div>
-                                    <div class="col-md-1" style="margin-left: 136px;width:12%;">
-                                        <label class="label-control" style="float:right;padding-top:10px">输入停车场:</label>
+                                    <div class="col-md-1" style="margin-left: -10px;width:11%;">
+                                        <label class="label-control" style="float:left;padding-top:10px">输入停车场:</label>
                                     </div>
-                                    <div class="col-md-3" style="margin-left: 0px">
+                                    <div class="col-md-2" style="margin-left: -17px;width:17%;">
                                         <input type="text" ng-model="searchParkNameText" class="form-control" style="float:right"/>
                                     </div>
                                     <div class="col-md-1">
@@ -175,7 +182,7 @@ rel="stylesheet">
                                     <th><span>离场时间</span></th>
                                     <th><span>停车时长</span></th>
                                     <th><span>缴费渠道</span></th>
-                                    <!-- <th><span>查看图片</span></th> -->
+                                    <th><span>查看图片</span></th>
                                 </tr>
                                 <tbody id="channelBody"></tbody>
                                 <tr  ng-repeat = "item in detail.items">
@@ -200,10 +207,11 @@ rel="stylesheet">
                                 <td ng-if="item.paidCompleted==true&&item.payType==0">支付宝</td>
                                 <td ng-if="item.paidCompleted==true&&item.payType==1">微信</td>
                                 <td ng-if="item.paidCompleted==true&&item.payType==2">现金</td>
-                                <td ng-if="item.paidCompleted==true&&item.payType==9">道闸</td>
-                                    <!-- <td ng-if="item.url!=''"><a href={{item.url}} target="_blank">查看
+                                <td ng-if="item.paidCompleted==true&&item.payType==3">工行</td>
+                                <td ng-if="item.paidCompleted==true&&item.payType==9">现金</td>
+                                    <td ng-if="item.url!=''"><a href={{item.url}} target="_blank">查看
                                     </a></td>
-                                    <td ng-if="item.url==''">暂无</td> -->
+                                    <td ng-if="item.url==''">暂无</td>
                             </table>
                         </div>
                         <tm-pagination conf="paginationConf"></tm-pagination>
