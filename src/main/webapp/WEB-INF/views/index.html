@@ -1,133 +1,132 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
-        <meta charset="utf-8" />
-        <title></title>
-        <link href="/parkinfo/css/style.css" rel="stylesheet" type="text/css" />
-        <link href="/parkinfo/css/style1.css" rel="stylesheet" type="text/css" />
-        <link href="/parkinfo/bootstrap/css/bootstrap.css" rel="stylesheet" />
-        <link href="/parkinfo/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="/parkinfo/bootstrap/css/style.min.css" rel="stylesheet" />
-        <script src="/parkinfo/js/jquery-1.7.2.min.js"></script>
-        <script src="/parkinfo/angular/angular.min.js"></script>
-        <script src="/parkinfo/angular/angular-animate.min.js"></script>
-        <script src="/parkinfo/angular/angular-cookies.min.js"></script>       
-        <script src="/parkinfo/angular/angular-ui-router.min.js"></script>
-        <script src="/parkinfo/angular/ocLazyLoad.min.js"></script>
-        <script src="/parkinfo/angular/ui-bootstrap-tpls.min.js"></script>
-        <script src="/parkinfo/bootstrap/js/bootstrap.min.js"></script>
-        <script src="/parkinfo/js/generalDataView.js?v=1.5"></script>
-       	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=c7A2jm3enN7T0s5V8QbDHx85"></script>       
-		<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
-		<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>            		
-		<script type="text/javascript" src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>
-		<script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
-		<script type="text/javascript" src="/parkinfo/script/utility.js"></script>
-		<script type="text/javascript" src="/parkinfo/script/parkinfoBigData.js?v=1.0"></script>
-		<script type="text/javascript" src="/parkinfo/script/parkinfoBigDataAngular.js?v=1.0"></script>
-		<script type="text/javascript" src="/parkinfo/script/dist/echarts.js"></script>
-		<script type="text/javascript" src="/parkinfo/script/mainBar2.js"></script>
-    </head>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link href="/parkinfo/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/parkinfo/css/style1.css" rel="stylesheet" type="text/css" />
+<link href="/parkinfo/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="/parkinfo/bootstrap/css/font-awesome.min.css"
+	rel="stylesheet" />
+<link href="/parkinfo/bootstrap/css/style.min.css" rel="stylesheet" />
+<script src="/parkinfo/script/jquery-3.3.1.min.js"></script>
+<script src="/parkinfo/angular/angular.min.js"></script>
+<script src="/parkinfo/angular/angular-animate.min.js"></script>
+<script src="/parkinfo/angular/angular-cookies.min.js"></script>
+<script src="/parkinfo/angular/angular-ui-router.min.js"></script>
+<script src="/parkinfo/angular/ocLazyLoad.min.js"></script>
+<script src="/parkinfo/angular/ui-bootstrap-tpls.min.js"></script>
+<script src="/parkinfo/bootstrap/js/bootstrap.min.js"></script>
+<script src="/parkinfo/js/generalDataView.js?v=1.5"></script>
+<script type="text/javascript"
+	src="http://api.map.baidu.com/api?v=2.0&ak=c7A2jm3enN7T0s5V8QbDHx85"></script>
+<script type="text/javascript"
+	src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+<script type="text/javascript"
+	src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+<script type="text/javascript"
+	src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>
+<script type="text/javascript"
+	src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+<script type="text/javascript" src="/parkinfo/script/utility.js"></script>
+<script type="text/javascript"
+	src="/parkinfo/script/parkinfoBigData.js?v=1.0"></script>
+<script type="text/javascript"
+	src="/parkinfo/script/parkinfoBigDataAngular.js?v=1.0"></script>
+<script type="text/javascript" src="/parkinfo/script/dist/echarts.js"></script>
+<script type="text/javascript" src="/parkinfo/script/mainBar2.js"></script>
+</head>
 
-    <body ng-app="generalDataViewApp" ng-controller="generalDataViewCtrl">
-        <div class="top mg2">
-            <div class="topl f">
-                <a href="#"><img align="absmiddle" src="images/index_1_01.png" /></a>
-            </div>
-            <div class="topc f cen xi13">
-                <ul>
-                    <li class="bg1">
-                        <a href="index">概况</a>
-                    </li>
-                    <div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" />
-                    </div>
-                    <li class="bg3"> 
-                        <a href="report">数据</a>
-                    </li>
-                    <div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" />
-                    </div>
-                    <!-- <li class="bg2 bg2hover"> -->
-                    <li class="bg2">
-                        <a href="report/finance">财务对账</a>
-                    </li>
-                    <div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" />
-                    </div>
-                    
-                    <!-- <li class="bg2">
+<body ng-app="generalDataViewApp" ng-controller="generalDataViewCtrl">
+	<div class="top mg2">
+		<div class="topl f">
+			<a href="#"><img align="absmiddle" src="images/index_1_01.png" /></a>
+		</div>
+		<div class="topc f cen xi13">
+			<ul>
+				<li class="bg1"><a href="index">概况</a></li>
+				<div class="topcbar f">
+					<img align="absmiddle" src="images/index_07.jpg" />
+				</div>
+				<li class="bg3"><a href="report">数据</a></li>
+				<div class="topcbar f">
+					<img align="absmiddle" src="images/index_07.jpg" />
+				</div>
+				<!-- <li class="bg2 bg2hover"> -->
+				<li class="bg2"><a href="report/finance">财务对账</a></li>
+				<div class="topcbar f">
+					<img align="absmiddle" src="images/index_07.jpg" />
+				</div>
+
+				<!-- <li class="bg2">
                         <a href="report/monthUser">用户预约</a>
                     </li>
                     <div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" />
                     </div> -->
-                    <li class="bg4">
-                        <a href="report/searchArrearage">欠费查询</a>
-                    </li>
-                    <div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" />
-                    </div>
-                    <li class="bg5">
-                        <a href="report/searchParking">停车记录</a>
-                    </li>
-                    <div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" />
-                    </div>
-                    <li class="bg2">
-                        <a href="report/CarportStatus">车位状态</a>
-                    </li>
-                    <div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" />
-                    </div>
-                    <li class="bg2">
-                        <a href="report/month">月卡管理</a>
-                    </li>
-                    <div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" />
-                    </div>
-                    <!-- <li class="bg2">
+				<li class="bg4"><a href="report/searchArrearage">欠费查询</a></li>
+				<div class="topcbar f">
+					<img align="absmiddle" src="images/index_07.jpg" />
+				</div>
+				<li class="bg5"><a href="report/searchParking">停车记录</a></li>
+				<div class="topcbar f">
+					<img align="absmiddle" src="images/index_07.jpg" />
+				</div>
+				<li class="bg2"><a href="report/CarportStatus">车位状态</a></li>
+				<div class="topcbar f">
+					<img align="absmiddle" src="images/index_07.jpg" />
+				</div>
+				<li class="bg2"><a href="report/month">月卡管理</a></li>
+				<div class="topcbar f">
+					<img align="absmiddle" src="images/index_07.jpg" />
+				</div>
+				<!-- <li class="bg2">
                         <a href="report/user">用户管理</a>
                     </li>
                     <div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" />
                     </div> -->
-                    <li class="bg6 bg6hover">
-                        <a href="#">服务</a>
-                    </li>
-                    <div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" />
-                    </div>
-                </ul>
-            </div>
-            <div class="topr r xi13">
-                <ul>
-                    <li>
-                        <a href="#">欢迎您</a>
-                    </li>
-                    <!-- <li>
+				<li class="bg6 bg6hover"><a href="#">服务</a></li>
+				<div class="topcbar f">
+					<img align="absmiddle" src="images/index_07.jpg" />
+				</div>
+			</ul>
+		</div>
+		<div class="topr r xi13">
+			<ul>
+				<li><a href="#">欢迎您</a></li>
+				<!-- <li>
                         <a href="#"><img align="absmiddle" src="images/index_26.png" /></a>
                     </li>
                     <li>
                         <a href="#"><img align="absmiddle" src="images/index_28.png" /></a>
                     </li> -->
-                    <li>
-                        <a href="/parkinfo/login"><img align="absmiddle" src="images/index_30.png" /></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        
-       <div class="gaikuang mg2">
-            <div class="gaikuang1 mg2 xi15" style="margin-left: 35px;">
-                今日数据发布
-            </div>
-            <div class="gaikuang2 mg2 cen">
-                <ul>
-                    <li>
-                        <div class="gaikuang2s mg2 gaikuangbg1">
-                            <div class="gaikuang2ss mg2 xi14 bai">
-                                今日应收金额
-                            </div>
-                            <div class="gaikuang2sc mg2 xi26">
-                                {{dayAmountMoney}}<span class="xi14">元</span>
-                            </div>
-                            <div class="gaikuang2sx mg2 xi13 hui">
-                                应收总金额{{dayAmountMoney}}元
-                            </div>
-                        </div>
-                    </li>
-                    <!-- <li>
+				<li><a href="/parkinfo/login"><img align="absmiddle"
+						src="images/index_30.png" /></a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="container">
+		<ul class="nav nav-tabs" style="padding-top:100px;">
+			<li role="presentation" class="active"><a href="#">今日数据发布</a></li>
+			<!-- <li role="presentation"><a href="#">Profile</a></li>
+			<li role="presentation"><a href="#">Messages</a></li> -->
+		</ul>
+	</div>
+	<div class="gaikuang mg2">
+		<!-- <div class="gaikuang1 mg2 xi15" style="margin-left: 35px;">
+			今日数据发布</div> -->
+		<div class="gaikuang2 mg2 cen">
+			<ul>
+				<li>
+					<div class="gaikuang2s mg2 gaikuangbg1">
+						<div class="gaikuang2ss mg2 xi14 bai">今日应收金额</div>
+						<div class="gaikuang2sc mg2 xi26">
+							{{dayAmountMoney}}<span class="xi14">元</span>
+						</div>
+						<div class="gaikuang2sx mg2 xi13 hui">
+							应收总金额{{dayAmountMoney}}元</div>
+					</div>
+				</li>
+				<!-- <li>
                         <div class="gaikuang2s mg2 gaikuangbg2">
                             <div class="gaikuang2ss mg2 xi14 bai">
                                 今日实收金额
@@ -140,7 +139,7 @@
                             </div>
                         </div>
                     </li> -->
-                    <!-- <li>
+				<!-- <li>
                         <div class="gaikuang2s mg2 gaikuangbg3">
                             <div class="gaikuang2ss mg2 xi14 bai">
                                 今日欠费金额
@@ -153,20 +152,17 @@
                             </div>
                         </div>
                     </li> -->
-                    <li>
-                        <div class="gaikuang2s mg2 gaikuangbg4">
-                            <div class="gaikuang2ss mg2 xi14 bai">
-                                订单数
-                            </div>
-                            <div class="gaikuang2sc mg2 xi26">
-                                {{dayOutCount}}<span class="xi14">笔</span>
-                            </div>
-                            <div class="gaikuang2sx mg2 xi13 hui">
-                                交易总次数{{dayOutCount}}笔
-                            </div>
-                        </div>
-                    </li>
-                   <!--  <li>
+				<li>
+					<div class="gaikuang2s mg2 gaikuangbg4">
+						<div class="gaikuang2ss mg2 xi14 bai">订单数</div>
+						<div class="gaikuang2sc mg2 xi26">
+							{{dayOutCount}}<span class="xi14">笔</span>
+						</div>
+						<div class="gaikuang2sx mg2 xi13 hui">交易总次数{{dayOutCount}}笔
+						</div>
+					</div>
+				</li>
+				<!--  <li>
                         <div class="gaikuang2s mg2 gaikuangbg5">
                             <div class="gaikuang2ss mg2 xi14 bai">
                                 今日逃费率
@@ -179,7 +175,7 @@
                             </div>
                         </div>
                     </li> -->
-                    <!-- <li>
+				<!-- <li>
                         <div class="gaikuang2s mg2 gaikuangbg6">
                             <div class="gaikuang2ss mg2 xi14 bai">
                                 今日运营站点数
@@ -192,33 +188,27 @@
                             </div>
                         </div>
                     </li> -->
-                    <li>
-                        <div class="gaikuang2s mg2 gaikuangbg6">
-                            <div class="gaikuang2ss mg2 xi14 bai">
-                                今日运营泊位数
-                            </div>
-                            <div class="gaikuang2sc mg2 xi26">
-                                {{dayOnlineCarportCount}}<span class="xi14"></span>
-                            </div>
-                            <div class="gaikuang2sx mg2 xi13 hui">
-                                总泊位数{{dayCarportCount}}
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="gaikuang2s mg2 gaikuangbg8">
-                            <div class="gaikuang2ss mg2 xi14 bai">
-                                停车次数
-                            </div>
-                            <div class="gaikuang2sc mg2 xi26">
-                                {{dayOutCount}}<span class="xi14">次</span>
-                            </div>
-                            <div class="gaikuang2sx mg2 xi13 hui">
-                                停车总次数{{dayOutCount}}次
-                            </div>
-                        </div>
-                    </li>
-                    <!-- <li>
+				<li>
+					<div class="gaikuang2s mg2 gaikuangbg6">
+						<div class="gaikuang2ss mg2 xi14 bai">今日运营泊位数</div>
+						<div class="gaikuang2sc mg2 xi26">
+							{{dayOnlineCarportCount}}<span class="xi14"></span>
+						</div>
+						<div class="gaikuang2sx mg2 xi13 hui">
+							总泊位数{{dayCarportCount}}</div>
+					</div>
+				</li>
+				<li>
+					<div class="gaikuang2s mg2 gaikuangbg8">
+						<div class="gaikuang2ss mg2 xi14 bai">停车次数</div>
+						<div class="gaikuang2sc mg2 xi26">
+							{{dayOutCount}}<span class="xi14">次</span>
+						</div>
+						<div class="gaikuang2sx mg2 xi13 hui">停车总次数{{dayOutCount}}次
+						</div>
+					</div>
+				</li>
+				<!-- <li>
                         <div class="gaikuang2s mg2 gaikuangbg8">
                             <div class="gaikuang2ss mg2 xi14 bai">
                                 今日泊位在线率
@@ -231,7 +221,7 @@
                             </div>
                         </div>
                     </li> -->
-                    <!-- <li>
+				<!-- <li>
                         <div class="gaikuang2s mg2 gaikuangbg9">
                             <div class="gaikuang2ss mg2 xi14 bai">
                                 今日泊位饱和度
@@ -244,23 +234,20 @@
                             </div>
                         </div>
                     </li> -->
-                    <li>
-                        <div class="gaikuang2s mg2 gaikuangbg10">
-                            <div class="gaikuang2ss mg2 xi14 bai">
-                                今日泊位周转率
-                            </div>
-                            <div class="gaikuang2sc mg2 xi26">
-                                {{dayOutCount/dayOnlineCarportCount|number:3}}<span class="xi14"></span>
-                            </div>
-                            <div class="gaikuang2sx mg2 xi13 hui">
-                                总泊位周转率{{dayOutCount/dayOnlineCarportCount|number:4}}
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            
-            <!-- <div class="gaikuang1 mg2 xi15">
+				<li>
+					<div class="gaikuang2s mg2 gaikuangbg10">
+						<div class="gaikuang2ss mg2 xi14 bai">今日泊位周转率</div>
+						<div class="gaikuang2sc mg2 xi26">
+							{{dayOutCount/dayOnlineCarportCount|number:3}}<span class="xi14"></span>
+						</div>
+						<div class="gaikuang2sx mg2 xi13 hui">
+							总泊位周转率{{dayOutCount/dayOnlineCarportCount|number:4}}</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+		<!-- <div class="gaikuang1 mg2 xi15">
                	 停车大数据
             </div>
         <div class="row"  style="margin-top:20px;min-width:700px" >
@@ -312,8 +299,8 @@
                 </div>
             </div>
         </div> -->
-        
-        <!-- <div class="con1 mg2 mb10">
+
+		<!-- <div class="con1 mg2 mb10">
 				<ul>
 					<li class="bgbai btop4hui">
 						<div class="con1s mg2">
@@ -345,7 +332,7 @@
 					</li>
 				</ul>
 			</div> -->
-        	<!-- <div class="con2 mg2 bgbai btop4hui">
+		<!-- <div class="con2 mg2 bgbai btop4hui">
 				<div class="con1s mg2">
 					<div class="con1sl f xi14">总收入分析</div>
 				</div>
@@ -392,87 +379,92 @@
 					</div>
 				</div>
 			</div> -->
-			
 
-            <div class="gaikuang1 mg2 xi15" style="margin-left: 35px;">
-                停车场今日数据
-            </div>
-            <div class="gaikuang3 mg2">
-                <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#ebebeb" class="tab2 cen">
-                    <tr class="cu bgqianlan">
-                        <td>停车场名</td>
-                        <td>今日应收额</td>
-                        <td>今日实收额</td>
-                        <td>今日欠费</td>
-                        <td>进场车辆数</td>
-                        <td>离场车辆数</td>
-                        <td>停车次数</td>
-                        <td>泊位周转率</td>
-                        <td>总车位数</td>
+	<div class="container">
+		<ul class="nav nav-tabs">
+			<li role="presentation" class="active"><a href="#">停车场今日数据</a></li>
+			<!-- <li role="presentation"><a href="#">Profile</a></li>
+			<li role="presentation"><a href="#">Messages</a></li> -->
+		</ul>
+	</div>
+		<!-- <div class="gaikuang1 mg2 xi15" style="margin-left: 35px;">
+			停车场今日数据</div> -->
+		<div class="container-fluid" style="margin-top:30px;">
+			<table width="100%" border="1" cellpadding="0" cellspacing="0"
+				bordercolor="#ebebeb" class="table table-striped table-condensed table-hover table-bordered text-center">
+				<tr  class="info" style="height: 30px; line-height: 30px;">
+					<td>停车场名</td>
+					<td>今日应收额</td>
+					<td>今日实收额</td>
+					<td>今日欠费</td>
+					<td>进场车辆数</td>
+					<td>离场车辆数</td>
+					<td>停车次数</td>
+					<td>泊位周转率</td>
+					<td>总车位数</td>
 
-                    </tr>
-                    <tr class="tab2tr2" ng-repeat="parkdata in parkdatasArray">
+				</tr>
+				<tr  ng-repeat="parkdata in parkdatasArray">
 
-                        <td>{{parkdata.selectedParkName}}</td>
-                        <td>{{parkdata.dayChargeTotal|number:2}}</td>
-                        <td>{{parkdata.dayRealReceiveMoney|number:2}}</td>
-                        <td>{{parkdata.dayChargeTotal-parkdata.dayRealReceiveMoney}}</td>
-                        <td>{{parkdata.carsInCount}}</td>
-                        <td>{{parkdata.carsOutCount}}</td>
-                        <td>{{parkdata.dayCarsCount}}</td>
-                        <td>{{parkdata.dayCarsCount/parkdata.carportsCount|number:2}}</td>
-                        <td>{{parkdata.carportsCount}}</td>
+					<td>{{parkdata.selectedParkName}}</td>
+					<td>{{parkdata.dayChargeTotal|number:2}}</td>
+					<td>{{parkdata.dayRealReceiveMoney|number:2}}</td>
+					<td>{{parkdata.dayChargeTotal-parkdata.dayRealReceiveMoney}}</td>
+					<td>{{parkdata.carsInCount}}</td>
+					<td>{{parkdata.carsOutCount}}</td>
+					<td>{{parkdata.dayCarsCount}}</td>
+					<td>{{parkdata.dayCarsCount/parkdata.carportsCount|number:2}}</td>
+					<td>{{parkdata.carportsCount}}</td>
 
-                    </tr>
+				</tr>
 
-                </table>
-            </div>
+			</table>
+		</div>
 
-            <div class="gaikuang1 mg2 xi15" hidden>
-                各区收费分析
-            </div>
-            <div class="gaikuang3 mg2" hidden>
-                <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#ebebeb" class="tab2 cen">
-                    <tr class="cu bgqianlan">
-                        <td>区中心</td>
-                        <td>应收额</td>
-                        <td>实收额</td>
-                        <td>欠费</td>
-                        <td>入场数</td>
-                        <td>出场数</td>
-                        <td>经营中心</td>
-                        <td>街道数</td>
-                        <td>站点总数</td>
-                        <td>在线站点</td>
-                        <td>总泊位</td>
-                        <td>在线泊位</td>
-                        <td>剩余泊位</td>
+		<div class="gaikuang1 mg2 xi15" hidden>各区收费分析</div>
+		<div class="gaikuang3 mg2" hidden>
+			<table width="100%" border="1" cellpadding="0" cellspacing="0"
+				bordercolor="#ebebeb" class="tab2 cen">
+				<tr class="cu bgqianlan">
+					<td>区中心</td>
+					<td>应收额</td>
+					<td>实收额</td>
+					<td>欠费</td>
+					<td>入场数</td>
+					<td>出场数</td>
+					<td>经营中心</td>
+					<td>街道数</td>
+					<td>站点总数</td>
+					<td>在线站点</td>
+					<td>总泊位</td>
+					<td>在线泊位</td>
+					<td>剩余泊位</td>
 
-                    </tr>
-                    <tr class="tab2tr2" ng-repeat="zoneCenter in zoneCenters">
-                        <td ><a href='#'>{{zoneCenter.zonename|limitTo:5}}</a></td>
-                        <td>{{zoneCenter.amountmoney}}</td>
-                        <td>{{zoneCenter.realmoney}}</td>
-                        <td>{{(zoneCenter.amountmoney-zoneCenter.realmoney)>0?(zoneCenter.amountmoney-zoneCenter.realmoney):0}}</td>
-                        <td>{{zoneCenter.entrancecount}}</td>
-                        <td>{{zoneCenter.outcount}}</td>
-                        <td>{{zoneCenter.areacount}}</td>
-                        <td>{{zoneCenter.streetcount}}</td>
-                        <td>{{zoneCenter.parkcount}}</td>
-                        <td>{{zoneCenter.onlineparkcount}}</td>
-                        <td>{{zoneCenter.carportcount}}</td>
-                        <td>{{zoneCenter.onlinecarportcount}}</td>
-                        <td>{{zoneCenter.carportleftcount}}</td>
-                    </tr>
+				</tr>
+				<tr class="tab2tr2" ng-repeat="zoneCenter in zoneCenters">
+					<td><a href='#'>{{zoneCenter.zonename|limitTo:5}}</a></td>
+					<td>{{zoneCenter.amountmoney}}</td>
+					<td>{{zoneCenter.realmoney}}</td>
+					<td>{{(zoneCenter.amountmoney-zoneCenter.realmoney)>0?(zoneCenter.amountmoney-zoneCenter.realmoney):0}}</td>
+					<td>{{zoneCenter.entrancecount}}</td>
+					<td>{{zoneCenter.outcount}}</td>
+					<td>{{zoneCenter.areacount}}</td>
+					<td>{{zoneCenter.streetcount}}</td>
+					<td>{{zoneCenter.parkcount}}</td>
+					<td>{{zoneCenter.onlineparkcount}}</td>
+					<td>{{zoneCenter.carportcount}}</td>
+					<td>{{zoneCenter.onlinecarportcount}}</td>
+					<td>{{zoneCenter.carportleftcount}}</td>
+				</tr>
 
-                </table>
-            </div>
-        </div>
-<!--         <script src="js/js.js"></script> -->
-        <script >
-/* $(function() {
-                $.fn.platformShow.initial();
-            }); */
-</script>
-    </body>
+			</table>
+		</div>
+	</div>
+	<!--         <script src="js/js.js"></script> -->
+	<script>
+		/* $(function() {
+		 $.fn.platformShow.initial();
+		 }); */
+	</script>
+</body>
 </html>
