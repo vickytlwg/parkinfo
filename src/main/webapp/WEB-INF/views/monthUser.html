@@ -6,7 +6,6 @@
 <link href="/parkinfo/datepicker/datepicker.css" rel="stylesheet" />
 <link href="/parkinfo/css/xx_list_admin.css" rel="stylesheet" />
 <link href="/parkinfo/css/stylexh.css" rel="stylesheet" />
-
 <script src="/parkinfo/angular/angular.min.js"></script>
 <script src="/parkinfo/angular/angular-animate.min.js"></script>
 <script src="/parkinfo/angular/angular-cookies.min.js"></script>
@@ -20,7 +19,6 @@
 <script src="/parkinfo/js/service/textModalService.js"></script>
 <script src="/parkinfo/js/jquery.form.js"></script>
 <script src="/parkinfo/script/tm.pagination.js"></script>
-<script src="/parkinfo/js/monthUser2.js"></script>
 <script
 	src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
 <link
@@ -124,68 +122,91 @@
 
 <div class="container" ng-app="monthUserApp"
 	ng-controller="monthUserCtrl">
-	<div class="col-xs-12" style="padding-top: 20px;">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<h3 class="panel-title">月卡用户查找及导出</h3>
-			</div>
+
+
+	<section class="content">
+		<div class="panel panel-default">
 			<div class="panel-body">
-				<div class="row" style="padding: 0 0 0 150px">
-					<div class="col-md-1">
-						<label class="control-label"
-							style="float: right; padding-top: 5px;">关键字:</label>
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">月卡用户查找及导出</h3>
 					</div>
-					<div class="col-md-3">
-						<input type="text" ng-model="searchText" class="form-control"
-							style="float: right">
-					</div>
+					<div class="panel-body">
+						<div class="row" style="height: 50px;">
+							<div class="col-md-1">
+								<label class="control-label"
+									style="float: right; padding-top: 10px;">关键字:</label>
+							</div>
 
-					<div class="col-md-2">
-						<button type="button" class="btn btn-info"
-							ng-click="searchByPlateNumber()" style="float: left">查找</button>
-					</div>
+							<div class="col-md-3">
+								<input type="text" ng-model="searchText"
+									class="form-control text" style="float: right">
+							</div>
 
-					<div class="col-md-2 col-md-offset-1">
-						<button class="btn btn-primary" id="uploadEventBtn" type="button">选择文件(Excel文件)</button>
-					</div>
-					<form enctype="multipart/form-data" id="batchUpload"
-						action="user/upload" method="post" class="form-horizontal" hidden>
-						<input type="file" name="file" style="width: 0px; height: 0px;"
-							id="uploadEventFile"> <input
-							class="form-control text-center" id="uploadEventPath"
-							disabled="disabled" type="text" placeholder="请选择excel表">
-					</form>
-					<div class="col-md-1">
-						<button type="button" class="btn btn-info"
-							onclick="user.uploadBtn()">导入</button>
-					</div>
-				</div>
+							<div class="col-md-1">
+								<button type="button" class="btn btn-info"
+									ng-click="searchByPlateNumber()" style="float: left">
+									查找</button>
+							</div>
 
-				<div class="row" style="padding: 20px 0 0 150px">
+							<div class="col-md-2 col-md-offset-1">
+								<button class="btn btn-success" id="uploadEventBtn"
+									type="button">选择文件(Excel文件)</button>
+							</div>
+							<form enctype="multipart/form-data" id="batchUpload"
+								hidden="hidden" action="user/upload" method="post"
+								class="form-horizontal">
+								<input type="file" name="file" style="width: 0px; height: 0px;"
+									id="uploadEventFile"> <input id="uploadEventPath"
+									disabled="disabled" type="text" placeholder="请选择excel表">
+							</form>
+							<div class="col-md-2">
+								<button type="button" class="btn btn-info"
+									onclick="user.uploadBtn()">导入</button>
+							</div>
 
-					<div class="col-md-1">
-						<label class="label-control"
-							style="float: right; padding-top: 5px"> 时间段:</label>
-					</div>
-					<div class="col-md-2">
-						<input type="text" id="date1" ng-model="startDate"
-							class="form-control date">
-					</div>
 
-					<div class="col-md-2">
-						<input type="text" id="date2" ng-model="endDate"
-							class="form-control date">
-					</div>
-					<div class="col-md-4">
-						<select class="form-control"
-							style="padding: 1px; font-size: 14px; height: 35px"
-							ng-options="park.id as park.name for park in parks"
-							ng-model="selectedParkidd">
-							<option value="">请选择</option> #if($isAdmin)
-							<option value=-1>所有停车场</option>#end
-						</select>
-					</div>
-					<!-- <div class="col-md-3">
+							<!-- <div class="col-md-4">
+                                            <select id="park-select" class="form-control" style="font-weight:bold;width: 220.5px;float: right;">
+                                            #foreach( $park in $parks)
+                                            <option value=$park.id>$park.name</option>
+                                            #end
+                                            </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                            <button id="excelBtn" ng-click="getExcelByParkRange()" type="button" class="btn btn-info"> 导出</button>
+                                            </div> -->
+							<div class="col-md-1" hidden>
+								<button ng-click="getExcelByDay()" type="button"
+									class="btn bg-purple">所有停车场</button>
+							</div>
+						</div>
+
+						<div class="row" style="padding-top: 20px">
+
+							<div class="col-md-1">
+								<label class="label-control"
+									style="float: right; padding-top: 10px"> 时间段:</label>
+							</div>
+							<div class="col-md-2">
+								<input type="text" id="date1" ng-model="startDate"
+									class="form-control date">
+							</div>
+
+							<div class="col-md-2">
+								<input type="text" id="date2" ng-model="endDate"
+									class="form-control date">
+							</div>
+							<div class="col-md-3">
+								<select class="form-control"
+									style="padding: 1px; font-size: 14px; height: 35px"
+									ng-options="park.id as park.name for park in parks"
+									ng-model="selectedParkidd">
+									<option value="">请选择</option> #if($isAdmin)
+									<option value=-1>所有停车场</option>#end
+								</select>
+							</div>
+							<!-- <div class="col-md-3">
 			                                    <select id="park-select2" class="form-control" style="font-weight:bold">
 			                                            #foreach( $park in $parks)
 			                                                <option value=$park.id>$park.name</option>
@@ -193,131 +214,134 @@
 			                                     </select>
 			                                </div> -->
 
-					<div class="col-md-2">
-						<button id="excelBtn" ng-click="getExcel()" type="button"
-							class="btn btn-info">导出</button>
-					</div>
+							<div class="col-md-2">
+								<button id="excelBtn" ng-click="getExcel()" type="button"
+									class="btn btn-info">导出</button>
+							</div>
 
-					<div class="col-md-1" hidden>
-						<button type="button" class="btn btn-info"
-							ng-click="getExcelByDayRange()" style="float: left">
-							所有停车场</button>
+							<div class="col-md-1" hidden>
+								<button type="button" class="btn btn-info"
+									ng-click="getExcelByDayRange()" style="float: left">
+									所有停车场</button>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<!-- <div class="box-body">  -->
-		<div class="btn-group">
-			<button ng-click="refreshUser()" type="button" class="btn btn-info"
-				style="border-radius: 25px; margin-right: 5px;">
-				<span class="glyphicon glyphicon-refresh"></span> 刷新
-			</button>
-			<button ng-click="insertUser()" type="button" class="btn btn-primary"
-				style="border-radius: 25px; margin-right: 5px;">
-				<span class="glyphicon glyphicon-pencil"></span> 用户开卡
-			</button>
-			<button ng-click="updateUser()" type="button" class="btn btn-warning"
-				style="border-radius: 25px; margin-right: 5px;">
-				<span class="glyphicon glyphicon-edit"></span> 月卡续费
-			</button>
-			<button ng-click="deleteUser()" type="button" class="btn btn-danger"
-				style="border-radius: 25px; margin-right: 5px;">
-				<span class="glyphicon glyphicon-remove"></span> 删除用户
-			</button>
-			<button ng-click="updateUserPark()" type="button" class="btn bg-blue"
-				style="border-radius: 25px; margin-right: 5px;">
-				<span class="glyphicon glyphicon-edit"></span> 所属停车场
-			</button>
-			<button ng-click="updateBatchRenewal()" type="button"
-				class="btn bg-maroon"
-				style="border-radius: 25px; margin-right: 5px;">
-				<span class="glyphicon glyphicon-edit"></span> 批量续费
-			</button>
-		</div>
+				<!-- <div class="box-body">  -->
+				<div class="btn-group">
+					<button ng-click="refreshUser()" type="button" class="btn btn-info"
+						style="border-radius: 25px; margin-right: 5px;">
+						<span class="glyphicon glyphicon-refresh"></span> 刷新
+					</button>
+					<button ng-click="insertUser()" type="button"
+						class="btn btn-primary"
+						style="border-radius: 25px; margin-right: 5px;">
+						<span class="glyphicon glyphicon-pencil"></span> 用户开卡
+					</button>
+					<button ng-click="updateUser()" type="button"
+						class="btn btn-warning"
+						style="border-radius: 25px; margin-right: 5px;">
+						<span class="glyphicon glyphicon-edit"></span> 月卡续费
+					</button>
+					<button ng-click="deleteUser()" type="button"
+						class="btn btn-danger"
+						style="border-radius: 25px; margin-right: 5px;">
+						<span class="glyphicon glyphicon-remove"></span> 删除用户
+					</button>
+					<button ng-click="updateUserPark()" type="button"
+						class="btn bg-blue"
+						style="border-radius: 25px; margin-right: 5px;">
+						<span class="glyphicon glyphicon-edit"></span> 所属停车场
+					</button>
+					<button ng-click="updateBatchRenewal()" type="button"
+						class="btn bg-maroon"
+						style="border-radius: 25px; margin-right: 5px;">
+						<span class="glyphicon glyphicon-edit"></span> 批量续费
+					</button>
+				</div>
 
-		<!-- <div class="pull-right">
-
+				<!-- <div class="pull-right">
                                 <select class="form-control" style="padding:1px;font-size:14px;height:35px" ng-options="park.id as park.name for park in parks" ng-model="selectedParkid" ng-change="selectChanged(selectedParkid)">
                                 #if($isAdmin) <option value=-1>所有停车场</option>#end
                                 </select>
                                 </div> -->
-		<div class="pull-right">
-			<select style="display: none" id="get_Park" class="form-control"
-				style="padding:1px;font-size:14px;height:35px" id="searchPark">
-				#foreach( $park in $parks)
-				<option value=$park.id>$park.name</option> #end
-			</select> <select class="form-control"
-				style="padding: 1px; font-size: 14px; height: 35px"
-				ng-options="park.id as park.name for park in parks"
-				ng-model="selectedParkid" ng-change="selectChanged(selectedParkid)">
-				<option value="">请选择</option> #if($isAdmin)
-				<option value=-1>所有停车场</option>#end
-			</select>
-		</div>
+				<div class="pull-right">
+					<select style="display: none" id="get_Park" class="form-control"
+						style="padding:1px;font-size:14px;height:35px" id="searchPark">
+						#foreach( $park in $parks)
+						<option value=$park.id>$park.name</option> #end
+					</select> <select class="form-control"
+						style="padding: 1px; font-size: 14px; height: 35px"
+						ng-options="park.id as park.name for park in parks"
+						ng-model="selectedParkid"
+						ng-change="selectChanged(selectedParkid)">
+						<option value="">请选择</option> #if($isAdmin)
+						<option value=-1>所有停车场</option>#end
+					</select>
+				</div>
 
-		<br /> <br />
-		<div>
-			<table class="table table-bordered table-hover table-condensed table-striped text-center"
-				style="font-size: 12px">
-				<tr class="info">
-					<th><span> <input type="checkbox" />
-					</span></th>
-					<th hidden><span>Id </span></th>
-					<th style="width: 170px;"><span>停车场名 </span></th>
-					<th hidden><span>楼层 </span></th>
-					<th><span>车主 </span></th>
-					<th><span>车牌号 </span></th>
-					<!-- <th><span style="padding-left:15%">车位号
+				<br /> <br />
+				<div>
+					<table class="table table-bordered table-hover table-condensed table-striped text-center"
+						style="font-size: 12px">
+						<tr class="info">
+							<th><span style=""> <input type="checkbox" />
+							</span></th>
+							<th hidden><span style="padding-left: 15%">Id </span></th>
+							<th style="width: 170px;"><span>停车场名 </span></th>
+							<th hidden><span>楼层 </span></th>
+							<th><span>车主 </span></th>
+							<th><span>车牌号 </span></th>
+							<!-- <th><span style="padding-left:15%">车位号
             </div></th> -->
-					<th hidden><span>车牌颜色 </span></th>
-					<th><span >描述 </span></th>
-					<th><span>类型 </span></th>
-					<th hidden><span>电话号码 </span></th>
-					<th><span>开始时间 </span></th>
-					<th><span>结束时间 </span></th>
-					<th hidden><span>支付金额 </span></th>
-					<!-- <th><span style="padding-left:15%">状态</div></th> -->
-				</tr>
+							<th hidden><span>车牌颜色 </span></th>
+							<th><span>描述 </span></th>
+							<th><span>类型 </span></th>
+							<th hidden><span>电话号码 </span></th>
+							<th><span>开始时间 </span></th>
+							<th><span>结束时间 </span></th>
+							<th hidden><span>支付金额 </span></th>
+							<!-- <th><span style="padding-left:15%">状态</div></th> -->
+						</tr>
 
-				<tbody id="parkBody"></tbody>
-				<tr ng-repeat="user in users">
-					<td><input type="checkbox" ng-model="user.checked"
-						ng-click="selectChange($index)" /></td>
-					<td ng-bind="user.id" hidden></td>
-					<td ng-bind="user.parkname"></td>
-					<td ng-bind="user.owner"></td>
-					<!-- <td ng-bind="user.cardnumber"></td> -->
-					<td ng-bind="user.platenumber"></td>
-					<td ng-bind="user.certificatenumber" hidden></td>
-					<td ng-bind="user.platecolor" hidden></td>
-					<td ng-bind="user.certificatetype"></td>
-					<td ng-if="user.type==0">包月用户</td>
-					<td ng-if="user.type==1">预约</td>
-					<td ng-if="user.type==2">月卡A1</td>
-					<td ng-if="user.type==3">月卡A2</td>
-					<td ng-if="user.type==4">月卡B</td>
-					<td ng-if="user.type==5">月卡D</td>
-					<td ng-if="user.type==6">月卡E</td>
-					<td ng-bind="user.certificatenumber" hidden></td>
-					<td ng-bind="user.starttime"></td>
-					<td ng-bind="user.endtime"></td>
-					<td ng-bind="user.payment | currency:'￥'" hidden></td>
-					<!-- <td ng-if="user.status==1">已支付</td>
+						<tbody id="parkBody"></tbody>
+						<tr ng-repeat="user in users">
+							<td><input type="checkbox" ng-model="user.checked"
+								ng-click="selectChange($index)" /></td>
+							<td ng-bind="user.id" hidden></td>
+							<td ng-bind="user.parkname"></td>
+							<td ng-bind="user.owner"></td>
+							<!-- <td ng-bind="user.cardnumber"></td> -->
+							<td ng-bind="user.platenumber"></td>
+							<td ng-bind="user.certificatenumber" hidden></td>
+							<td ng-bind="user.platecolor" hidden></td>
+							<td ng-bind="user.certificatetype"></td>
+							<td ng-if="user.type==0">包月用户</td>
+							<td ng-if="user.type==1">预约</td>
+							<td ng-if="user.type==2">月卡A1</td>
+							<td ng-if="user.type==3">月卡A2</td>
+							<td ng-if="user.type==4">月卡B</td>
+							<td ng-if="user.type==5">月卡D</td>
+							<td ng-if="user.type==6">月卡E</td>
+							<td ng-bind="user.certificatenumber" hidden></td>
+							<td ng-bind="user.starttime"></td>
+							<td ng-bind="user.endtime"></td>
+							<td ng-bind="user.payment | currency:'￥'" hidden></td>
+							<!-- <td ng-if="user.status==1">已支付</td>
     <td ng-if="user.status==0">未支付</td> -->
-				</tr>
-			</table>
-			<tm-pagination conf="paginationConf"></tm-pagination>
+						</tr>
+					</table>
+					<tm-pagination conf="paginationConf"></tm-pagination>
+				</div>
+				<div class="box-footer clearfix">
+					<div id='pagination'></div>
+				</div>
+			</div>
 		</div>
-		<div class="box-footer clearfix">
-			<div id='pagination'></div>
-		</div>
-	</div>
-</div>
-</div>
-</section>
+	</section>
 
 
-<script type="text/ng-template" id="modifyUser2">
+	<script type="text/ng-template" id="modifyUser2">
 <div class="modal-header">
     <button type='button' class='close' ng-click="close()" aria-hidden='true'>
         &times;
@@ -378,7 +402,7 @@
 </div>
 </script>
 
-<script type="text/ng-template" id="modifyUser">
+	<script type="text/ng-template" id="modifyUser">
 
     <div class="modal-header">
     <button type='button' class='close' ng-click="close()" aria-hidden='true'>
@@ -501,7 +525,7 @@
     </div>
 </script>
 
-<script type="text/ng-template" id="modifyUser3">
+	<script type="text/ng-template" id="modifyUser3">
 
     <div class="modal-header">
     <button type='button' class='close' ng-click="close()" aria-hidden='true'>
