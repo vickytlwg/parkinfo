@@ -84,6 +84,8 @@ public interface PosChargeDataService {
 	
 	public Map<String, Object> getParkChargeByDay(int parkId, String day);
 	
+	public Map<String, Object> getYearsParkChargeByRange(int parkId, String day);
+	
 	public Map<String, Object> getParkChargeByDay2(int parkId, String day);
 	
 	public List<PosChargeData> getByCardNumber(Integer parkId,String cardNumber);
