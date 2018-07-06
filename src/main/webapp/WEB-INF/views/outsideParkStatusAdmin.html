@@ -235,8 +235,8 @@
 						aria-controls="profile" role="tab" data-toggle="tab">每日进出流量</a></li>
 					<li role="presentation"><a href="#messages"
 						aria-controls="messages" role="tab" data-toggle="tab">每日进出车数量</a></li>
-					<li role="presentation"><a href="#years" aria-controls="years"
-						role="tab" data-toggle="tab">（按年)</a></li>
+					<!-- <li role="presentation"><a href="#years" aria-controls="years"
+						role="tab" data-toggle="tab">每年应收实收金额</a></li> -->
 				</ul>
 
 				<!-- Tab panes -->
@@ -305,19 +305,19 @@
 						<div class="well" style="height: 430px;" id="grad1">
 							<div class="col-md-3">
 								<div class="form-group">
-									<!-- <input type="text" ng-model="monthDate3" id="parkMonth3"
-										class="form-control"> -->
+									<input type="text" ng-model="monthDate4" id="parkMonth4"
+										class="form-control">
 								</div>
 							</div>
 							<div class="col-md-1">
-								<!-- <button type="button" class="btn btn-info"
-									ng-click="getByDayAndDateDiffNoOut()" style="float: left">
-									查看</button> -->
+								<button type="button" class="btn btn-info"
+									ng-click="getYearsParkChargeByRange()" style="float: left">
+									查看</button> 
 							</div>
 							<div class="col-md-12">
-								<!-- <p ng-show="show1">正在数据查询,请稍等...</p>
+								<p ng-show="show1">正在数据查询,请稍等...</p>
 								<div style="height: 400px; width: 95%; padding-left: 10px"
-									id="chart_park_period_charge3"></div> -->
+									id="chart_park_period_charge4"></div>
 							</div>
 						</div>
 					</div>

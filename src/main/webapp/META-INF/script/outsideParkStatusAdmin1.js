@@ -247,6 +247,106 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
     };
     dateInitialparkcharge2();
     
+  //统计图4
+    var dateInitialparkcharge4 = function() {
+        $('#parkMonth4').val(new Date().format('yyyy'));
+        $('#parkMonth4').datepicker({
+            autoClose : true,
+            dateFormat : "yyyy",
+            months : ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            monthsShort : ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+            showMonthAfterYear : true,
+            viewStart : 1,
+            weekStart : 1,
+            yearSuffix : "年",
+            isDisabled : function(date) {
+                return date.valueOf() > Date.now() ? true : false;
+            }
+        });
+        $scope.monthDate4 = $('#parkMonth4').val();
+    };
+    dateInitialparkcharge4();
+    
+  //作图4
+    var renderChart4 = function(category, seriesData) {
+        var myChart4 = echarts.init(document.getElementById('chart_park_period_charge4'));
+        var option4 = {
+            title : {
+                text : '停车场每年应收/实收费用对比',
+                subtext : '年单位'
+            },
+            tooltip : {
+                trigger : 'axis'
+            },
+            legend : {
+                data : ['应收费用', '实收费用']
+            },
+            toolbox : {
+                show : true,
+                feature : {
+                    mark : {
+                        show : true
+                    },
+                    saveAsImage : {
+                        show : true
+                    }
+                }
+            },
+            calculable : true,
+            xAxis : [{
+                type : 'category',
+                boundaryGap : false,
+                data : category
+            }],
+            yAxis : [{
+                type : 'value',
+                axisLabel : {
+                    formatter : '{value} 元'
+                }
+            }],
+            series : seriesData,
+        };
+        myChart4.setOption(option4);
+    };
+
+    var chartData4 = function() {
+        var series1 = {
+            name : '应收费用',
+            type : 'line',
+            data : $scope.totalMoney
+        };
+        var series2 = {
+            name : '实收费用',
+            type : 'line',
+            data : $scope.realMoney
+        };
+        renderChart4($scope.catagory, [series1, series2]);
+    };
+    
+    //根据日期范围获取停车场收费
+    $scope.getYearsParkChargeByRange = function() {
+        var dateselect = $('#parkMonth4').val();
+        var dateStart = new Date(dateselect.substring(0, 7) + '-01');
+        var dateEnd = dateStart;
+        dateEnd.setMonth(dateStart.getMonth() + 1);
+        $scope.show1=true;
+        getDataService.getYearsParkChargeByRange($scope.parkid, dateselect.substring(0, 7) + '-01', dateEnd.getFullYear() + '-' + (dateEnd.getMonth()+1) + '-01').then(function(result) {
+        $scope.show1=false;
+        $scope.catagory = [];
+        $scope.totalMoney = [];
+        $scope.realMoney = [];
+            $.each(result, function(name, value) {
+                var date = new Date(parseInt(name));
+                var month = date.getMonth() + 1;
+                var day = date.getDate();
+                $scope.catagory.push(month + '-' + day);
+                $scope.totalMoney.push(value['totalMoney']);
+                $scope.realMoney.push(value['realMoney']);
+            });
+            chartData4();
+        });
+    };
+    
        
   //统计图3
     var dateInitialparkcharge3 = function() {
@@ -647,6 +747,23 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
         });
         return promise;
     };
+    
+    var getYearsParkChargeByRange = function(parkId, startDay, endDay) {
+        var deferred = $q.defer();
+        var promise = deferred.promise;
+        $http({
+            url : '/parkinfo/pos/charge/getYearsParkChargeByRange',
+            method : 'post',
+            data : {
+                'parkId' : parkId,
+                'startDay' : startDay,
+                'endDay' : endDay
+            }
+        }).success(function(response) {
+            deferred.resolve(response);
+        });
+        return promise;
+    };
 
     var selectPosdataByParkAndRange = function(parkId, startDay, endDay) {
         var deferred = $q.defer();
@@ -745,6 +862,7 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
         getParkChargeByRange : getParkChargeByRange,
         getParkRecordsCountByRange : getParkRecordsCountByRange,
         getByDayAndDateDiffNoOut : getByDayAndDateDiffNoOut,
+        getYearsParkChargeByRange:getYearsParkChargeByRange,
         selectPosdataByParkAndRange : selectPosdataByParkAndRange,
         selectPosdataByParkAndRange2 : selectPosdataByParkAndRange2,
         getParkById : getParkById,
