@@ -227,26 +227,6 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
     };
     
     
-  //统计图2
-    var dateInitialparkcharge2 = function() {
-        $('#parkMonth2').val(new Date().format('yyyy-MM'));
-        $('#parkMonth2').datepicker({
-            autoClose : true,
-            dateFormat : "yyyy-mm",
-            months : ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
-            monthsShort : ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
-            showMonthAfterYear : true,
-            viewStart : 1,
-            weekStart : 1,
-            yearSuffix : "年",
-            isDisabled : function(date) {
-                return date.valueOf() > Date.now() ? true : false;
-            }
-        });
-        $scope.monthDate2 = $('#parkMonth2').val();
-    };
-    dateInitialparkcharge2();
-    
   //统计图4
     var dateInitialparkcharge4 = function() {
         $('#parkMonth4').val(new Date().format('yyyy'));
@@ -267,84 +247,136 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
     };
     dateInitialparkcharge4();
     
+    
+    
   //作图4
     var renderChart4 = function(category, seriesData) {
-        var myChart4 = echarts.init(document.getElementById('chart_park_period_charge4'));
-        var option4 = {
-            title : {
-                text : '停车场每年应收/实收费用对比',
-                subtext : '年单位'
-            },
-            tooltip : {
-                trigger : 'axis'
-            },
-            legend : {
-                data : ['应收费用', '实收费用']
-            },
-            toolbox : {
-                show : true,
-                feature : {
-                    mark : {
-                        show : true
-                    },
-                    saveAsImage : {
-                        show : true
-                    }
-                }
-            },
-            calculable : true,
-            xAxis : [{
-                type : 'category',
-                boundaryGap : false,
-                data : category
-            }],
-            yAxis : [{
-                type : 'value',
-                axisLabel : {
-                    formatter : '{value} 元'
-                }
-            }],
-            series : seriesData,
-        };
-        myChart4.setOption(option4);
+    	  
     };
 
-    var chartData4 = function() {
-        var series1 = {
-            name : '应收费用',
-            type : 'line',
-            data : $scope.totalMoney
-        };
-        var series2 = {
-            name : '实收费用',
-            type : 'line',
-            data : $scope.realMoney
-        };
-        renderChart4($scope.catagory, [series1, series2]);
-    };
-    
+    //parkId下拉框
+    var selectparkId ;
     //根据日期范围获取停车场收费
-    $scope.getYearsParkChargeByRange = function() {
-        var dateselect = $('#parkMonth4').val();
-        var dateStart = new Date(dateselect.substring(0, 7) + '-01');
-        var dateEnd = dateStart;
-        dateEnd.setMonth(dateStart.getMonth() + 1);
-        $scope.show1=true;
-        getDataService.getYearsParkChargeByRange($scope.parkid, dateselect.substring(0, 7) + '-01', dateEnd.getFullYear() + '-' + (dateEnd.getMonth()+1) + '-01').then(function(result) {
-        $scope.show1=false;
-        $scope.catagory = [];
-        $scope.totalMoney = [];
-        $scope.realMoney = [];
-            $.each(result, function(name, value) {
-                var date = new Date(parseInt(name));
-                var month = date.getMonth() + 1;
-                var day = date.getDate();
-                $scope.catagory.push(month + '-' + day);
-                $scope.totalMoney.push(value['totalMoney']);
-                $scope.realMoney.push(value['realMoney']);
-            });
-            chartData4();
-        });
+    $scope.getMonthsParkChargeByRange = function() {
+    	var dateselect = $('#parkMonth4').val();
+    	require.config({
+    		paths : {
+    			echarts : 'http://echarts.baidu.com/build/dist'
+    		}
+    	})
+    	require([ 'echarts', 'echarts/chart/pie' ], 
+    		function(ec) {
+    		 var myChart4 = echarts.init(document.getElementById('chart_park_period_charge4'));
+    	        var option1 = {
+    					title: {
+    						text: '停车场每月应收/实收费用对比',
+    					},
+    					tooltip: {
+    						trigger: 'axis'
+    					},
+    					legend: {
+    						data: ['应收费用', '实收费用']
+    					},
+    					toolbox: {
+    						show: true,
+    						feature: {
+    							mark: {
+    								show: true
+    							},
+    							saveAsImage: {
+    								show: true
+    							}
+    						}
+    					},
+    					calculable: true,
+    					xAxis: [{
+    						type: 'category',
+    						data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+    					}],
+    					yAxis: [{
+    						type: 'value'
+    					}],
+    					series: [{
+    							name: '应收费用',
+    							type: 'line',
+//    								动态获取数据库数据  ========================================
+    								data:(function(){
+    									var arr2=[];
+    									$.ajax({
+    										type:"post",
+    										async : false,//同步执行
+    										url:"/parkinfo/pos/charge/getMonthsParkChargeByRange",
+    										data:{parkId:selectparkId,year:dateselect},
+    										dataType : "json",
+    										success:function(result){
+    											
+    											for (var i = 1; i <= 12; i++) {
+    												for (var j = 0; j <= result.length; j++) {
+    													if(j < result.length){
+    														var dysparefieldone = result[j].entranceDate;
+    														var intdysparefieldone = parseInt(dysparefieldone);
+    														if(intdysparefieldone == i){
+    															arr2.push(result[j].chargeMoney);
+    															break;
+    														}
+    													}else{
+    														arr2.push(0);
+    													}
+    												}
+    												
+    											}
+
+    										},error:function(errorMsg){
+    											alert("有误。。。。");
+    										}
+    									
+    									})
+    									return arr2;
+    								})(),
+
+    						},
+    						{
+    							name: '实收费用',
+    							type: 'line',
+    							data:(function(){
+    								var arr3=[];
+    								$.ajax({
+    									type:"post",
+    									async : false,//同步执行
+    									url:"/parkinfo/pos/charge/getMonthsParkChargeByRange",
+    									data:{parkId:selectparkId,year:dateselect},
+    									dataType : "json",
+    									success:function(result){
+    										for (var i = 1; i <= 12; i++) {
+    											for (var j = 0; j <= result.length; j++) {
+    												if(j < result.length){
+    													var lesparefieldone = result[j].entranceDate;
+    													var intlesparefieldone = parseInt(lesparefieldone);
+    													if(intlesparefieldone == i){
+    														arr3.push(result[j].paidMoney);
+    														break;
+    													}
+    												}else{
+    													arr3.push(0);
+    												}
+    											}
+    											
+    										}
+    									},error:function(errorMsg){
+    										alert("有误。。。。");
+    									}
+    								
+    								})
+    								return arr3;
+    							})(),
+    							
+    						}
+    					]
+    				};
+
+    	        myChart4.setOption(option1);
+    	}) 
+    	
     };
     
        
@@ -453,7 +485,7 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
                 trigger : 'axis'
             },
             legend : {
-                data : ['次数']
+                data : ['入场','出场']
             },
             toolbox : {
                 show : true,
@@ -535,10 +567,10 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
           dateEnd.setMonth(dateStart.getMonth() + 1);
           $scope.show2=true;
           getDataService.getParkRecordsCountByRange($scope.parkid, dateselect.substring(0, 7) + '-01', dateEnd.getFullYear() + '-' + (dateEnd.getMonth()+1) + '-01').then(function(result) {
-          $scope.show2=false;
           $scope.catagory = [];
           $scope.incount = [];
           $scope.outcount = [];
+          $scope.show2=false;
           $.each(result, function(name, value) {
                   var date = new Date(parseInt(name));
                   var month = date.getMonth() + 1;
@@ -559,7 +591,7 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
             return;
         }
         $scope.getParkById();
-     
+        selectparkId = parkId;
         var date = $('#date').val();
         var dateInit = new Date(date);
         dateInit.setDate(dateInit.getDate() + 1);
@@ -588,6 +620,8 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
             // }
         // });
     };
+    
+   
     
   //获取posdata 并处理
     $scope.selectPosdataByParkAndRange2 = function() {
@@ -747,23 +781,7 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
         });
         return promise;
     };
-    
-    var getYearsParkChargeByRange = function(parkId, startDay, endDay) {
-        var deferred = $q.defer();
-        var promise = deferred.promise;
-        $http({
-            url : '/parkinfo/pos/charge/getYearsParkChargeByRange',
-            method : 'post',
-            data : {
-                'parkId' : parkId,
-                'startDay' : startDay,
-                'endDay' : endDay
-            }
-        }).success(function(response) {
-            deferred.resolve(response);
-        });
-        return promise;
-    };
+
 
     var selectPosdataByParkAndRange = function(parkId, startDay, endDay) {
         var deferred = $q.defer();
@@ -862,7 +880,7 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
         getParkChargeByRange : getParkChargeByRange,
         getParkRecordsCountByRange : getParkRecordsCountByRange,
         getByDayAndDateDiffNoOut : getByDayAndDateDiffNoOut,
-        getYearsParkChargeByRange:getYearsParkChargeByRange,
+        /*getMonthsParkChargeByRange:getMonthsParkChargeByRange,*/
         selectPosdataByParkAndRange : selectPosdataByParkAndRange,
         selectPosdataByParkAndRange2 : selectPosdataByParkAndRange2,
         getParkById : getParkById,

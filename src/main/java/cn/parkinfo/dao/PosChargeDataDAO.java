@@ -24,6 +24,9 @@ public interface PosChargeDataDAO {
 	
 	public Map<String, Object> calMoneyByParkAndRange(@Param("parkId")int parkId,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
 	
+	//月份
+	public List<PosChargeData> getMoneyByMonthsParkAndRange(Map<String, Object> map);
+	
 	public Map<String, Object> calInByParkAndRange(@Param("parkId")int parkId,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
 	
 	public Map<String, Object> calOutByParkAndRange(@Param("parkId")int parkId,@Param("startDate")Date startDate,@Param("endDate")Date endDate);

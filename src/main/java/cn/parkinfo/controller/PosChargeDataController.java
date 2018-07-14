@@ -383,45 +383,25 @@ public class PosChargeDataController {
 		return Utility.gson.toJson(retMap);
 	};
 	
-	//计算年——应收实收
-		@RequestMapping(value="/getYearsParkChargeByRange",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})
-		@ResponseBody
-		public String getYearsParkChargeByRange(@RequestBody Map<String, Object> args){
-			int parkId=Integer.parseInt((String)args.get("parkId"));
-			String startDay=(String)args.get("startDay");
-			String endDay=(String)args.get("endDay");
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-			Date parsedStartDay = null;
-			try {
-				parsedStartDay = sdf.parse(startDay + " 00:00:00");
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}	
-			Date parsedEndDay  = null;
-			try {
-				parsedEndDay = sdf.parse(endDay + " 00:00:00");
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}	
-			
-			Calendar start =Calendar.getInstance(); 
-			start.setTime(parsedStartDay);
-			Long startTime = start.getTimeInMillis();
-			Calendar end = Calendar.getInstance();
-			end.setTime(parsedEndDay);
-			Long endTime = end.getTimeInMillis();
-			Long oneDay = 1000 * 60 * 60 * 24l;
-			Long time = startTime;  
-			Map<Long, Object> comparemap=new TreeMap<>();
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			  while (time <= endTime) {  
-			        Date d = new Date(time);            
-			        Map<String, Object> posChargeDatas = chargeSerivce.getYearsParkChargeByRange(parkId, df.format(d));
-			        comparemap.put(d.getTime(), posChargeDatas);
-			        time += oneDay;  
-			    }     
-			return  Utility.gson.toJson(comparemap);
+	//按年份获取每月应收实收费用
+	@RequestMapping(value="/getMonthsParkChargeByRange", method = RequestMethod.POST, produces = {
+	"application/json;charset=utf-8" })
+	@ResponseBody
+	public Object getMonthsParkChargeByRange(Integer parkId,String year){
+		List<PosChargeData> list = null;
+		try {
+			Map<String, Object> map = new HashMap<String,Object>();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+			Date year2 = sdf.parse(year);
+			map.put("parkId", parkId);
+			map.put("startDate", year2);
+			list = chargeSerivce.getMoneyByMonthsParkAndRange(map);
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
+		return list;
+		
+	}
 	
 	@RequestMapping(value = "/getCarTimesByDateRangeAndParkId", method = RequestMethod.POST, produces = {
 	"application/json;charset=utf-8" })
@@ -735,6 +715,8 @@ public String getBySearchCardNumber(@RequestBody Map<String, String> args, HttpS
 		    }     
 		return  Utility.gson.toJson(comparemap);
 	}
+	
+	
 	@RequestMapping(value="/getParkRecordsCountByRange",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})
 	@ResponseBody
 	public String getParkRecordsCountByRange(@RequestBody Map<String, Object> args){
