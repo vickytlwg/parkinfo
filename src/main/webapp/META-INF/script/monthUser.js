@@ -282,9 +282,7 @@ monthUserApp.controller("monthUserCtrl", ['$scope', '$http', '$window', '$modal'
 
 
 monthUserApp.controller("monthUserModify", function($scope, textModal, $modalInstance, $http, $timeout, index) {
-	alert("num==hehehehehehhe="+num);
 	var url = '/parkinfo/monthUser/insert';
-	alert("url==aiaiaiaiai="+url);
 	$scope.tempUser = {};
 	if (index != undefined) {
 		$scope.tempUser = $scope.$parent.users[index];
@@ -299,7 +297,6 @@ monthUserApp.controller("monthUserModify", function($scope, textModal, $modalIns
 		url='/parkinfo/monthUser/updateBatchRenewal';
 	}
 
-	alert("tip提示信息");
 
 	/*$scope.statuses = [{
         value : 0,
