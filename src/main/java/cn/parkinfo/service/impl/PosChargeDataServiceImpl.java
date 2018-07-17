@@ -26,6 +26,7 @@ import cn.parkinfo.service.OutsideParkInfoService;
 import cn.parkinfo.service.ParkService;
 import cn.parkinfo.service.PosChargeDataService;
 import cn.parkinfo.service.PosdataService;
+import cn.parkinfo.service.Utility;
 
 @Transactional
 @Service
@@ -576,18 +577,16 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 	@Override
 	public Map<String, Object> getParkChargeCountByDay(int parkId, String day) {
 		// TODO Auto-generated method stub
-	
-	
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		Date parsedStartDay = null;
 		try {
-			parsedStartDay = sdf.parse(day + " 00:00:00");
+			parsedStartDay = sdf.parse(day+ " 00:00:00");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}	
 		Date parsedEndDay  = null;
 		try {
-			parsedEndDay = sdf.parse(day + " 23:59:59");
+			parsedEndDay = sdf.parse(day+ " 23:59:59");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}	
@@ -604,9 +603,6 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 			outcount=(long) outcountMap.get("count");
 		}
 		Map<String, Object> retmap=new HashMap<>();
-		
-		
-			
 			retmap.put("in", incount);
 			retmap.put("out",outcount);
 		
@@ -632,31 +628,11 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 		return chargeDao.calOutByParkAndRange(parkId, startDate, endDate);
 	}
 
+	//月份
 	@Override
-	public Map<String, Object> getYearsParkChargeByRange(int parkId, String day) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-		Date parsedStartDay = null;
-		try {
-			parsedStartDay = sdf.parse(day + " 00:00:00");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}	
-		Date parsedEndDay  = null;
-		try {
-			parsedEndDay = sdf.parse(day + " 23:59:59");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}	
-		Map<String, Object> tmMap=calMoneyByParkAndRange(parkId, parsedStartDay, parsedEndDay);
-	//	List<PosChargeData> posChargeDatas=selectPosdataByParkAndRange(parsedStartDay, parsedEndDay, parkId);
-		Map<String, Object> retmap=new HashMap<>();
-		float chargeTotal=0;
-		float realReceiveMoney=0;
-		if (tmMap!=null) {
-			 chargeTotal=(float)(double) tmMap.get("chargeMoney");
-			realReceiveMoney=(float)((double) tmMap.get("givenMoney")+(double)tmMap.get("paidMoney")-(double)tmMap.get("changeMoney"));
-		}
-		return retmap;
+	public List<PosChargeData> getMoneyByMonthsParkAndRange(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return chargeDao.getMoneyByMonthsParkAndRange(map);
 	}
 
 }

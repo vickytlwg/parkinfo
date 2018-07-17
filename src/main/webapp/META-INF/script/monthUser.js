@@ -297,7 +297,6 @@ monthUserApp.controller("monthUserModify", function($scope, textModal, $modalIns
 		url='/parkinfo/monthUser/updateBatchRenewal';
 	}
 
-
 	/*$scope.statuses = [{
         value : 0,
         text : '未支付'

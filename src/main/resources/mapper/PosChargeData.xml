@@ -115,6 +115,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		paidMoney=#{paidMoney}, unPaidMoney=#{unPaidMoney},givenMoney=#{givenMoney} ,changeMoney=#{changeMoney}, isOneTimeExpense=#{isOneTimeExpense},
 		paidCompleted=#{paidCompleted},isLargeCar=#{isLargeCar}, entranceDate=#{entranceDate}, exitDate=#{exitDate},url=#{url}
 		where id=#{id}</update>
+	<select id="getMoneyByMonthsParkAndRange" resultType="java.util.HashMap">
+		select MONTH(entranceDate) as entranceDate,SUM(chargeMoney) as chargeMoney,SUM(paidMoney) as paidMoney FROM 
+		posChargeData where parkId=#{parkId} AND YEAR(entranceDate)=#{startDate} group by MONTH(entranceDate)
+	</select>
 	<select id="selectPosdataByParkAndRange" resultMap="PosChargeDataMapper">
 		<![CDATA[
 		SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
@@ -124,7 +128,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="calMoneyByParkAndRange" resultType="java.util.HashMap">
 		SELECT SUM(chargeMoney) as chargeMoney,SUM(paidMoney) as paidMoney,SUM(givenMoney) as givenMoney,SUM(changeMoney) as changeMoney FROM posChargeData WHERE parkId=#{parkId} AND entranceDate
 		BETWEEN  #{startDate} AND #{endDate}
-		</select>
+	</select>
 	<select id="calInByParkAndRange" resultType="java.util.HashMap">
 		SELECT count(*) as count FROM posChargeData WHERE parkId=#{parkId} AND entranceDate
 		BETWEEN  #{startDate} AND #{endDate}
