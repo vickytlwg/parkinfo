@@ -1,6 +1,4 @@
 var num=0;
-
-
 var monthUserApp = angular.module("monthUserApp", ['ui.bootstrap', 'tm.pagination']);
 monthUserApp.controller("monthUserCtrl", ['$scope', '$http', '$window', '$modal', 'textModalTest', 'textModal', '$timeout',
                                           function($scope, $http, $window, $uibModal, textModalTest, textModal, $timeout) {
@@ -304,6 +302,8 @@ monthUserApp.controller("monthUserModify", function($scope, textModal, $modalIns
         value : 1,
         text : '已支付'
     }];*/
+	
+	
 	$scope.orderTypes = [{
 		value : 0,
 		text : '包月用户'
@@ -327,7 +327,7 @@ monthUserApp.controller("monthUserModify", function($scope, textModal, $modalIns
 		text : '月卡E'
 	}
 	];
-	/*$scope.tempUser.type = 0;*/
+	$scope.tempUser.type = 0;
 
 	$scope.parks = [];
 	$scope.getParks = function() {
