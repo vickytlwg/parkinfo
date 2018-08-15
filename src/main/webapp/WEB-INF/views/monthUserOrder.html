@@ -9,7 +9,7 @@
 <script src="/parkinfo/angular/angular-ui-router.min.js"></script>
 <script src="/parkinfo/angular/ocLazyLoad.min.js"></script>
 <script src="/parkinfo/angular/ui-bootstrap-tpls.min.js"></script>
-<script src="/park/script/monthUserOrder.js?v=1.1"></script>
+<script src="/park/script/monthUserOrder.js?v=1.2"></script>
 <script src="/park/script/utility.js"></script>
 <script src="/park/script/service/textModalService.js"></script>
 <div class="<!-- content-wrapper -->" ng-app="monthUserApp" ng-controller="monthUserCtrl">
@@ -116,7 +116,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" >卡号</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" placeholder="请输入卡号" ng-model="tempUser.cardnumber">
+                <input type="text" class="form-control" placeholder="请输入卡号" ng-model="tempUser.cardnumber" required >
             </div>
         </div>
         <div class="form-group">
@@ -128,7 +128,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" >车牌号</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" placeholder="请输入车牌号" ng-model="tempUser.platenumber">
+                <input type="text" class="form-control" placeholder="请输入车牌号" ng-model="tempUser.platenumber" required ng-minlength="3">
             </div>
         </div>
         <div class="form-group">

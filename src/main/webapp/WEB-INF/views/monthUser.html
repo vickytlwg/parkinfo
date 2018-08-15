@@ -12,7 +12,7 @@
 <script src="/parkinfo/angular/angular-ui-router.min.js"></script>
 <script src="/parkinfo/angular/ocLazyLoad.min.js"></script>
 <script src="/parkinfo/angular/ui-bootstrap-tpls.min.js"></script>
-<script src="/parkinfo/js/monthUser.js?v=1.3"></script>
+<script src="/parkinfo/js/monthUser.js?v=1.4"></script>
 <script src="/parkinfo/js/bootstrap.min.js"></script>
 <script src="/parkinfo/js/utility.js"></script>
 <script src="/parkinfo/script/datepicker.js"></script>
@@ -62,10 +62,6 @@
 
 .page-list .page-total select {
 	width: 50px;
-}
-
-label span{
-	color:red;
 }
 </style>
 <script type="text/javascript">
@@ -121,17 +117,13 @@ label span{
 		user = new User();
 		user.init();
 	});
-	
-	function excelDownload(){
-		 var url = basePath+"/monthUser/getExcelDownload";  //mybatis+spring  
-		    url = encodeURI(url);
-		    location.href = url;  
-	}
-	
 </script>
 
 
-<div class="container" ng-app="monthUserApp" ng-controller="monthUserCtrl">
+<div class="container" ng-app="monthUserApp"
+	ng-controller="monthUserCtrl">
+
+
 	<section class="content">
 		<div class="panel panel-default">
 			<div class="panel-body">
@@ -156,15 +148,8 @@ label span{
 									ng-click="searchByPlateNumber()" style="float: left">
 									查找</button>
 							</div>
-							<!-- <div class="col-md-2" style="width:9%;margin-top:10px;">
-								<a href="">
-									<i class="glyphicon glyphicon-download-alt"></i>
-									模板下载
-								</a>
-								<button class="btn btn-primary" 
-									type="button" onclick="excelDownload()">模板下载</button>
-							</div>  -->
-							<div class="col-md-2 col-md-offset-1" style="margin-left:5px;">
+
+							<div class="col-md-2 col-md-offset-1">
 								<button class="btn btn-success" id="uploadEventBtn"
 									type="button">选择文件(Excel文件)</button>
 							</div>
@@ -217,7 +202,7 @@ label span{
 									style="padding: 1px; font-size: 14px; height: 35px"
 									ng-options="park.id as park.name for park in parks"
 									ng-model="selectedParkidd">
-									<option value="">请选择停车场</option> #if($isAdmin)
+									<option value="">请选择</option> #if($isAdmin)
 									<option value=-1>所有停车场</option>#end
 								</select>
 							</div>
@@ -290,7 +275,7 @@ label span{
 						ng-options="park.id as park.name for park in parks"
 						ng-model="selectedParkid"
 						ng-change="selectChanged(selectedParkid)">
-						<option value="">请选择停车场</option> #if($isAdmin)
+						<option value="">请选择</option> #if($isAdmin)
 						<option value=-1>所有停车场</option>#end
 					</select>
 				</div>
@@ -417,59 +402,68 @@ label span{
 </div>
 </script>
 
-
 	<script type="text/ng-template" id="modifyUser">
+
     <div class="modal-header">
     <button type='button' class='close' ng-click="close()" aria-hidden='true'>
     &times;
     </button>
     <h4 class="modal-title" >月卡缴费</h4>
+
     </div>
 
     <div class="modal-body">
-    <form class="form-horizontal" role="form" name="myForm">
+    <form class="form-horizontal" role="form" name="myForm" novalidate>
 
     <div class="form-group">
-    <label class="col-sm-2 control-label" style="width:105px;">停车场 <span>*</span></label>
+    <label class="col-sm-2 control-label" style="width:105px;">停车场 *</label>
     <div class="col-sm-8">
-    <select class="form-control" ng-options="park.id as park.name for park in parks" ng-model="tempUser.parkid"><option value="">请选择停车场</option></select>
+    <select class="form-control" ng-options="park.id as park.name for park in parks" ng-model="tempUser.parkid"><option value="">请选择</option></select>
     </div>
     </div>
     <div class="form-group">
-    <label class="col-sm-2 control-label" style="width:105px;">车牌号<span>*</span></label>
+    <label class="col-sm-2 control-label" style="width:105px;">车牌号 *</label>
     <div class="col-sm-8">
-    <input type="text" name="platenumber" class="form-control" placeholder="请输入车牌号" ng-model="tempUser.platenumber">
+    <input type="text" name="platenumber" class="form-control" placeholder="请输入车牌号" ng-model="tempUser.platenumber" required ng-minlength="5">
     </div>
+	<!--<span style="color:red;" ng-show="myForm.platenumber.$pristine && myForm.platenumber.$invalid">
+	<span ng-show="myForm.platenumber.$error.required">车牌不能为空！</span>-->
     </div>
 	<!--<div class="form-group">
-    <label class="col-sm-2 control-label" style="width:105px;">车位号 </label>
+    <label class="col-sm-2 control-label" style="width:105px;">车位号 *</label>
     <div class="col-sm-8">
-    <input type="text" name="certificatenumber" class="form-control" placeholder="请输入车位号" ng-model="tempUser.certificatenumber">
+    <input type="text" name="certificatenumber" class="form-control" placeholder="请输入车位号" ng-model="tempUser.certificatenumber" required>
     </div>
+	<span style="color:red;" ng-show="myForm.certificatenumber.$pristine && myForm.certificatenumber.$invalid">
+	<span ng-show="myForm.certificatenumber.$error.required">车位不能为空！</span>
     </div>-->
     <div class="form-group">
-    <label class="col-sm-2 control-label" style="width:105px;">车主 <span>*</span></label>
+    <label class="col-sm-2 control-label" style="width:105px;">车主 *</label>
     <div class="col-sm-8">
-    <input type="text" name="owner" class="form-control" placeholder="请输入车主姓名" ng-model="tempUser.owner">
+    <input type="text" name="owenr" class="form-control" placeholder="请输入车主姓名" ng-model="tempUser.owner" required>
     </div>
+	<!--<span style="color:red;" ng-show="myForm.owenr.$pristine && myForm.owenr.$invalid">
+	<span ng-show="myForm.owenr.$error.required">车主不能为空！</span>-->
     </div>
+
     <div class="form-group">
-    <label class="col-sm-2 control-label" style="width:105px;">开始时间 <span>*</span></label>
+    <label class="col-sm-2 control-label" style="width:105px;">开始时间 *</label>
     <div class="col-sm-8">
     <input type="text" class="form-control" placeholder="YYYY-MM-DD hh:mm:ss" ng-model="tempUser.starttime">
     </div>
     </div>
     <div class="form-group">
-    <label class="col-sm-2 control-label" style="width:105px;">结束时间 <span>*</span></label>
+    <label class="col-sm-2 control-label" style="width:105px;">结束时间 </label>
     <div class="col-sm-8">
     <input type="text" class="form-control" placeholder="YYYY-MM-DD hh:mm:ss" ng-model="tempUser.endtime">
     </div>
     </div>
+
     <div class="form-group">
-    <label class="col-sm-2 control-label" style="width:105px;">类型<span>*</span></label>
+    <label class="col-sm-2 control-label" style="width:105px;">类型</label>
     <div class="col-sm-8">
-    <select ng-model="tempUser.type" ng-options="status.value as status.text for status in orderTypes" class="form-control" id="type">
-	<!--<option value="">请选择类型</option>-->
+    <select ng-model="tempUser.type" ng-options="status.value as status.text for status in orderTypes" class="form-control" required>
+	<option value="" style="color:red;">此项为必选项</option>    
 	</select>
       </div>
       </div>
@@ -525,7 +519,7 @@ label span{
     <button ng-click="close()" type="button" class="btn btn-default" data-dismiss="modal">
     取消
     </button>
-    <button ng-click="submit()" type="submit" class="btn btn-primary" id="submitBtn">
+    <button ng-click="submit()" type="submit" class="btn btn-primary">
     确定
     </button>
     </div>
@@ -547,7 +541,7 @@ label span{
     <div class="form-group">
     <label class="col-sm-2 control-label" style="width:105px;">停车场 </label>
     <div class="col-sm-8">
-    <select class="form-control" ng-options="park.id as park.name for park in parks" ng-model="tempUser.parkid"><option value="">请选择停车场</option></select>
+    <select class="form-control" ng-options="park.id as park.name for park in parks" ng-model="tempUser.parkid"><option value="">请选择</option></select>
     </div>
     </div>
     <div class="form-group">
