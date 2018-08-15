@@ -1,11 +1,16 @@
 package cn.parkinfo.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +23,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -118,6 +124,43 @@ public void getExcelByParkAndDayRange(HttpServletRequest request, HttpServletRes
 	}
 	Utility.download(docsPath + FILE_SEPARATOR + "monthusers.xlsx", response);
 }
+
+@RequestMapping(value = "/getExcelDownload")
+@ResponseBody
+public void download(HttpServletRequest request,HttpServletResponse response){
+	//获取下载模板文件路径
+	String filename=request.getParameter("monthUser");
+	//下载的文件模板名
+	response.setHeader("Content-disposition","attachment;filename="+filename);
+	response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+	//获取项目中文件模板路劲
+	String filepath=request.getSession().getServletContext().getRealPath("/WEB-INF/excel")+"/"+filename;
+	filepath=filepath.replace("\\", "/");
+	InputStream input=null;
+	OutputStream output=null;
+	try {
+		input=new FileInputStream(filepath); 
+		output=response.getOutputStream();
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	byte[] b=new byte[2048];
+	int len;
+	try {
+		while((len=input.read(b))!=-1){
+			output.write(b,0,len);
+		}
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+}
+
 
 
 @RequestMapping(value="")
