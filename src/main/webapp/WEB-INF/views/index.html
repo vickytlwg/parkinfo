@@ -2,13 +2,15 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8" />
+
 <title></title>
 <link href="/parkinfo/css/style.css" rel="stylesheet" type="text/css" />
 <link href="/parkinfo/css/style1.css" rel="stylesheet" type="text/css" />
 <link href="/parkinfo/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 <link href="/parkinfo/bootstrap/css/font-awesome.min.css"
 	rel="stylesheet" />
-<link href="/parkinfo/bootstrap/css/style.min.css" rel="stylesheet" />
+<!-- <link href="/parkinfo/bootstrap/css/style.min.css" rel="stylesheet" />
+ -->
 <script src="/parkinfo/script/jquery-3.3.1.min.js"></script>
 <script src="/parkinfo/angular/angular.min.js"></script>
 <script src="/parkinfo/angular/angular-animate.min.js"></script>
@@ -35,6 +37,28 @@
 	src="/parkinfo/script/parkinfoBigDataAngular.js?v=1.1"></script>
 <script type="text/javascript" src="/parkinfo/script/dist/echarts.js"></script>
 <script type="text/javascript" src="/parkinfo/script/mainBar2.js?v=1.1"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+
+<!-- Latest compiled and minified Locales -->
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
+<style>
+.media {
+	margin-top: 0px;
+}
+
+.col-md-3 ,.col-md-2{
+	padding: 0px;
+}
+</style>
+
+
 </head>
 
 <body ng-app="generalDataViewApp" ng-controller="generalDataViewCtrl">
@@ -63,7 +87,7 @@
                     </li>
                     <div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" />
                     </div> -->
-<!-- 				<li class="bg4"><a href="report/searchArrearage">欠费查询</a></li>
+				<!-- 				<li class="bg4"><a href="report/searchArrearage">欠费查询</a></li>
 				<div class="topcbar f">
 					<img align="absmiddle" src="images/index_07.jpg" />
 				</div> -->
@@ -105,7 +129,7 @@
 		</div>
 	</div>
 	<div class="container">
-		<ul class="nav nav-tabs" style="padding-top:100px;">
+		<ul class="nav nav-tabs" style="padding-top: 100px;">
 			<li role="presentation" class="active"><a href="#">今日数据发布</a></li>
 			<!-- <li role="presentation"><a href="#">Profile</a></li>
 			<li role="presentation"><a href="#">Messages</a></li> -->
@@ -126,32 +150,7 @@
 							应收总金额{{dayAmountMoney}}元</div>
 					</div>
 				</li>
-				<!-- <li>
-                        <div class="gaikuang2s mg2 gaikuangbg2">
-                            <div class="gaikuang2ss mg2 xi14 bai">
-                                今日实收金额
-                            </div>
-                            <div class="gaikuang2sc mg2 xi26">
-                                {{dayRealMoney}} <span class="xi14"></span>
-                            </div>
-                            <div class="gaikuang2sx mg2 xi13 hui">
-                                实收总金额{{dayRealMoney}}
-                            </div>
-                        </div>
-                    </li> -->
-				<!-- <li>
-                        <div class="gaikuang2s mg2 gaikuangbg3">
-                            <div class="gaikuang2ss mg2 xi14 bai">
-                                今日欠费金额
-                            </div>
-                            <div class="gaikuang2sc mg2 xi26">
-                                {{(dayAmountMoney-dayRealMoney)>0?(dayAmountMoney-dayRealMoney):0}}<span class="xi14">元</span>
-                            </div>
-                            <div class="gaikuang2sx mg2 xi13 hui">
-                                欠费总金额{{(dayAmountMoney-dayRealMoney)>0?(dayAmountMoney-dayRealMoney):0}}元
-                            </div>
-                        </div>
-                    </li> -->
+
 				<li>
 					<div class="gaikuang2s mg2 gaikuangbg4">
 						<div class="gaikuang2ss mg2 xi14 bai">订单数</div>
@@ -162,32 +161,7 @@
 						</div>
 					</div>
 				</li>
-				<!--  <li>
-                        <div class="gaikuang2s mg2 gaikuangbg5">
-                            <div class="gaikuang2ss mg2 xi14 bai">
-                                今日逃费率
-                            </div>
-                            <div class="gaikuang2sc mg2 xi26">
-                                {{((dayAmountMoney-dayRealMoney)/dayAmountMoney|number:2)>0?((dayAmountMoney-dayRealMoney)/dayAmountMoney|number:2):0}}<span class="xi14"></span>
-                            </div>
-                            <div class="gaikuang2sx mg2 xi13 hui">
-                                总逃费率{{((dayAmountMoney-dayRealMoney)/dayAmountMoney|number:3)>0?((dayAmountMoney-dayRealMoney)/dayAmountMoney|number:3):0}}
-                            </div>
-                        </div>
-                    </li> -->
-				<!-- <li>
-                        <div class="gaikuang2s mg2 gaikuangbg6">
-                            <div class="gaikuang2ss mg2 xi14 bai">
-                                今日运营站点数
-                            </div>
-                            <div class="gaikuang2sc mg2 xi26">
-                                {{dayOnlineParkCount}}<span class="xi14">个</span>
-                            </div>
-                            <div class="gaikuang2sx mg2 xi13 hui">
-                                合计运营站点数{{dayParkCount}}个
-                            </div>
-                        </div>
-                    </li> -->
+
 				<li>
 					<div class="gaikuang2s mg2 gaikuangbg6">
 						<div class="gaikuang2ss mg2 xi14 bai">今日运营泊位数</div>
@@ -208,32 +182,7 @@
 						</div>
 					</div>
 				</li>
-				<!-- <li>
-                        <div class="gaikuang2s mg2 gaikuangbg8">
-                            <div class="gaikuang2ss mg2 xi14 bai">
-                                今日泊位在线率
-                            </div>
-                            <div class="gaikuang2sc mg2 xi26">
-                                {{dayOnlineCarportCount/dayCarportCount|number:3}}<span class="xi14"></span>
-                            </div>
-                            <div class="gaikuang2sx mg2 xi13 hui">
-                                总泊位在线率{{dayOnlineCarportCount/dayCarportCount|number:4}}
-                            </div>
-                        </div>
-                    </li> -->
-				<!-- <li>
-                        <div class="gaikuang2s mg2 gaikuangbg9">
-                            <div class="gaikuang2ss mg2 xi14 bai">
-                                今日泊位饱和度
-                            </div>
-                            <div class="gaikuang2sc mg2 xi26">
-                                {{(1-(dayCarportLeftCount/dayCarportCount))|number:3}}<span class="xi14"></span>
-                            </div>
-                            <div class="gaikuang2sx mg2 xi13 hui">
-                                总泊位饱和度{{1-(dayCarportLeftCount/dayCarportCount)|number:4}}
-                            </div>
-                        </div>
-                    </li> -->
+
 				<li>
 					<div class="gaikuang2s mg2 gaikuangbg10">
 						<div class="gaikuang2ss mg2 xi14 bai">今日泊位周转率</div>
@@ -247,152 +196,227 @@
 			</ul>
 		</div>
 
-		<!-- <div class="gaikuang1 mg2 xi15">
-               	 停车大数据
-            </div>
-        <div class="row"  style="margin-top:20px;min-width:700px" >
-            <div class="col-md-6" style="margin-right:-10px">
-                <div class="panel panel-success" >
-                    <div class="panel-heading">
-                        <h3 class="panel-title">智慧停车场数全国分布图</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row" id="container4" style="width:100%;height:400px;"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6"  ng-app="parkinfoBigDataApp" ng-controller="parkinfoBigDataCtrl">
-                <div class="panel panel-info" style="margin-left:-25px;">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">停车场实时数据</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row" style="width:100%;height:400px;">										
-							<table class="table table-hover" style="font-size:12px;vertical-align: middle;">					        								
-							<tr>
-								<th style=" text-align: center;vertical-align: middle;"><span>车牌号</span></th>
-								<th style=" text-align: center;vertical-align: middle;"><span>车位号</span></th>
-								<th style=" text-align: center;vertical-align: middle;"><span>动作</span></th>
-								<th style=" text-align: center;vertical-align: middle;"><span>时间</span></th>
-								<th style=" text-align: center;vertical-align: middle;"><span>是否收费</span></th>
-								<th style=" text-align: center;vertical-align: middle;"><span>费用</span></th>
-								<th style=" text-align: center;vertical-align: middle;"><span>停车场</span></th>
-							</tr>
-								<tr  ng-repeat = "item in items" ng-class="{true:'success'}[item.isNew]">				          						     
-				          		<td ng-bind="item.cardNumber"></td>	
-								<td ng-bind="item.portNumber"></td>
-								<td ng-if="item.exitDate==undefined" >入场</td>
-								<td ng-if="item.exitDate!=undefined" >出场</td>
-								<td ng-if="item.exitDate==undefined" ng-bind="item.entranceDate"></td>
-								<td ng-if="item.exitDate!=undefined" ng-bind="item.exitDate"></td>
-				          		<td ng-if="item.paidCompleted==true" class="success">已收费</td>
-								<td ng-if="item.paidCompleted==false" class="warning">未收费</td>				          	
-				          		<td ng-if="item.paidCompleted==true" class="warning">收费:￥{{item.chargeMoney}}</td>	
-								<td ng-if="item.paidCompleted==false">计费:￥{{item.chargeMoney}}</td>	
-								<td ng-bind="item.parkDesc"></td>
-								</tr>
-								
-                            </table>
-						
-						</div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
 
-		<!-- <div class="con1 mg2 mb10">
-				<ul>
-					<li class="bgbai btop4hui">
-						<div class="con1s mg2">
-							<div class="con1sl f xi14">临停年度收入</div>
-							<div class="con1sr r bai bglan cen">全年</div>
-						</div>
-						<div class="con1x mg2 xi22">¥ 305,072.5</div>
-					</li>
-					<li class="bgbai btop4hui">
-						<div class="con1s mg2">
-							<div class="con1sl f xi14">临停本月收入</div>
-							<div class="con1sr r bai bglv cen">月</div>
-						</div>
-						<div class="con1x mg2 xi22">¥ 305,072.5</div>
-					</li>
-					<li class="bgbai btop4hui">
-						<div class="con1s mg2">
-							<div class="con1sl f xi14">临停年度收入</div>
-							<div class="con1sr r bai bglv cen">今天</div>
-						</div>
-						<div class="con1x mg2 xi22">¥ 305,072.5</div>
-					</li>
-					<li class="bgbai btop4hui">
-						<div class="con1s mg2">
-							<div class="con1sl f xi14">月租车辆数</div>
-							<div class="con1sr r bai bghong cen">全部</div>
-						</div>
-						<div class="con1x mg2 xi22">64</div>
-					</li>
-				</ul>
-			</div> -->
-		<!-- <div class="con2 mg2 bgbai btop4hui">
-				<div class="con1s mg2">
-					<div class="con1sl f xi14">总收入分析</div>
+
+		<div class="container">
+			<ul class="nav nav-tabs">
+				<li role="presentation" class="active"><a href="#">支付渠道占比</a></li>
+
+			</ul>
+			<div class="col-md-6" style="height: 250px;" id="container1"></div>
+			<!-- 			<div class="col-md-6" style="margin-top: 20px;">
+				<h4>总交易额5000元，总订单数1000笔。</h4>
+				<div class="col-md-4">
+					<ul>
+						<li>
+							<h5>支付宝***元</h5>
+						</li>
+						<li>
+							<h5>微信***元</h5>
+						</li>
+						<li>
+							<h5>工商银行***元</h5>
+						</li>
+						<li>
+							<h5>徽商银行***元</h5>
+						</li>
+						<li>
+							<h5>现金***元</h5>
+						</li>
+					</ul>
 				</div>
-				<div class="con2x mg2">
-					<div class="con2xl f">
-						<div id="mainBar" style="height: 280px;width: 100%;text-align: center;"></div>
-					</div>
-					<div class="con2xr r">
-						<ul class="stat-list">
-							<li>
-								<h2 class="no-margins" id="year" style="color: #000000;font-weight: 500;">¥ 315942</h2>
-								<small>年总收入</small>
-								<div class="stat-percent" id="yearIn" >
-									2322311.00%
-									<i class="fa fa-bolt text-navy" style="color: #1AB394"></i>
-								</div>
-								<div class="progress progress-mini">
-									<div class="progress-bar" id="yearInwidth" style="width: 100%;"></div>
-								</div>
-							</li>
-							<li>
-								<h2 class="no-margins" id="month" style="color: #000000;font-weight: 500;">¥ 71470</h2>
-								<small>本月收入</small>
-								<div class="stat-percent" id="monthIn">
-									41.25%
-									<i class="fa fa-level-down text-navy"></i>
-								</div>
-								<div class="progress progress-mini">
-									<div class="progress-bar" id="monthInwidth" style="width: 41.25%;"></div>
-								</div>
-							</li>
-							<li>
-								<h2 class="no-margins" id="month" style="color: #000000;font-weight: 500;">¥ 2785.5</h2>
-								<small>今日总收入</small>
-								<div class="stat-percent" id="dayIn">
-									83.91%
-									<i class="fa fa-level-down text-navy"></i>
-								</div>
-								<div class="progress progress-mini">
-									<div class="progress-bar" id="dayInwidth" style="width: 83.91%;"></div>
-								</div>
-							</li>
-						</ul>
-					</div>
+				<div class="col-md-4">
+					<ul>
+						<li>
+							<h5>支付宝***笔</h5>
+						</li>
+						<li>
+							<h5>微信***笔</h5>
+						</li>
+						<li>
+							<h5>工商银行***笔</h5>
+						</li>
+						<li>
+							<h5>徽商银行***笔</h5>
+						</li>
+						<li>
+							<h5>现金***笔</h5>
+						</li>
+					</ul>
 				</div>
+
+
 			</div> -->
 
-	<div class="container">
-		<ul class="nav nav-tabs">
-			<li role="presentation" class="active"><a href="#">停车场今日数据</a></li>
-			<!-- <li role="presentation"><a href="#">Profile</a></li>
+
+
+			<div class="col-md-6" style="margin-top:50px;">
+				<h4>交易总额5000元，总订单数1000笔。</h4>
+				<div class="media">
+					<div class="media-left">
+						<a href="#"> <img class="media-object"
+							src="/parkinfo/img/cash.png" alt="支付宝">
+						</a>
+					</div>
+					<div class="media-body">
+						<div class="col-md-3">
+							<p>现金：</p>
+						</div>
+						<div class="col-md-2">
+							<span>元</span>
+						</div>
+						<div class="col-md-3">
+							<p>现金：</p>
+						</div>
+						<div class="col-md-2">
+							<span>笔</span>
+						</div>
+					</div>
+				</div>
+				<div class="media">
+					<div class="media-left">
+						<a href="#"> <img class="media-object"
+							src="/parkinfo/img/wechat.png" alt="支付宝">
+						</a>
+					</div>
+					<div class="media-body">
+						<div class="col-md-3">
+							<p>微信：</p>
+						</div>
+						<div class="col-md-2">
+							<span>元</span>
+						</div>
+						<div class="col-md-3">
+							<p>微信：</p>
+						</div>
+						<div class="col-md-2">
+							<span>笔</span>
+						</div>
+					</div>
+				</div>
+				<div class="media">
+					<div class="media-left">
+						<a href="#"> <img class="media-object"
+							src="/parkinfo/img/alipay.png" alt="支付宝">
+						</a>
+					</div>
+					<div class="media-body">
+						<div class="col-md-3">
+							<p>支付宝：</p>
+						</div>
+						<div class="col-md-2">
+							<span>元</span>
+						</div>
+						<div class="col-md-3">
+							<p>支付宝：</p>
+						</div>
+						<div class="col-md-2">
+							<span>笔</span>
+						</div>
+					</div>
+				</div>
+				<div class="media">
+					<div class="media-left">
+						<a href="#"> <img class="media-object"
+							src="/parkinfo/img/huishang.png" alt="支付宝">
+						</a>
+					</div>
+					<div class="media-body">
+						<div class="col-md-3">
+							<p>徽商银行：</p>
+						</div>
+						<div class="col-md-2">
+							<span>元</span>
+						</div>
+						<div class="col-md-3">
+							<p>徽商银行：</p>
+						</div>
+						<div class="col-md-2">
+							<span>笔</span>
+						</div>
+					</div>
+				</div>
+				<div class="media">
+					<div class="media-left">
+						<a href="#"> <img class="media-object"
+							src="/parkinfo/img/ICBC.png" alt="支付宝">
+						</a>
+					</div>
+					<div class="media-body">
+						<div class="col-md-3">
+							<p>工商银行：</p>
+						</div>
+						<div class="col-md-2">
+							<span>元</span>
+						</div>
+						<div class="col-md-3">
+							<p>工商银行：</p>
+						</div>
+						<div class="col-md-2">
+							<span>笔</span>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!-- 			<div class="col-md-3" style="margin-top: 20px;">
+				<div class="media">
+					<div class="media-left">
+						<a href="#"> <img class="media-object"
+							src="/parkinfo/img/ICBC.png" alt="支付宝">
+						</a>
+					</div>
+					<div class="media-body">
+						<h4 class="media-heading">工商银行占比</h4>
+						<p>订单数：</p>
+						<p>总金额：</p>
+					</div>
+				</div>
+				<div class="media">
+					<div class="media-left">
+						<a href="#"> <img class="media-object"
+							src="/parkinfo/img/cash.png" alt="支付宝">
+						</a>
+					</div>
+					<div class="media-body">
+						<h4 class="media-heading">现金占比</h4>
+						<p>订单数：</p>
+						<p>总金额：</p>
+					</div>
+				</div>
+				<div class="media">
+					<div class="media-left">
+						<a href="#"> <img class="media-object"
+							src="/parkinfo/img/user.png" alt="支付宝">
+						</a>
+					</div>
+					<div class="media-body">
+						<h4 class="media-heading">总金额统计</h4>
+						<p>订单数：</p>
+						<p>总金额：</p>
+					</div>
+				</div>
+			</div> -->
+		</div>
+
+
+
+
+
+		<div class="container">
+			<ul class="nav nav-tabs">
+				<li role="presentation" class="active"><a href="#">停车场今日数据</a></li>
+				<!-- <li role="presentation"><a href="#">Profile</a></li>
 			<li role="presentation"><a href="#">Messages</a></li> -->
-		</ul>
-	</div>
+			</ul>
+		</div>
 		<!-- <div class="gaikuang1 mg2 xi15" style="margin-left: 35px;">
 			停车场今日数据</div> -->
-		<div class="container-fluid" style="margin-top:30px;">
+		<div class="container-fluid" style="margin-top: 30px;">
 			<table width="100%" border="1" cellpadding="0" cellspacing="0"
-				bordercolor="#ebebeb" class="table table-striped table-condensed table-hover table-bordered text-center">
-				<tr  class="info" style="height: 30px; line-height: 30px;">
+				bordercolor="#ebebeb"
+				class="table table-striped table-condensed table-hover table-bordered text-center">
+				<tr class="info" style="height: 30px; line-height: 30px;">
 					<td>停车场名</td>
 					<td>今日应收额</td>
 					<td>今日实收额</td>
@@ -404,7 +428,7 @@
 					<td>总车位数</td>
 
 				</tr>
-				<tr  ng-repeat="parkdata in parkdatasArray">
+				<tr ng-repeat="parkdata in parkdatasArray">
 
 					<td>{{parkdata.selectedParkName}}</td>
 					<td>{{parkdata.dayChargeTotal|number:2}}</td>
@@ -466,5 +490,72 @@
 		 $.fn.platformShow.initial();
 		 }); */
 	</script>
+	<script type="text/javascript" src="/parkinfo/script/echarts.js"></script>
+	<script type="text/javascript">
+		var dom = document.getElementById("container1");
+		var myChart = echarts.init(dom);
+		var app = {};
+		option = null;
+		option = {
+
+			tooltip : {
+				trigger : 'item',
+				formatter : "{a} <br/>{b} : {c} ({d}%)"
+			},
+			/* legend : {
+				orient : 'vertical',
+				left : 'right',
+				data : [ '支付宝', '微信', '工行', '徽行', '现金' ]
+			}, */
+			series : [ {
+				name : '支付渠道',
+				type : 'pie',
+				radius : '55%',
+				center : [ '50%', '60%' ],
+				data : [ {
+					value : 335,
+					name : '支付宝'
+				}, {
+					value : 310,
+					name : '微信'
+				}, {
+					value : 234,
+					name : '工行'
+				}, {
+					value : 135,
+					name : '徽行'
+				}, {
+					value : 1548,
+					name : '现金'
+				} ],
+				itemStyle : {
+					emphasis : {
+						shadowBlur : 10,
+						shadowOffsetX : 0,
+						shadowColor : 'rgba(0, 0, 0, 0.5)'
+					}
+				}
+			} ]
+		};
+		;
+		if (option && typeof option === "object") {
+			myChart.setOption(option, true);
+		}
+	</script>
+	<!-- <script>
+		$('#table').bootstrapTable({
+			url : 'data1.json',
+			columns : [ {
+				field : 'id',
+				title : 'Item ID'
+			}, {
+				field : 'name',
+				title : 'Item Name'
+			}, {
+				field : 'price',
+				title : 'Item Price'
+			}, ]
+		});
+	</script> -->
 </body>
 </html>
