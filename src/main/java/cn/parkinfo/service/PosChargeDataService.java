@@ -24,6 +24,8 @@ public interface PosChargeDataService {
 	
 	public Map<String, Object> calMoneyByParkAndRange(int parkId,Date startDate,Date endDate);
 	
+	public Map<String, Object> calDaysChannelParkChargeByRange(int parkId,Date startDate,Date endDate);
+	
 	public List<PosChargeData> getByDateDiffNoOut(int parkId,int days,int start,int count);
 	
 	public List<PosChargeData> getParkingData(int parkId,Date startDate,Date endDate);
@@ -83,6 +85,16 @@ public interface PosChargeDataService {
 	public List<PosChargeData> selectPosdataByParkAndRange2(Date startDay, Date endDay,int parkId);
 	
 	public Map<String, Object> getParkChargeByDay(int parkId, String day);
+	
+	//查询收费总笔数、收费总金额、各渠道收费统计
+			public String getByDateAndParkCount2(int parkId,String startDate,String endDate);
+			public String getByDateAndParkCount4(int parkId,String startDate,String endDate);
+			//各渠道收费统计
+			public String getByDateAndParkCount(int parkId,String startDate,String endDate,int payType);
+			public String getByDateAndParkCount3(int parkId,String startDate,String endDate,int payType);
+	
+	//渠道
+	public Map<String, Object> getDaysChannelParkChargeByRange(int parkId, String day);
 	
 	//月份
 	public List<PosChargeData> getMoneyByMonthsParkAndRange(Map<String, Object> map);

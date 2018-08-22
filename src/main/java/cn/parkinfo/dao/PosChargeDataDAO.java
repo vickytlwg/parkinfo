@@ -24,6 +24,16 @@ public interface PosChargeDataDAO {
 	
 	public Map<String, Object> calMoneyByParkAndRange(@Param("parkId")int parkId,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
 	
+	//查询收费总笔数、收费总金额、各渠道收费统计
+	public String getByDateAndParkCount2(@Param("parkId")int parkId,@Param("startDate")String startDate,@Param("endDate")String endDate);
+	public String getByDateAndParkCount4(@Param("parkId")int parkId,@Param("startDate")String startDate,@Param("endDate")String endDate);
+	//各渠道收费统计
+	public String getByDateAndParkCount(@Param("parkId")int parkId,@Param("startDate")String startDate,@Param("endDate")String endDate,@Param("payType")int payType);
+	public String getByDateAndParkCount3(@Param("parkId")int parkId,@Param("startDate")String startDate,@Param("endDate")String endDate,@Param("payType")int payType);
+	
+	//渠道
+	public Map<String, Object> calDaysChannelParkChargeByRange(@Param("parkId")int parkId,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
+	
 	//月份
 	public List<PosChargeData> getMoneyByMonthsParkAndRange(Map<String, Object> map);
 	

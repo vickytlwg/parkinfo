@@ -226,6 +226,114 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
         });
     };
     
+  //统计图5
+    var dateInitialparkcharge5 = function() {
+         $('#parkMonth5').val(new Date().format('yyyy-MM'));
+         $('#parkMonth5').datepicker({
+             autoClose : true,
+             dateFormat : "yyyy-mm",
+             months : ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+             monthsShort : ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+             showMonthAfterYear : true,
+             viewStart : 1,
+             weekStart : 1,
+             yearSuffix : "年",
+             isDisabled : function(date) {
+                 return date.valueOf() > Date.now() ? true : false;
+             }
+         });
+         $scope.monthDate5 = $('#parkMonth5').val();
+     };
+     dateInitialparkcharge5();
+     
+   //作图5
+     var renderChart5 = function(category, seriesData) {
+         var myChart5 = echarts.init(document.getElementById('chart_park_period_charge5'));
+         var option5 = {
+             title : {
+                 text : '停车场每日渠道费用',
+                 subtext : '月单位'
+             },
+             tooltip : {
+                 trigger : 'axis'
+             },
+             legend : {
+                 data : ['支付宝', '微信','工行']
+             },
+             toolbox : {
+                 show : true,
+                 feature : {
+                     mark : {
+                         show : true
+                     },
+                     saveAsImage : {
+                         show : true
+                     }
+                 }
+             },
+             calculable : true,
+             xAxis : [{
+                 type : 'category',
+                 boundaryGap : false,
+                 data : category
+             }],
+             yAxis : [{
+                 type : 'value',
+                 axisLabel : {
+                     formatter : '{value} 元'
+                 }
+             }],
+             series : seriesData,
+         };
+         myChart5.setOption(option5);
+     };
+
+     var chartData5 = function() {
+         var series1 = {
+             name : '支付宝',
+             type : 'line',
+             data : $scope.alipayMoney
+         };
+         var series2 = {
+             name : '微信',
+             type : 'line',
+             data : $scope.wechatMoney
+         };
+         var series3 = {
+             name : '工行',
+             type : 'line',
+             data : $scope.ghMoney
+         };
+         renderChart5($scope.catagory, [series1, series2,series3]);
+     };
+     
+   //根据日期范围获取各渠道收费
+     $scope.getDaysChannelParkChargeByRange = function() {
+         var dateselect = $('#parkMonth5').val();
+         var dateStart = new Date(dateselect.substring(0, 7) + '-01');
+         var dateEnd = dateStart;
+         dateEnd.setMonth(dateStart.getMonth() + 1);
+         $scope.show5=true;
+         getDataService.getDaysChannelParkChargeByRange($scope.parkid, dateselect.substring(0, 7) + '-01', dateEnd.getFullYear() + '-' + (dateEnd.getMonth()+1) + '-01').then(function(result) {
+         $scope.show5=false;
+         $scope.catagory = [];
+         $scope.alipayMoney = [];
+         $scope.wechatMoney = [];
+         $scope.ghMoney=[];
+//         getDataService.getParkChargeByRange($scope.parkid, dateselect.substring(0, 7) + '-01', dateEnd.getFullYear() + '-' + (dateEnd.getMonth()+1) + '-01').then(function(result) {
+             $.each(result, function(name, value) {
+                 var date = new Date(parseInt(name));
+                 var month = date.getMonth() + 1;
+                 var day = date.getDate();
+                 $scope.catagory.push(month + '-' + day);
+                 $scope.alipayMoney.push(value['alipayMoney']);
+                 $scope.wechatMoney.push(value['wechatMoney']);
+                 $scope.ghMoney.push(value['ghMoney']);
+             });
+             chartData();
+         });
+     };
+    
     
   //统计图4
     var dateInitialparkcharge4 = function() {
@@ -736,6 +844,23 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
         var promise = deferred.promise;
         $http({
             url : '/parkinfo/pos/charge/getParkChargeByRange',
+            method : 'post',
+            data : {
+                'parkId' : parkId,
+                'startDay' : startDay,
+                'endDay' : endDay
+            }
+        }).success(function(response) {
+            deferred.resolve(response);
+        });
+        return promise;
+    };
+    
+    var getDaysChannelParkChargeByRange = function(parkId, startDay, endDay) {
+        var deferred = $q.defer();
+        var promise = deferred.promise;
+        $http({
+            url : '/parkinfo/pos/charge/getDaysChannelParkChargeByRange',
             method : 'post',
             data : {
                 'parkId' : parkId,

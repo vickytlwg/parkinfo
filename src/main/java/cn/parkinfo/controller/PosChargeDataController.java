@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -62,6 +63,71 @@ public class PosChargeDataController {
 	
 	@Autowired
 	private MonthUserService monthUserService;
+	
+	//查询收费总笔数、收费总金额、各渠道收费统计
+			@RequestMapping(value = "/getByDateAndParkCount", produces = {"application/json;charset=utf-8" })
+			@ResponseBody
+			public String getByDateAndParkCount(@RequestBody Map<String, Object> args,HttpServletRequest request, HttpSession session) throws Exception{
+				int parkId=Integer.parseInt((String)args.get("parkId"));
+				String startDate=(String)args.get("startDate");
+				String endDate=(String)args.get("endDate");
+				Map<String, Object> retMap = new HashMap<String, Object>();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Date parsedStartDay = null;
+				try {
+					parsedStartDay = sdf.parse(startDate + " 00:00:00");
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				Date parsedEndDay = null;
+				try {
+					parsedEndDay = sdf.parse(endDate + " 00:00:00");
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				int payTypezfb=0;
+				int payTypewx=1;
+				int payTypexj=2;
+				int payTypeqt=3;
+				int payTypeyl=4;
+				int payTypegh=5;
+				/*int payTypedj=9;*/
+				//查询收费总笔数、收费总金额、各渠道收费统计
+				String results2=chargeSerivce.getByDateAndParkCount2(parkId,startDate, endDate);
+				String resultszfbbs=chargeSerivce.getByDateAndParkCount(parkId,startDate, endDate,payTypezfb);
+				String resultswxbs=chargeSerivce.getByDateAndParkCount(parkId,startDate, endDate,payTypewx);
+				String resultsxjbs=chargeSerivce.getByDateAndParkCount(parkId,startDate, endDate,payTypexj);
+				String resultsqtbs=chargeSerivce.getByDateAndParkCount(parkId,startDate, endDate,payTypeqt);
+				String resultsylbs=chargeSerivce.getByDateAndParkCount(parkId,startDate, endDate,payTypeyl);
+				String resultsghbs=chargeSerivce.getByDateAndParkCount(parkId,startDate, endDate,payTypegh);
+				
+				String results4=chargeSerivce.getByDateAndParkCount4(parkId,startDate, endDate);
+				String resultszfbje=chargeSerivce.getByDateAndParkCount3(parkId,startDate, endDate,payTypezfb);
+				String resultswxje=chargeSerivce.getByDateAndParkCount3(parkId,startDate, endDate,payTypewx);
+				String resultsxjje=chargeSerivce.getByDateAndParkCount3(parkId,startDate, endDate,payTypexj);
+				String resultsqtje=chargeSerivce.getByDateAndParkCount3(parkId,startDate, endDate,payTypeqt);
+				String resultsylje=chargeSerivce.getByDateAndParkCount3(parkId,startDate, endDate,payTypeyl);
+				String resultsghje=chargeSerivce.getByDateAndParkCount3(parkId,startDate, endDate,payTypegh);
+				
+				retMap.put("totalAmount", results4==null?new BigDecimal("0"):new BigDecimal(results4));
+				retMap.put("alipayAmount", resultszfbje==null?new BigDecimal("0"):new BigDecimal(resultszfbje));
+				retMap.put("wechartAmount", resultswxje==null?new BigDecimal("0"):new BigDecimal(resultswxje));
+				retMap.put("cashAmount", resultsxjje==null?new BigDecimal("0"):new BigDecimal(resultsxjje));
+				retMap.put("unionPayAmount", resultsylje==null?new BigDecimal("0"):new BigDecimal(resultsylje));
+				retMap.put("cbcAmount", resultsghje==null?new BigDecimal("0"):new BigDecimal(resultsghje));
+				retMap.put("otherAmount", resultsqtje==null?new BigDecimal("0"):new BigDecimal(resultsqtje));
+				
+				retMap.put("totalCount", results2==null?new BigDecimal("0"):new BigDecimal(results2));
+				retMap.put("alipayCount", resultszfbbs==null?new BigDecimal("0"):new BigDecimal(resultszfbbs));
+				retMap.put("wechartCount", resultswxbs==null?new BigDecimal("0"):new BigDecimal(resultswxbs));
+				retMap.put("cashCount", resultsxjbs==null?new BigDecimal("0"):new BigDecimal(resultsxjbs));
+				retMap.put("unionPayCount", resultsylbs==null?new BigDecimal("0"):new BigDecimal(resultsylbs));
+				retMap.put("cbcCount", resultsghbs==null?new BigDecimal("0"):new BigDecimal(resultsghbs));
+				retMap.put("otherCount", resultsqtbs==null?new BigDecimal("0"):new BigDecimal(resultsqtbs));
+
+				return Utility.createJsonMsg(1001, "success", retMap);
+			}
+	
 	
 	@RequestMapping(value = "/getMonthuserCountsByPark",produces = { "application/json;charset=UTF-8" })
 	@ResponseBody
@@ -715,6 +781,46 @@ public String getBySearchCardNumber(@RequestBody Map<String, String> args, HttpS
 		    }     
 		return  Utility.gson.toJson(comparemap);
 	}
+	
+	//渠道
+		@RequestMapping(value="/getDaysChannelParkChargeByRange",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})
+		@ResponseBody
+		public String getDaysChannelParkChargeByRange(@RequestBody Map<String, Object> args){
+			int parkId=Integer.parseInt((String)args.get("parkId"));
+			String startDay=(String)args.get("startDay");
+			String endDay=(String)args.get("endDay");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+			Date parsedStartDay = null;
+			try {
+				parsedStartDay = sdf.parse(startDay + " 00:00:00");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}	
+			Date parsedEndDay  = null;
+			try {
+				parsedEndDay = sdf.parse(endDay + " 00:00:00");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}	
+			
+			Calendar start =Calendar.getInstance(); 
+			start.setTime(parsedStartDay);
+			Long startTime = start.getTimeInMillis();
+			Calendar end = Calendar.getInstance();
+			end.setTime(parsedEndDay);
+			Long endTime = end.getTimeInMillis();
+			Long oneDay = 1000 * 60 * 60 * 24l;
+			Long time = startTime;  
+			Map<Long, Object> comparemap=new TreeMap<>();
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			  while (time <= endTime) {  
+			        Date d = new Date(time);            
+			        Map<String, Object> posChargeDatas = chargeSerivce.getDaysChannelParkChargeByRange(parkId, df.format(d));
+			        comparemap.put(d.getTime(), posChargeDatas);
+			        time += oneDay;  
+			    }     
+			return  Utility.gson.toJson(comparemap);
+		}
 	
 	
 	@RequestMapping(value="/getParkRecordsCountByRange",method=RequestMethod.POST,produces={"application/json;charset=utf-8"})

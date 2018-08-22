@@ -634,5 +634,68 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 		// TODO Auto-generated method stub
 		return chargeDao.getMoneyByMonthsParkAndRange(map);
 	}
+	
+	//渠道数据
+	@Override
+	public Map<String, Object> getDaysChannelParkChargeByRange(int parkId, String day) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+		Date parsedStartDay = null;
+		try {
+			parsedStartDay = sdf.parse(day + " 00:00:00");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}	
+		Date parsedEndDay  = null;
+		try {
+			parsedEndDay = sdf.parse(day + " 23:59:59");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}	
+		Map<String, Object> tmMap=calDaysChannelParkChargeByRange(parkId, parsedStartDay, parsedEndDay);
+		Map<String, Object> retmap=new HashMap<>();
+		float alipayMoney=0;
+		float wechatMoney=0;
+		float ghMoney=0;
+		if (tmMap!=null) {
+			alipayMoney=(float)(double) tmMap.get("alipayMoney");
+			wechatMoney=(float)(double) tmMap.get("wechatMoney");
+			ghMoney=(float)(double)tmMap.get("ghMoney");
+		}
+		
+		retmap.put("alipayMoney", alipayMoney);
+		retmap.put("wechatMoney", wechatMoney);
+		retmap.put("ghMoney", ghMoney);
+		return retmap;
+	}
+
+	@Override
+	public Map<String, Object> calDaysChannelParkChargeByRange(int parkId, Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return chargeDao.calDaysChannelParkChargeByRange(parkId, startDate, endDate);
+	}
+	
+	@Override
+	public String getByDateAndParkCount2(int parkId, String startDate, String endDate) {
+		// TODO Auto-generated method stub
+		return chargeDao.getByDateAndParkCount2(parkId, startDate, endDate);
+	}
+
+	@Override
+	public String getByDateAndParkCount4(int parkId, String startDate, String endDate) {
+		// TODO Auto-generated method stub
+		return chargeDao.getByDateAndParkCount4(parkId, startDate, endDate);
+	}
+
+	@Override
+	public String getByDateAndParkCount(int parkId, String startDate, String endDate, int payType) {
+		// TODO Auto-generated method stub
+		return chargeDao.getByDateAndParkCount(parkId, startDate, endDate, payType);
+	}
+
+	@Override
+	public String getByDateAndParkCount3(int parkId, String startDate, String endDate, int payType) {
+		// TODO Auto-generated method stub
+		return chargeDao.getByDateAndParkCount3(parkId, startDate, endDate, payType);
+	}
 
 }

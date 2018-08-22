@@ -231,12 +231,14 @@
 				<ul class="nav nav-tabs" role="tablist">
 					<li role="presentation" class="active"><a href="#home"
 						aria-controls="home" role="tab" data-toggle="tab">每日应收实收金额</a></li>
+					<li role="presentation"><a href="#years" 
+						aria-controls="years" role="tab" data-toggle="tab">每月应收实收金额</a></li>
 					<li role="presentation"><a href="#profile"
 						aria-controls="profile" role="tab" data-toggle="tab">每日进出流量</a></li>
 					<li role="presentation"><a href="#messages"
 						aria-controls="messages" role="tab" data-toggle="tab">每日进出车数量</a></li>
-					<li role="presentation"><a href="#years" 
-						aria-controls="years" role="tab" data-toggle="tab">每月应收实收金额</a></li>
+					<li role="presentation"><a href="#channel"
+						aria-controls="channel" role="tab" data-toggle="tab">每日收费渠道金额</a></li>
 				</ul>
 
 				<!-- Tab panes -->
@@ -318,6 +320,26 @@
 								<p ng-show="show4">正在数据查询,请稍等...</p>
 								<div style="height: 400px; width: 1000px; padding-left: 10px"
 									id="chart_park_period_charge4"></div>
+							</div>
+						</div>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="channel">
+						<div class="well" style="height: 450px;" id="grad1">
+							<div class="col-md-3">
+								<div class="form-group">
+									<input type="text" ng-model="monthDate5" id="parkMonth5"
+										class="form-control">
+								</div>
+							</div>
+							<div class="col-md-1">
+								<button type="button" class="btn btn-info"
+									ng-click="getDaysChannelParkChargeByRange()" style="float: left">
+									查看</button> 
+							</div>
+							<div class="col-md-12">
+								<!-- <p ng-show="show5">正在数据查询,请稍等...</p> -->
+								<div style="height: 400px; width: 1000px; padding-left: 10px"
+									id="chart_park_period_charge5"></div>
 							</div>
 						</div>
 					</div>

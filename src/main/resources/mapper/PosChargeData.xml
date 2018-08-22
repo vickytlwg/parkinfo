@@ -26,6 +26,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="payType" column="payType"/>
 		<result property="url" column="url"/>
 	</resultMap>
+	
+	<!-- 获取笔数-->
+ <select id="getByDateAndParkCount2" resultType="java.lang.String">
+ <![CDATA[
+  	select SUM(posChargeData.chargeMoney>0) AS totalCount
+  	from posChargeData where parkId=#{parkId} and entranceDate between #{startDate} and #{endDate} 
+  ]]> 
+  </select>
+  <!-- 获取金额-->
+  <select id="getByDateAndParkCount4" resultType="java.lang.String">
+	  select SUM(posChargeData.chargeMoney) AS totalAmount from posChargeData 
+where parkId=#{parkId} and entranceDate between #{startDate} and #{endDate} 
+  </select>
+  <!-- 获取渠道 笔数-->
+ <select id="getByDateAndParkCount" resultType="java.lang.String">
+	  select sum(posChargeData.chargeMoney>0) AS totalCount from posChargeData 
+where parkId=#{parkId} and entranceDate between #{startDate} and #{endDate} 
+ and payType = #{payType}
+  </select>
+    <!-- 获取渠道 金额-->
+  <select id="getByDateAndParkCount3" resultType="java.lang.String">
+	  select SUM(posChargeData.chargeMoney) AS totalAmount from posChargeData 
+where parkId=#{parkId} and entranceDate between #{startDate} and #{endDate} 
+ and payType = #{payType}
+  </select>
+	
 	<select id="get" resultMap="PosChargeDataMapper">SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
 		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id</select>
 	<select id="getUnCompleted" resultMap="PosChargeDataMapper">SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted

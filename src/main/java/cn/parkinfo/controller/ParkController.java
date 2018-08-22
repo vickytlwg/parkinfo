@@ -38,6 +38,7 @@ import cn.parkinfo.model.Park;
 import cn.parkinfo.model.ParkDetail;
 import cn.parkinfo.model.ParkNews;
 import cn.parkinfo.service.AuthorityService;
+import cn.parkinfo.service.HttpUtil;
 import cn.parkinfo.service.ParkService;
 
 import cn.parkinfo.service.Utility;
@@ -173,7 +174,7 @@ public class ParkController {
 		ret.put("message", "get park success");
 		return Utility.gson.toJson(ret);
 	}
-	
+	//住
 	@RequestMapping(value = "/getNearParks", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
 	@ResponseBody
 	public String getNearParks(@RequestBody Map<String, Object> args){
@@ -188,6 +189,7 @@ public class ParkController {
 		ret.put("message", "get park success");
 		return Utility.gson.toJson(ret);
 	}
+	
 	
 	@RequestMapping(value="/getParksByType", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
 	@ResponseBody
