@@ -1,7 +1,7 @@
 package cn.parkinfo.service;
 
 import java.util.List;
-
+import java.util.Map;
 
 import cn.parkinfo.model.Park;
 import cn.parkinfo.model.ParkDetail;
@@ -53,4 +53,6 @@ public interface ParkService {
 	
 	public Park getLastPark();
 	
+	//查询停车场总金额
+	public List<Park> getParkByMoney(Map<String, Object> map);
 }

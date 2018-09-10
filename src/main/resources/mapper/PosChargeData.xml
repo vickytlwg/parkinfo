@@ -27,6 +27,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="url" column="url"/>
 	</resultMap>
 	
+	<!-- 获取停车场总金额 -->
+	<select id="getParkByMoney" resultType="cn.parkinfo.model.Park">
+	<!-- resultMap="BaseResultMap" parameterType="java.lang.Integer" -->
+		select *
+		from authUsers a1
+		left join userPark u2 on a1.id=u2.userId 
+		left join park p3 on u2.parkId=p3.id 
+		where a1.username LIKE '%${username}%'
+	</select>
+	
 	<!-- 获取笔数-->
  <select id="getByDateAndParkCount2" resultType="java.lang.String">
  <![CDATA[
@@ -125,6 +135,13 @@ where parkId=#{parkId} and entranceDate between #{startDate} and #{endDate}
 		where pp.parkId= '${parkId}' and pp.cardNumber like '%${cardNumber}%' order by pp.exitDate desc
 	</select>
 	
+	<select id="getBySearchByOperatorId" statementType="STATEMENT" resultMap="PosChargeDataMapper">
+		SELECT pp.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,
+		entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData pp LEFT JOIN  park AS p ON pp.parkId=p.id 
+		where pp.parkId= '${parkId}' and pp.operatorId like '%${operatorId}%' order by pp.exitDate desc
+	</select>
+	
 	<select id="getBySearchCardNumber" statementType="STATEMENT" resultMap="PosChargeDataMapper">
 		SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,
 		entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
@@ -136,6 +153,12 @@ where parkId=#{parkId} and entranceDate between #{startDate} and #{endDate}
 		SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,
 		exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
 		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id where cardNumber like '%${cardNumber}%' and parkId= '${parkId}' order by id desc
+		</select>
+		
+		<select id="getSearchByOperatorId" statementType="STATEMENT" resultMap="PosChargeDataMapper">
+		SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,
+		exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id where operatorId like '%${operatorId}%' and parkId= '${parkId}' order by id desc
 		</select>
 		
 	<select id="getByParkName" statementType="STATEMENT" resultMap="PosChargeDataMapper">select * from posChargeData where parkDesc like '%${parkName}%' order by id desc limit 800</select>

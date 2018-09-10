@@ -1,6 +1,7 @@
 package cn.parkinfo.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -43,6 +44,9 @@ public interface ParkDAO {
 	public int updateLeftPortCount(@Param("id")int parkId, @Param("portLeftCount") int leftPortCount);
 	
 	public int deletePark(int id);
+	
+	//查询停车场总金额
+	public List<Park> getParkByMoney(Map<String, Object> map);
 	
 	
 }

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.parkinfo.dao.PosChargeDataDAO">
+	<resultMap id="PosChargeDataMapper" type="PosChargeData">
+		<id property="id" column="id" />
+		<result property="cardNumber" column="cardNumber" />
+		<result property="parkId" column="parkId"/>
+		<result property="parkDesc" column="parkDesc"/>
+		<result property="portNumber" column="portNumber" />
+		<result property="isEntrance" column="isEntrance"/>
+		<result property="operatorId" column="operatorId"/>
+		<result property="posId" column="posId" />
+		<result property="chargeMoney" column="chargeMoney"/>
+		<result property="paidMoney" column="paidMoney"/>
+		<result property="unPaidMoney" column="unPaidMoney"/>
+		<result property="givenMoney" column="givenMoney"/>
+		<result property="changeMoney" column="changeMoney"/>
+		<result property="isOneTimeExpense" column="isOneTimeExpense"/>
+		<result property="paidCompleted" column="paidCompleted"/>
+		<result property="isLargeCar" column="isLargeCar"/>
+		<result property="entranceDate" column="entranceDate"/>
+		<result property="exitDate" column="exitDate"/>
+		<result property="payType" column="payType"/>
+		<result property="url" column="url"/>
+	</resultMap>
+	
+	<!-- 获取停车场总金额 -->
+	<select id="getParkByMoney" resultType="java.util.HashMap">
+		select p3.id
+		from authUsers a1
+		left join userPark u2 on a1.id=u2.userId 
+		left join park p3 on u2.parkId=p3.id 
+		where a1.username LIKE '%${username}%'
+	</select>
+	
+	<!-- 获取笔数-->
+ <select id="getByDateAndParkCount2" resultType="java.lang.String">
+ <![CDATA[
+  	select SUM(posChargeData.chargeMoney>0) AS totalCount
+  	from posChargeData where parkId=#{parkId} and entranceDate between #{startDate} and #{endDate} 
+  ]]> 
+  </select>
+  <!-- 获取金额-->
+  <select id="getByDateAndParkCount4" resultType="java.lang.String">
+	  select SUM(posChargeData.chargeMoney) AS totalAmount from posChargeData 
+where parkId=#{parkId} and entranceDate between #{startDate} and #{endDate} 
+  </select>
+  <!-- 获取渠道 笔数-->
+ <select id="getByDateAndParkCount" resultType="java.lang.String">
+	  select sum(posChargeData.chargeMoney>0) AS totalCount from posChargeData 
+where parkId=#{parkId} and entranceDate between #{startDate} and #{endDate} 
+ and payType = #{payType}
+  </select>
+    <!-- 获取渠道 金额-->
+  <select id="getByDateAndParkCount3" resultType="java.lang.String">
+	  select SUM(posChargeData.chargeMoney) AS totalAmount from posChargeData 
+where parkId=#{parkId} and entranceDate between #{startDate} and #{endDate} 
+ and payType = #{payType}
+  </select>
+	
+	<select id="get" resultMap="PosChargeDataMapper">SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id</select>
+	<select id="getUnCompleted" resultMap="PosChargeDataMapper">SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id where paidCompleted = 0 limit 500</select>
+	<select id="getByParkIdAndCardNumber" resultMap="PosChargeDataMapper">SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id where parkId=#{parkId} and cardNumber =#{cardNumber} order by id desc limit 0,1</select>
+	<select id="getById" resultMap="PosChargeDataMapper">SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id  where id = #{param1}</select>
+	<select id="getPage" resultMap="PosChargeDataMapper">SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id order by id desc limit #{param1}, #{param2}</select>
+	<select id="getByDateDiffNoOut" resultMap="PosChargeDataMapper">
+		<![CDATA[
+		SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id where parkId=#{parkId} and
+		exitDate IS NULL AND DATEDIFF(NOW(),entranceDate)>#{days}
+		order by id desc limit #{start}, #{count}
+		]]>
+	</select>
+	<select id="getCarTimesByDateRangeAndParkId" resultType="java.util.HashMap">
+		select count(*) as count,cardNumber from posChargeData where parkId=#{parkId} and entranceDate between #{startDate} and #{endDate}  GROUP BY cardNumber
+		order by count desc limit #{start},#{count}
+		</select>
+	<select id="getPageByParkId" resultMap="PosChargeDataMapper">
+		SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData 
+		LEFT JOIN park AS p ON parkId=p.id 
+		where parkId=#{parkId} order by posChargeData.exitDate desc limit #{start}, #{count}</select>
+	<select id="getPageArrearage" resultMap="PosChargeDataMapper">SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id  where paidCompleted=false order by id desc limit #{param1}, #{param2}</select>
+	<select id="getPageArrearageByParkId" resultMap="PosChargeDataMapper">SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id where paidCompleted=false and parkId=#{parkId} order by id desc limit #{start}, #{count}</select>
+	<select id= "getByRange" resultMap="PosChargeDataMapper">
+		SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData 
+		LEFT JOIN park AS p ON parkId=p.id where parkId=#{parkId} and exitDate between #{startDate} and #{endDate} order by exitDate desc</select>
+	<select id= "getAllByDay" resultMap="PosChargeDataMapper">SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id where entranceDate between #{startDate} and #{endDate} limit 800</select>
+	<select id="count" resultType="int">select count(*) from posChargeData</select>
+	<select id="getByParkDatetime" resultMap="PosChargeDataMapper">
+		SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData 
+		LEFT JOIN park AS p ON parkId=p.id where parkId=#{parkId} and exitDate between #{startDate} and #{endDate} order by exitDate desc</select>
+	<select id="getParkingData" resultMap="PosChargeDataMapper">
+		SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id where exitDate is null and parkId=#{parkId} and entranceDate between
+		#{startDate} and #{endDate} order by id desc <!-- limit 700 -->
+	</select>
+	<select id="getFreeData" resultMap="PosChargeDataMapper">SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id where exitDate is not null and parkId=#{parkId} and chargeMoney=0 and exitDate between
+		#{startDate} and #{endDate} order by exitDate desc</select>
+	<!--  -->
+	<select id="getChargeMoneyData" resultMap="PosChargeDataMapper">
+		SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id where exitDate is not null and parkId=#{parkId} and chargeMoney > 0 and exitDate between
+		#{startDate} and #{endDate} order by exitDate desc <!--  limit 700 -->
+	</select>
+	<select id="getDebt" resultMap="PosChargeDataMapper">SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id where paidCompleted = 0 and cardNumber=#{param1} order by id desc</select>
+	<select id="getArrearageByCardNumber" resultMap="PosChargeDataMapper">SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id where paidCompleted = 0 and cardNumber=#{param1} and exitDate is not null order by id desc</select>
+	<select id="getParkCarportStatusToday" resultMap="PosChargeDataMapper">
+		<![CDATA[
+		SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id where parkId=#{parkId} and entranceDate > #{day} and paidCompleted = 0 order by id desc
+		]]>
+	</select>
+	<select id="getByCardNumber" statementType="STATEMENT" resultMap="PosChargeDataMapper">
+		SELECT pp.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,
+		entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData pp LEFT JOIN  park AS p ON pp.parkId=p.id 
+		where pp.parkId= '${parkId}' and pp.cardNumber like '%${cardNumber}%' order by pp.exitDate desc
+	</select>
+	
+	<select id="getBySearchCardNumber" statementType="STATEMENT" resultMap="PosChargeDataMapper">
+		SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,
+		entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN  park AS p ON parkId=p.id 
+		where cardNumber like '%${cardNumber}%' order by id desc
+	</select>
+	
+	<select id="getByCardNumberAndPark" statementType="STATEMENT" resultMap="PosChargeDataMapper">
+		SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,
+		exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id where cardNumber like '%${cardNumber}%' and parkId= '${parkId}' order by id desc
+		</select>
+		
+	<select id="getByParkName" statementType="STATEMENT" resultMap="PosChargeDataMapper">select * from posChargeData where parkDesc like '%${parkName}%' order by id desc limit 800</select>
+	<insert id="insert" parameterType="PosChargeData" keyProperty="id">insert into posChargeData(cardNumber, parkId, parkDesc,payType, portNumber, isEntrance, operatorId, posId, chargeMoney,
+		paidMoney, unPaidMoney,givenMoney,changeMoney, isOneTimeExpense, paidCompleted,isLargeCar, entranceDate, exitDate,url)
+		values(#{cardNumber}, #{parkId}, #{parkDesc}, #{portNumber}, #{isEntrance}, #{operatorId}, #{posId}, #{chargeMoney},
+		#{paidMoney}, #{unPaidMoney},#{givenMoney},#{changeMoney}, #{isOneTimeExpense},#{paidCompleted},#{isLargeCar},#{entranceDate}, #{exitDate},#{url})</insert>
+	<update id="update" parameterType="PosChargeData">update posChargeData set cardNumber=#{cardNumber}, parkId=#{parkId}, parkDesc=#{parkDesc}, portNumber = #{portNumber},isEntrance=#{isEntrance},
+		operatorId=#{operatorId},posId=#{posId},chargeMoney=#{chargeMoney},
+		paidMoney=#{paidMoney}, unPaidMoney=#{unPaidMoney},givenMoney=#{givenMoney} ,changeMoney=#{changeMoney}, isOneTimeExpense=#{isOneTimeExpense},
+		paidCompleted=#{paidCompleted},isLargeCar=#{isLargeCar}, entranceDate=#{entranceDate}, exitDate=#{exitDate},url=#{url}
+		where id=#{id}</update>
+	<select id="getMoneyByMonthsParkAndRange" resultType="java.util.HashMap">
+		select MONTH(entranceDate) as entranceDate,SUM(chargeMoney) as chargeMoney,SUM(paidMoney) as paidMoney FROM 
+		posChargeData where parkId=#{parkId} AND YEAR(entranceDate)=#{startDate} group by MONTH(entranceDate)
+	</select>
+	<select id="selectPosdataByParkAndRange" resultMap="PosChargeDataMapper">
+		<![CDATA[
+		SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id where entranceDate <= #{endDay} and entranceDate >= #{startDay} and parkId=#{parkId} order by id desc
+		]]>
+	</select>
+	<select id="calMoneyByParkAndRange" resultType="java.util.HashMap">
+		SELECT SUM(chargeMoney) as chargeMoney,SUM(paidMoney) as paidMoney,SUM(givenMoney) as givenMoney,SUM(changeMoney) as changeMoney FROM posChargeData WHERE parkId=#{parkId} AND entranceDate
+		BETWEEN  #{startDate} AND #{endDate}
+	</select>
+	<select id="calInByParkAndRange" resultType="java.util.HashMap">
+		SELECT count(*) as count FROM posChargeData WHERE parkId=#{parkId} AND entranceDate
+		BETWEEN  #{startDate} AND #{endDate}
+	</select>
+	<select id="calOutByParkAndRange" resultType="java.util.HashMap">
+		SELECT count(*) as count FROM posChargeData WHERE parkId=#{parkId} AND exitDate
+		BETWEEN  #{startDate} AND #{endDate}
+	</select>
+	<select id="selectPosdataByExitDateAndParkAndRange" resultMap="PosChargeDataMapper">
+		<![CDATA[
+		SELECT posChargeData.id,cardNumber,parkId,parkDesc,payType,portNumber,isEntrance,isLargeCar,entranceDate,exitDate,url,operatorId,chargeMoney,paidMoney,unPaidMoney,givenMoney,changeMoney,isOneTimeExpense,paidCompleted
+		FROM posChargeData LEFT JOIN park AS p ON parkId=p.id where exitDate is not null and exitDate <= #{endDay} and exitDate >= #{startDay} and parkId=#{parkId} order by id desc
+		]]>
+	</select>
+	<delete id="delete">delete from PosChargeData
+		where id=#{param1}</delete>
+	<select id="getFeeOperatorChargeData" resultType="java.util.HashMap">SELECT SUM(posChargeData.chargeMoney) AS chargeMoney,count(*) AS count,SUM(posChargeData.paidMoney) AS paidMoney,SUM(posChargeData.unPaidMoney) AS unPaidMoney,
+		SUM(posChargeData.givenMoney) AS givenMoney,SUM(posChargeData.changeMoney) AS changeMoney,posChargeData.operatorId ,feeOperator.name AS feeOperator
+		FROM feeOperator LEFT JOIN posChargeData ON posChargeData.operatorId=feeOperator.account  where entranceDate between
+		#{startDate} and #{endDate}
+		GROUP BY feeOperator.account</select>
+	<delete id="deleteByParkIdAndDate">
+		<![CDATA[
+		delete from posChargeData where parkId=#{parkId} and entranceDate>=#{startDay} and entranceDate<=#{endDay}
+		]]>
+	</delete>
+	<delete id="deleteById">delete from posChargeData where id = #{id}</delete>
+</mapper>

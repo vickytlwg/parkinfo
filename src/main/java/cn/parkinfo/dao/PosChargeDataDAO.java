@@ -7,7 +7,9 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import cn.parkinfo.model.Park;
 import cn.parkinfo.model.PosChargeData;
+import cn.parkinfo.model.UserPark;
 
 @Repository
 public interface PosChargeDataDAO {
@@ -23,6 +25,9 @@ public interface PosChargeDataDAO {
 	public List<PosChargeData> getParkingData(@Param("parkId")int parkId,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
 	
 	public Map<String, Object> calMoneyByParkAndRange(@Param("parkId")int parkId,@Param("startDate")Date startDate,@Param("endDate")Date endDate);
+	
+	//查询停车场总金额
+	public List<Park> getParkByMoney(Map<String, Object> map);
 	
 	//查询收费总笔数、收费总金额、各渠道收费统计
 	public String getByDateAndParkCount2(@Param("parkId")int parkId,@Param("startDate")String startDate,@Param("endDate")String endDate);
@@ -50,6 +55,10 @@ public interface PosChargeDataDAO {
 	public List<PosChargeData> getByParkIdAndCardNumber(@Param("parkId")int parkId,@Param("cardNumber")String cardNumber);
 	
 	public List<PosChargeData> getByCardNumberAndPark(@Param("cardNumber")String cardNumber,@Param("parkId")int parkId);
+	
+	public List<PosChargeData> getBySearchByOperatorId(@Param("parkId")int parkId,@Param("operatorId")String operatorId);
+	
+	public List<PosChargeData> getSearchByOperatorId(@Param("operatorId")String operatorId,@Param("parkId")int parkId);
 	
 	public List<PosChargeData> getPageByParkId(@Param("parkId")int parkId,@Param("start")int start,@Param("count")int count);
 	

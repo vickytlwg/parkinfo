@@ -21,7 +21,7 @@ import cn.parkinfo.model.Outsideparkinfo;
 import cn.parkinfo.model.Park;
 import cn.parkinfo.model.PosChargeData;
 import cn.parkinfo.model.Posdata;
-
+import cn.parkinfo.model.UserPark;
 import cn.parkinfo.service.OutsideParkInfoService;
 import cn.parkinfo.service.ParkService;
 import cn.parkinfo.service.PosChargeDataService;
@@ -696,6 +696,24 @@ public class PosChargeDataServiceImpl implements PosChargeDataService {
 	public String getByDateAndParkCount3(int parkId, String startDate, String endDate, int payType) {
 		// TODO Auto-generated method stub
 		return chargeDao.getByDateAndParkCount3(parkId, startDate, endDate, payType);
+	}
+
+	@Override
+	public List<Park> getParkByMoney(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return chargeDao.getParkByMoney(map);
+	}
+
+	@Override
+	public List<PosChargeData> getBySearchByOperatorId(int parkId,String operatorId) {
+		// TODO Auto-generated method stub
+		return chargeDao.getBySearchByOperatorId(parkId,operatorId);
+	}
+
+	@Override
+	public List<PosChargeData> getSearchByOperatorId(String operatorId, Integer parkId) {
+		// TODO Auto-generated method stub
+		return chargeDao.getSearchByOperatorId(operatorId, parkId);
 	}
 
 }

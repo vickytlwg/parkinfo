@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title></title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery-1.7.2.min.js"></script>
+</head>
+
+<body>
+<div class="top mg2">
+	<div class="topl f"><a href="#"><img align="absmiddle" src="images/index_1_01.png" /></a></div>
+	<div class="topc f cen xi13">
+		<ul>
+			<li class="bg1"><a href="../index.html">概况</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg2"><a href="../visualization.html">可视化</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg3"><a href="../report.html">报表</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg4"><a href="../trade.html">交易</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg5"><a href="../operation.html">运维</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg6"><a href="../service.html">服务</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="images/index_07.jpg" /></div>
+			<li class="bg1hover topchover"><a href="../set.html">设置</a></li>
+		</ul>
+	</div>
+	<div class="topr r xi13">
+		<ul>
+			<li><a href="#">欢迎您</a></li>
+			<li><a href="#"><img align="absmiddle" src="images/index_26.png" /></a></li>
+			<li><a href="#"><img align="absmiddle" src="images/index_28.png" /></a></li>
+			<li><a href="#"><img align="absmiddle" src="images/index_30.png" /></a></li>
+		</ul>
+	</div>
+</div>
+<div class="con mg2">
+	<div class="conl">
+		<div class="conls mg2">
+			<span class="conlsr1 r"><img align="absmiddle" src="images/user_list_23.png" /></span>
+			<span class="conlsr2 r"><img align="absmiddle" src="images/user_list_23.png" /></span>
+		</div>
+		<div id="menu_zzjs_net" class="sdmenu">
+			<div>
+				<span>人员管理</span>
+				<a href="../set.html">巡检员</a>
+				<a href="../set.html">收费员</a>
+			</div>
+			<div>
+				<span>路边停车场管理</span>
+				<a href="zoneCenter.html">区中心</a>
+				<a href="area.html">经营区域</a>
+				<a href="street.html">路段街道</a>
+				<a href="park.html">收费站点</a>
+				<a href="feeCriterion.html">收费标准</a>
+				
+			</div>
+			
+			<div>
+				<span>设备管理</span>
+				<a href="device.html">收费终端</a>
+				<a href="device.html">巡检终端</a>
+				<a href="device.html">网关</a>
+				<a href="device.html">地磁</a>
+				<a href="device.html">诱导屏</a>
+			</div>
+			<div>
+				<span>系统管理</span>
+				<a href="#">系统日志</a>
+			</div>
+			<script type="text/javascript">
+			// <![CDATA[
+			var myMenu;
+			window.onload = function() {
+				myMenu = new SDMenu("menu_zzjs_net");
+				myMenu.init();
+			var firstSubmenu = myMenu.submenus[0]; //不同栏目首页是0以此类推
+			myMenu.expandMenu(firstSubmenu);
+			};
+			// ]]>
+			</script>
+		</div>
+	</div>
+	<div class="conr">
+		<div class="user_lists mg2">
+			<div class="user_listss mg2">
+				<ul>
+					<li class="user_listss1 you">区中心</li>
+					<li><input name="" type="text" class="bd1 f"></li>
+					<li class="user_listss1 you">经营区域：</li>
+					<li><input name="" type="text" class="bd1 f"></li>
+					<li class="user_listss1 you">收费路段：</li>
+					<li><input name="" type="text" class="bd1 f"></li>
+				</ul>
+			</div>
+			<div class="user_listss mg2">
+				<ul>
+					<li class="user_listss1 you">收费站点：</li>
+					<li><input name="" type="text" class="bd1 f"></li>
+					<li class="user_listss1 you">联系人：</li>
+					<li><select name="" class="bd1_1 f">
+		  <option value="--自定--">----</option>
+		  <option value="自定">自定</option>
+		  <option value="自定">自定</option>
+		</select></li>
+					<li class="user_listss1 you">联系电话：</li>
+					<li><select name="" class="bd1_1 f">
+		  <option value="--自定--">----</option>
+		  <option value="自定">自定</option>
+		  <option value="自定">自定</option>
+		</select></li>
+					<li><input name="" type="button" class="an1 f xi14 bai" value="查询"></li>
+					<li><input name="" type="button" class="an2 f xi14 bai" value="添加"></li>
+					<li><input name="" type="button" class="an1 f xi14 bai" value="修改"></li>
+					
+				</ul>
+			</div>
+		</div>
+		<div class="user_listc mg2">
+			<table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#e4e4e4" class="tab1">
+			  <tr class="bghui cu">
+				<td>名称</td>
+				<td>免费时段</td>
+				<td>阶段1范围</td>
+				<td class="cen">阶段2范围</td>
+				<td>计费单位</td>
+				<td class="cen">首小时内小车计费</td>
+				<td class="cen">首小时后小车计费</td>
+				<td>最高收费</td>
+				<td>夜间时间</td>
+				<td>是否按次收费</td>
+				<td>收费说明</td>
+			  </tr>
+			  <tr>
+				<td>徐州市韩山路</td>
+				<td>15分钟</td>
+				<td>60分钟</td>
+				<td class="cen">首小时后</td>
+				<td>15分钟</td>
+				<td class="cen">0.5</td>
+				<td class="cen">1.5</td>
+				<td>20</td>
+				<td>20:00～8:00</td>
+				<td>否</td>
+				<td>首小时内，每15分钟0.5元，首小时后，每15分钟0.5元，前15分钟免费</td>
+			  </tr>
+			  <tr>
+				<td>徐州市聚龙湖东路</td>
+				<td>15分钟</td>
+				<td>60分钟</td>
+				<td class="cen">首小时后</td>
+				<td>15分钟</td>
+				<td class="cen">0.5</td>
+				<td class="cen">1.5</td>
+				<td>20</td>
+				<td>20:00～8:00</td>
+				<td>否</td>
+				<td>首小时内，每15分钟0.5元，首小时后，每15分钟0.5元，前15分钟免费</td>
+			  </tr>
+			</table>
+		</div>
+		<div class="user_listx mg2">
+			<div class="user_listxl f">总记录数：<span class="lan">736</span></div>
+			<div class="user_listxl f">当前页：<span class="lan">1</span> / <span class="lan">74</span></div>
+			<div class="user_listxr1 r"><select name="" class="bd1_2 f">
+		  <option value="10">10</option>
+		  <option value="10">10</option>
+		  <option value="10">10</option>
+		</select></div>
+			<div class="user_listxr2 r">每页行数：</div>
+			<div class="user_listxc r">
+				<div class="fy mg2">
+					<a href="#">上一页</a>
+					<span>1</span>
+					<a href="#">2</a>
+					<a href="#">3</a>
+					<a href="#">4</a>
+					...
+					<a href="#">5</a>
+					<a href="#">6</a>
+					<a href="#">下一页</a>
+					<a href="#">尾页</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="js/js.js"></script>
+</body>
+</html>

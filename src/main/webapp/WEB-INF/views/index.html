@@ -141,7 +141,7 @@
 		<div class="gaikuang2 mg2 cen">
 			<ul>
 				<li>
-					<div class="gaikuang2s mg2 gaikuangbg1">
+					<div class="gaikuang2s mg2 gaikuangbg1" ng-controller="generalDataViewCtrl">
 						<div class="gaikuang2ss mg2 xi14 bai">今日应收金额</div>
 						<div class="gaikuang2sc mg2 xi26">
 							{{dayAmountMoney}}<span class="xi14">元</span>
@@ -152,7 +152,7 @@
 				</li>
 
 				<li>
-					<div class="gaikuang2s mg2 gaikuangbg4">
+					<div class="gaikuang2s mg2 gaikuangbg4" ng-controller="generalDataViewCtrl">
 						<div class="gaikuang2ss mg2 xi14 bai">订单数</div>
 						<div class="gaikuang2sc mg2 xi26">
 							{{dayOutCount}}<span class="xi14">笔</span>
@@ -163,7 +163,7 @@
 				</li>
 
 				<li>
-					<div class="gaikuang2s mg2 gaikuangbg6">
+					<div class="gaikuang2s mg2 gaikuangbg6" ng-controller="generalDataViewCtrl">
 						<div class="gaikuang2ss mg2 xi14 bai">今日运营泊位数</div>
 						<div class="gaikuang2sc mg2 xi26">
 							{{dayOnlineCarportCount}}<span class="xi14"></span>
@@ -173,7 +173,7 @@
 					</div>
 				</li>
 				<li>
-					<div class="gaikuang2s mg2 gaikuangbg8">
+					<div class="gaikuang2s mg2 gaikuangbg8" ng-controller="generalDataViewCtrl">
 						<div class="gaikuang2ss mg2 xi14 bai">停车次数</div>
 						<div class="gaikuang2sc mg2 xi26">
 							{{dayOutCount}}<span class="xi14">次</span>
@@ -184,7 +184,7 @@
 				</li>
 
 				<li>
-					<div class="gaikuang2s mg2 gaikuangbg10">
+					<div class="gaikuang2s mg2 gaikuangbg10" ng-controller="generalDataViewCtrl">
 						<div class="gaikuang2ss mg2 xi14 bai">今日泊位周转率</div>
 						<div class="gaikuang2sc mg2 xi26">
 							{{dayOutCount/dayOnlineCarportCount|number:3}}<span class="xi14"></span>
@@ -198,13 +198,13 @@
 
 
 
-		<div class="container">
+		<!--  <div class="container">
 			<ul class="nav nav-tabs">
 				<li role="presentation" class="active"><a href="#">支付渠道占比</a></li>
 
 			</ul>
 			<div class="col-md-6" style="height: 250px;" id="container1"></div>
-			<!-- 			<div class="col-md-6" style="margin-top: 20px;">
+						<div class="col-md-6" style="margin-top: 20px;">
 				<h4>总交易额5000元，总订单数1000笔。</h4>
 				<div class="col-md-4">
 					<ul>
@@ -246,11 +246,11 @@
 				</div>
 
 
-			</div> -->
+			</div>  -->
 
 
 
-			<div class="col-md-6" style="margin-top:50px;">
+			<!--<div class="col-md-6" style="margin-top:50px;">
 				<h4>交易总额5000元，总订单数1000笔。</h4>
 				<div class="media">
 					<div class="media-left">
@@ -359,7 +359,7 @@
 				</div>
 
 			</div>
-			<!-- 			<div class="col-md-3" style="margin-top: 20px;">
+						<div class="col-md-3" style="margin-top: 20px;">
 				<div class="media">
 					<div class="media-left">
 						<a href="#"> <img class="media-object"
@@ -396,8 +396,8 @@
 						<p>总金额：</p>
 					</div>
 				</div>
-			</div> -->
-		</div>
+			</div>
+		</div> -->
 
 
 

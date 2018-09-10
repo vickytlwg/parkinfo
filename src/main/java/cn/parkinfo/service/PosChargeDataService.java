@@ -7,8 +7,11 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.parkinfo.model.Monthuser;
 import cn.parkinfo.model.Outsideparkinfo;
+import cn.parkinfo.model.Park;
 import cn.parkinfo.model.PosChargeData;
+import cn.parkinfo.model.UserPark;
 
 public interface PosChargeDataService {
 	
@@ -39,6 +42,8 @@ public interface PosChargeDataService {
 	public List<PosChargeData> getByParkIdAndCardNumber(Integer parkId,String cardNumber);
 	
 	public List<PosChargeData> getByCardNumberAndPark(String cardNumber,Integer parkId);
+	
+	public List<PosChargeData> getSearchByOperatorId(String operatorId,Integer parkId);
 	
 	public List<PosChargeData> getPageByParkId(int parkId,int start,int count);
 	
@@ -86,12 +91,15 @@ public interface PosChargeDataService {
 	
 	public Map<String, Object> getParkChargeByDay(int parkId, String day);
 	
+	//查询停车场总金额
+	public List<Park> getParkByMoney(Map<String, Object> map);
+	
 	//查询收费总笔数、收费总金额、各渠道收费统计
-			public String getByDateAndParkCount2(int parkId,String startDate,String endDate);
-			public String getByDateAndParkCount4(int parkId,String startDate,String endDate);
-			//各渠道收费统计
-			public String getByDateAndParkCount(int parkId,String startDate,String endDate,int payType);
-			public String getByDateAndParkCount3(int parkId,String startDate,String endDate,int payType);
+	public String getByDateAndParkCount2(int parkId,String startDate,String endDate);
+	public String getByDateAndParkCount4(int parkId,String startDate,String endDate);
+	//各渠道收费统计
+	public String getByDateAndParkCount(int parkId,String startDate,String endDate,int payType);
+	public String getByDateAndParkCount3(int parkId,String startDate,String endDate,int payType);
 	
 	//渠道
 	public Map<String, Object> getDaysChannelParkChargeByRange(int parkId, String day);
@@ -102,6 +110,8 @@ public interface PosChargeDataService {
 	public Map<String, Object> getParkChargeByDay2(int parkId, String day);
 	
 	public List<PosChargeData> getByCardNumber(Integer parkId,String cardNumber);
+	
+	public List<PosChargeData> getBySearchByOperatorId(int parkId,String operatorId);
 	
 	public List<PosChargeData> getBySearchCardNumber(String cardNumber);
 	

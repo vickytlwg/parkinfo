@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>包月</title>
+<link href="/parkinfo/css/style.css" rel="stylesheet" type="text/css" />
+<script src="/parkinfo/js/jquery.min.js"></script>
+</head>
+<body>
+<div class="top mg2">
+	<div class="topl f"><a href="#"><img align="absmiddle" src="/parkinfo/images/index_1_01.png" /></a></div>
+	<div class="topc f cen xi13">
+	   <ul>
+            <li class="bg1"><a href="/parkinfo/index">概况</a></li>
+            <div class="topcbar f"><img align="absmiddle" src="/parkinfo/images/index_07.jpg" /></div>
+            <li class="bg3"><a href="/parkinfo/report">数据</a></li>
+            <div class="topcbar f"><img align="absmiddle" src="/parkinfo/images/index_07.jpg" /></div>
+            <li class="bg2"><a href="/parkinfo/report/finance/">财务对账</a></li>
+            <div class="topcbar f"><img align="absmiddle" src="/parkinfo/images/index_07.jpg" /></div>
+            <!-- <li class="bg2"><a href="/parkinfo/report/monthUser/">用户预约</a></li>
+			<div class="topcbar f"><img align="absmiddle" src="/parkinfo/images/index_07.jpg" /></div> -->
+            <li class="bg4"><a href="/parkinfo/report/searchArrearage/">欠费查询</a></li>
+            <div class="topcbar f"><img align="absmiddle" src="/parkinfo/images/index_07.jpg" /></div>      
+            <li class="bg5"><a href="/parkinfo/report/searchParking/">停车记录</a></li>
+            <div class="topcbar f"><img align="absmiddle" src="/parkinfo/images/index_07.jpg" /></div>
+            <!-- <li class="bg5 bg6hover"><a href="#">运维</a></li>
+            <div class="topcbar f"><img align="absmiddle" src="/parkinfo/images/index_07.jpg" /></div> -->
+            <li class="bg2"><a href="/parkinfo/report/month/">月卡管理</a></li>
+            <div class="topcbar f"><img align="absmiddle" src="/parkinfo/images/index_07.jpg" /></div>
+            <li class="bg2 topchover"><a href="/parkinfo/report/user/">用户管理</a></li>
+            <div class="topcbar f"><img align="absmiddle" src="/parkinfo/images/index_07.jpg" /></div>
+            <li class="bg6 bg6hover"><a href="#">服务</a></li>
+            <div class="topcbar f"><img align="absmiddle" src="/parkinfo/images/index_07.jpg" /></div>
+            <!-- <li class="bg7 bg7hover"><a href="/parkinfo/report/user/">设置</a></li> -->
+        </ul>
+	</div>
+	<div class="topr r xi13">
+		<ul>
+			<li><a href="#">欢迎您</a></li>
+			<!-- <li><a href="#"><img align="absmiddle" src="/parkinfo/images/index_26.png" /></a></li>
+			<li><a href="#"><img align="absmiddle" src="/parkinfo/images/index_28.png" /></a></li> -->
+			<li><a href="/parkinfo/login"><img align="absmiddle" src="/parkinfo/images/index_30.png" /></a></li>
+		</ul>
+	</div>
+</div>
+<div class="con mg2">
+    <div class="conl">
+        <div class="conls mg2">
+            <span class="conlsr1 r"><img align="absmiddle" src="/parkinfo/images/user_list_23.png" /></span>
+            <span class="conlsr2 r"><img align="absmiddle" src="/parkinfo/images/user_list_23.png" /></span>
+        </div>
+        <div id="menu_zzjs_net" class="sdmenu">
+            <!-- <div>
+                <span>月卡管理</span>
+    <a href="/parkinfo/report/month/" hidden>月卡管理</a>      
+              <a href="/parkinfo/report/infoToday">今日概况</a>   
+            </div> -->
+           <!--  <div>
+            	<span>包月用户管理</span>
+            	<a href="/parkinfo/report/month/">包月用户管理</a>
+            </div> -->
+            <!-- <div>
+                <span>财务概况</span>
+                <a href="/parkinfo/report/finance/">财务对账</a>
+                
+            </div>
+           <div>
+                <span>记录查询</span>               
+                <a href="/parkinfo/report/searchArrearage/">欠费查询</a>
+                <a href="/parkinfo/report/searchParking/">停车记录</a>
+               
+            </div> -->
+            <!-- <div>
+                <span>停车位状态</span> 
+                 <a href="/parkinfo/report/CarportStatus/">车位状态</a>
+             </div> -->
+             <div>
+            	<span>用户管理</span>
+            	<a href="/parkinfo/report/user/">用户信息</a>
+            </div>
+        </div>
+    </div>
+<div class="conr">
+	<iframe id="mainFrame" name="mainFrame" scrolling="no" onload="changeFrameHeight()" src="/parkinfo/usermanage" frameborder="0" style="padding: 0px; width: 100%;min-height:2700px"></iframe>
+</div>
+</div>
+<!-- <script type="text/javascript">
+            // <![CDATA[
+            var myMenu;
+            window.onload = function() {
+                myMenu = new SDMenu("menu_zzjs_net");
+                myMenu.init();
+            var firstSubmenu = myMenu.submenus[1]; //不同栏目首页是0以此类推
+   //         myMenu.expandMenu(firstSubmenu);
+            };
+            // ]]>
+            </script>-->
+<script>
+function changeFrameHeight(){
+    var ifm= document.getElementById("mainFrame"); 
+    ifm.height=ifm.contentWindow.document.body.scrollHeight;
+    
+    if(ifm.height<800){
+    ifm.height=800
+    }
+}
+window.onresize=function(){  
+     changeFrameHeight();  
+} 
+</script>
+<!-- <script src="js/js1.js"></script> -->
+</body>
+</html>

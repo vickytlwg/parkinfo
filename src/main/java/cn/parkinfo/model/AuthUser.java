@@ -9,7 +9,16 @@ public class AuthUser {
 	private String username;
 	private String password;
 	private int role;
+	private int parkid;
 	
+	
+	
+	public int getParkid() {
+		return parkid;
+	}
+	public void setParkid(int parkid) {
+		this.parkid = parkid;
+	}
 	public int getRole() {
 		return role;
 	}

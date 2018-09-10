@@ -25,4 +25,6 @@ public interface AuthorityService {
 	public int deleteUser(int id);
 	
 	public int updateUser(AuthUser user, List<Integer> parkIds);
+	
+	public List<AuthUser> getParkByNameandParkId(String username);
 }

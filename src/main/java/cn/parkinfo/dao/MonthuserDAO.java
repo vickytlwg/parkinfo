@@ -19,6 +19,8 @@ public interface MonthuserDAO {
 	int updateBatchRenewal(Monthuser record);
 	
     int deleteByPrimaryKey(Integer id);
+    
+    Integer deleteByIdandPlatenumber(Integer id,String platenumber);
 
     int insert(Monthuser record);
 
@@ -45,6 +47,10 @@ public interface MonthuserDAO {
     List<Monthuser> getByStartAndCountAndOrder(@Param("start")int start,@Param("count")int count,@Param("type")int type);
     
     List<Monthuser> getByPlateNumber(@Param("platenumber")String platenumber);
+    
+    List<Monthuser> getByPlateNumberBytype(@Param("platenumber")String platenumber,@Param("type")int type,@Param("owner")String owner,@Param("certificatetype")String certificatetype);
+    
+    Monthuser getByPlateNumberById(@Param("id")int id);
     
     List<Monthuser> getByPlateNumber22(@Param("platenumber")String platenumber,@Param("parkId")int parkId);
     

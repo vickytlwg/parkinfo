@@ -242,6 +242,25 @@ function($scope, $http, $window, textModal, textModalTest, $uibModal, $timeout) 
             }
         });
     };
+    
+    $scope.searchoperatorId="";
+    //查询操作员
+    $scope.searchByoperatorId=function(){
+        if($scope.searchoperatorId==""||$scope.searchoperatorId==undefined){
+            return;
+        }
+        $http({
+            url:'getBySearchByOperatorId',
+            method:'post',
+            data:{"operatorId":$scope.searchoperatorId,
+            	"parkId":$('#park-select1').val()
+            	}
+        }).success(function(response){
+            if(response.status==1001){
+                getInitail(response.body);
+            }
+        });
+    };
     $scope.getExcelByDay = function() {
         $window.location.href = "getExcelByDay?date=" + $scope.searchDate;
     };

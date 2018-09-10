@@ -19,6 +19,8 @@ public interface  MonthUserService {
 		int updateBatchRenewal(Monthuser record);
 
 	    int deleteByPrimaryKey(Integer id);
+	    
+	    Integer deleteByIdandPlatenumber(Integer id,String platenumber);
 
 	    int insert(Monthuser record);
 
@@ -45,6 +47,11 @@ public interface  MonthUserService {
 	    List<Monthuser> getByCarnumberAndPark2(String platenumber,int parkId);
 	    
 	    List<Monthuser> getByPlateNumber(String platenumber);
+	    
+	    List<Monthuser> getByPlateNumberBytype(String platenumber,int type,String owner,String certificatetype);
+	    
+	    Monthuser getByPlateNumberById(int id);
+	    
 	    
 	    List<Monthuser> getByPlateNumber22(String platenumber,int parkId);
 	    

@@ -32,8 +32,15 @@ public class Park {
 	private String number;
 	private String pictureUri;
 	private String description;
+	private int parkId;
 
 	
+	public int getParkId() {
+		return parkId;
+	}
+	public void setParkId(int parkId) {
+		this.parkId = parkId;
+	}
 	public int getId() {
 		return id;
 	}
@@ -175,6 +182,15 @@ public class Park {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	@Override
+	public String toString() {
+		return "Park [id=" + id + ", name=" + name + ", streetId=" + streetId + ", portCount=" + portCount
+				+ ", channelCount=" + channelCount + ", portLeftCount=" + portLeftCount + ", feeCriterionId="
+				+ feeCriterionId + ", status=" + status + ", isFree=" + isFree + ", floor=" + floor + ", type=" + type
+				+ ", longitude=" + longitude + ", latitude=" + latitude + ", alias=" + alias + ", position=" + position
+				+ ", mapAddr=" + mapAddr + ", date=" + date + ", isDeleted=" + isDeleted + ", contact=" + contact
+				+ ", number=" + number + ", pictureUri=" + pictureUri + ", description=" + description + "]";
 	}
 	
 	

@@ -227,7 +227,7 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
     };
     
   //统计图5
-    var dateInitialparkcharge5 = function() {
+    /*var dateInitialparkcharge5 = function() {
          $('#parkMonth5').val(new Date().format('yyyy-MM'));
          $('#parkMonth5').datepicker({
              autoClose : true,
@@ -332,7 +332,7 @@ angular.module("outsideParkStatusApp", ['ui.bootstrap']).controller("outsidePark
              });
              chartData();
          });
-     };
+     };*/
     
     
   //统计图4

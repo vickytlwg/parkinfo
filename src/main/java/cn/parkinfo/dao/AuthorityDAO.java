@@ -23,5 +23,7 @@ public interface AuthorityDAO {
 	
 	public int updateUser(AuthUser user);
 	
+	public List<AuthUser> getParkByNameandParkId(String username);
+	
 	
 }

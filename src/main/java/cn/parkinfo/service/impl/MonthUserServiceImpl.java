@@ -158,4 +158,27 @@ public class MonthUserServiceImpl implements MonthUserService {
 		// TODO Auto-generated method stub
 		return monthUserDao.getByParkAndDayRange(parkId, startDate, endDate);
 	}
+
+	@Override
+	public Integer deleteByIdandPlatenumber(Integer id, String platenumber) {
+		// TODO Auto-generated method stub
+		return monthUserDao.deleteByIdandPlatenumber(id, platenumber);
+	}
+
+
+	@Override
+	public Monthuser getByPlateNumberById(int id) {
+		// TODO Auto-generated method stub
+		return monthUserDao.getByPlateNumberById(id);
+	}
+
+
+	@Override
+	public List<Monthuser> getByPlateNumberBytype(String platenumber, int type,String owner,String certificatetype) {
+		// TODO Auto-generated method stub
+		return monthUserDao.getByPlateNumberBytype(platenumber, type,owner,certificatetype);
+	}
+
+
+
 }

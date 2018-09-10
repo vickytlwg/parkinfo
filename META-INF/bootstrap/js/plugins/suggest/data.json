@@ -1,0 +1,64 @@
+{
+	"message": "",
+	"value": [
+		{
+			"userName": "春秋",
+			"shortAccount": "chunyun",
+			"userId": 20001
+		}, {
+			"userName": "战国",
+			"shortAccount": "chunyun",
+			"userId": 20000
+		}, {
+			"userName": "武帝",
+			"shortAccount": "chunyun",
+			"userId": 20002
+		}, {
+			"userName": "唐宋",
+			"shortAccount": "chunyun",
+			"userId": 20003
+		}, {
+			"userName": "明清",
+			"shortAccount": "wuqiong",
+			"userId": 20004
+		}, {
+			"userName": "五霸",
+			"shortAccount": "wudongpeng",
+			"userId": 20005
+		}, {
+			"userName": "历史",
+			"shortAccount": "huangshaoqian",
+			"userId": 20006
+		}, {
+			"userName": "传说",
+			"shortAccount": "yunyan",
+			"userId": 20007
+		}, {
+			"userName": "楚国",
+			"shortAccount": "liuxing",
+			"userId": 20008
+		}, {
+			"userName": "大秦",
+			"shortAccount": "chenyuanyuan",
+			"userId": 20009
+		}, {
+			"userName": "燕赵",
+			"shortAccount": "chunyun",
+			"userId": 20010
+		}, {
+			"userName": "秦时明月",
+			"shortAccount": "chunyun",
+			"userId": 20011
+		}, {
+			"userName": "夜尽天明",
+			"shortAccount": "kuangdonglin",
+			"userId": 20010
+		}, {
+			"userName": "百步穿剑",
+			"shortAccount": "tanghongyu",
+			"userId": 20011
+		}
+	],
+	"code": 200,
+	"redirect": ""
+}

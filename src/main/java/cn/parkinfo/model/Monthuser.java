@@ -157,4 +157,17 @@ public class Monthuser {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+	@Override
+	public String toString() {
+		return "Monthuser [id=" + id + ", type=" + type + ", parkid=" + parkid + ", parkname=" + parkname
+				+ ", cardnumber=" + cardnumber + ", owner=" + owner + ", platenumber=" + platenumber + ", platecolor="
+				+ platecolor + ", certificatetype=" + certificatetype + ", certificatenumber=" + certificatenumber
+				+ ", starttime=" + starttime + ", endtime=" + endtime + ", payment=" + payment + ", status=" + status
+				+ ", checked=" + checked + "]";
+	}
+    
+    
+    
+    
 }

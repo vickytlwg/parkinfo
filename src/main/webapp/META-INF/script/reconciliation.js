@@ -177,6 +177,7 @@ function($scope, $http,$window, textModal,textModalTest, $uibModal, $timeout) {
             }
         });
     };
+
     $scope.getExcelByDay=function(){  
          $window.location.href="/parkinfo/pos/charge/getExcelByDay?date="+$scope.searchDate;
         };

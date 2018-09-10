@@ -277,6 +277,13 @@ public class ParkServiceImpl implements ParkService{
 	}
 
 
+	@Override
+	public List<Park> getParkByMoney(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return parkDAO.getParkByMoney(map);
+	}
+
+
 
 	
 
